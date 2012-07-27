@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<script src="./scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
+<title>Sweet Feedback demo</title>
+
+<body>
+<div id="content">
+<script language="javascript">
+		var auto_refresh = setInterval(
+		function(){
+			$.getJSON("./php/getOnlineUserNumber.php", function(data) {values = data;});
+			var txt=document.getElementById("content");
+			txt.innerHTML = "<h1>There are " + values['num_online_user'] + " users online!</h1>";
+			//document.write("There are " + values['num_online_user'] + " users online!");
+		},500);
+</script>
+</div>
+</body>
+</html>
+
