@@ -3,7 +3,12 @@ require_once("config.php");
 class DB{
 	public $dbh;
 
-	public $onlineUserTableName = "user_online";
+	public $onlineUser_tableName = "user_online";
+    public $basicSensorLog_tableName = "basic_sensor_log";
+    public $location_tableName = "location";
+    public $peopleSensorLog_tableName = "people_presence_log_ext";
+    public $windowStateLog_tableName = "window_state_log_ext";
+
 
 	public function __construct()
 	{
@@ -17,7 +22,7 @@ class DB{
 
 
 	public function getNumberOfOnline(){
-		$query = "select * from user_online";
+		$query = "select * from $onlineUser_tableName";
 		$result = $this->dbh->query($query);
 		$number = $result->rowCount();
 		return $number;

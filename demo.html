@@ -6,8 +6,7 @@
 <body>
 <div id="content">
 <script language="javascript">
-		var auto_refresh = setInterval(
-		function(){
+		var auto_refresh = setInterval( function(){
 			$.getJSON("./php/getOnlineUserNumber.php", function(data) {values = data;});
 			var txt=document.getElementById("content");
 			txt.innerHTML = "<h1>There are " + values['num_online_user'] + " users online!</h1>";
