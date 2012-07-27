@@ -22,7 +22,7 @@ class DB{
 
 
 	public function getNumberOfOnline(){
-		$query = "select * from $onlineUser_tableName";
+		$query = "select * from $this->onlineUser_tableName";
 		$result = $this->dbh->query($query);
 		$number = $result->rowCount();
 		return $number;
