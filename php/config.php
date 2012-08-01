@@ -1,7 +1,7 @@
 <?php
 
 $account = "root";
-$password = "29418401";
+$password = "just4now";
 
 class Config{
 	static $confArray;
@@ -20,6 +20,6 @@ class Config{
 Config::write('db.host', 'localhost');
 Config::write('db.basename', 'sweetfeedback');
 Config::write('db.user', 'root');
-Config::write('db.password', '29418401');
+Config::write('db.password', 'just4now');
 
 ?>

@@ -93,7 +93,7 @@ function getCandy() {
 			else isCandymachine = 0; // if not available, animation ver
 
 			console.log(data);
-			
+
 			// candy machine is not available, then let's move animetion
 			if (isCandymachine != 1) {
 			$("#machinestatus").css("display", "block");
@@ -267,8 +267,17 @@ $('#green-dot-1').ShowBubblePopup();
 function initFloor () {
 
 	var if_window_open = 0;
+	var values;
 	var auto_refresh = setInterval(
 			function () {
+
+			$.getJSON("./php/getOnlineUserNumber.php", function(data) {num = data;
+				var txt=document.getElementById("online");
+				if(num.hasOwnProperty('num_online_user') && num['num_online_user'] != undefined){
+				txt.innerHTML = "<p>There are <span style=\"color:#ff0000; font-weight:bold; font-size:24px;\">" + num['num_online_user'] + "</span> machines online!</p>";
+				//document.write("There are " + values['num_online_user'] + " users online!");
+				}
+				});
 
 			$.getJSON("./php/getSensorValuesNew.php", function(data) { values = data; });
 
@@ -281,76 +290,81 @@ function initFloor () {
 			   console.log("d" + values[0][0]["sensor_val_1"]);
 			   console.log("e" + values[0][0]["sensor_val_2"]);
 			 */
-			for(i = 0; i < 5; i++) {
+			if(values != null){
 
-				if(values[i][0].hasOwnProperty('no_data')){
-					console.log("oops");
-					continue;
+				for(i = 0; i < 5; i++) {
+
+					if(values[i][0].hasOwnProperty('no_data')){
+						console.log("oops");
+						continue;
+					}
+
+					var light_level = values[i][0]["light_level"];
+					var sound_level = values[i][0]["sound_level"];
+					var temperature = values[i][0]["temperature"];
+					var window_state = values[i][0]["window_state"];
+
+//					console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
+					if ( Math.abs(sound_level - 44) > 5) {
+						var id = i+1;
+						var earmuff = $("#earmuff-"+ id);
+
+						earmuff.show();
+					} else {
+						var id = i+1;
+						var earmuff = $("#earmuff-"+ id);
+						earmuff.hide();
+					}
+
+					if (light_level > 100) {
+						var id = i+1;
+						var sunglass = $("#sunglass-"+ id);
+						sunglass.show();
+					} else {
+						var id = i+1;
+						var sunglass = $("#sunglass-"+ id);
+						sunglass.hide();
+					}
+
+
+					if (temperature < 26 ) {
+						var id = i+1;
+						var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
+						cap.show(); sweat.hide();
+					} else if ( temperature > 26 ) {
+						var id = i+1;
+						var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
+						cap.hide(); sweat.show();
+					} else {
+						var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
+						var id = i+1;
+						cap.hide(); sweat.hide();
+					}
+
+					if (window_state > 0) {
+						var id = i+1;
+						//var windy_small = $("#windy-" + id + "-small");
+						//var windy = $("#windy-" + id + "-big");
+						//windy_small.show();
+						//windy_small.hide();
+						//windy.show(200);
+						var movingflag = $("#windflag_" + id);
+						movingflag.show();
+						//if_window_open = 1;
+					} else if(window_state == 0 ) {
+						var id = i+1;
+						//var windy = $("#windy-" + id + "-big");
+						//var windy_small = $("#windy-" + id + "-small");
+						//windy.hide(200);
+						//windy_small.show();
+						//windy_small.hide();
+						var movingflag = $("#windflag_" + id);
+						movingflag.hide();
+						//if_window_open = 0;
+					} 
 				}
 
-				var light_level = values[i][0]["light_level"];
-				var sound_level = values[i][0]["sound_level"];
-				var temperature = values[i][0]["temperature"];
-				var window_state = values[i][0]["window_state"];
-
-				console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
-				if ( Math.abs(sound_level - 44) > 5) {
-					var id = i+1;
-					var earmuff = $("#earmuff-"+ id);
-
-					earmuff.show();
-				} else {
-					var id = i+1;
-					var earmuff = $("#earmuff-"+ id);
-					earmuff.hide();
-				}
-
-				if (light_level > 100) {
-					var id = i+1;
-					var sunglass = $("#sunglass-"+ id);
-					sunglass.show();
-				} else {
-					var id = i+1;
-					var sunglass = $("#sunglass-"+ id);
-					sunglass.hide();
-				}
-
-
-				if (temperature < 110 ) {
-					var id = i+1;
-					var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
-					cap.show(); sweat.hide();
-				} else if ( temperature > 120 ) {
-					var id = i+1;
-					var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
-					cap.hide(); sweat.show();
-				} else {
-					var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
-					var id = i+1;
-					cap.hide(); sweat.hide();
-				}
-				
-				if (window_state > 0 && if_window_open == 0) {
-					var id = i+1;
-					var windy_small = $("#windy-" + id + "-small");
-					var windy = $("#windy-" + id + "-big");
-					windy_small.show();
-					windy_small.hide(200);
-					windy.show();
-					if_window_open = 1;
-				} else if(window_state == 0 && if_window_open == 1) {
-					var id = i+1;
-					var windy = $("#windy-" + id + "-big");
-					var windy_small = $("#windy-" + id + "-small");
-					windy.hide();
-					windy_small.show();
-					windy_small.hide(200);
-					if_window_open = 0;
-				}
-				
 			}
-
-
 
 
 			/*
@@ -411,5 +425,5 @@ function initFloor () {
 			   }
 			 */
 
-			}, 1000); 
+			}, 500); 
 }
