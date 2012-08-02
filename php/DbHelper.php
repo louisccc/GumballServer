@@ -44,9 +44,10 @@ class DB{
     }
 
     public function getWindowStateBy($log_id){
-        $query = "select * from $this->window_state_log_ext where log_id = $log_id limit 1";
+        $query = "select * from $this->windowStateLog_tableName where log_id = $log_id";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
+        //print_r($rows);
         return $rows;
     }
     

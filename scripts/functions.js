@@ -292,17 +292,17 @@ function initFloor () {
 			 */
 			if(values != null){
 
-				for(i = 0; i < 5; i++) {
+				for(i = 0; i < 3; i++) {
 
-					if(values[i][0].hasOwnProperty('no_data')){
+					if(values[i].hasOwnProperty('no_data')){
 						console.log("oops");
 						continue;
 					}
 
-					var light_level = values[i][0]["light_level"];
-					var sound_level = values[i][0]["sound_level"];
-					var temperature = values[i][0]["temperature"];
-					var window_state = values[i][0]["window_state"];
+					var light_level = values[i]["light_level"];
+					var sound_level = values[i]["sound_level"];
+					var temperature = values[i]["temperature"];
+					var window_state = values[i]["window_state"];
 
 //					console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
 					if ( Math.abs(sound_level - 44) > 5) {
