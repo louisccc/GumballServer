@@ -1,0 +1,110 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<html> <head>
+<title></title>
+
+ <link rel="stylesheet" type="text/css" href="./style.css">
+
+<script src="./jquery.min.js"></script>
+<script src="./jquery.animate-colors-min.js"></script>
+<link rel="stylesheet" href="./form.css"media="screen" />
+
+<script type="text/javascript">
+
+// edit correct answers for your questions.
+// true: 1, false:0
+var correct_answers = ["1","0","1","0","0"];
+var answered = ["0","0","0","0","0"];
+var score = 0;
+var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
+
+$(document).ready(function() {
+
+    $(".caption").hide();
+
+    $(".tf").click(function() {
+	// get question number, 0 ~ 4
+	q_num = ($("tr").index($(this).parent()));
+
+	// if not answered yet
+	if (answered[q_num] == 0) {
+	   
+	    // get answer
+	    ans = $(this).attr("val");
+	    
+	    // if correct, red
+	    if (ans == correct_answers[q_num]) {
+		$(this).animate({backgroundColor:"#FFCCCC"}, 1000);
+		score++;
+
+		// let's move the moter
+		$.post("../php/insertFeedback.php?application_id=4");
+
+	    } else {
+		//not correct, blue
+		$(this).animate({backgroundColor:"#8F8FFF"}, 1000);
+	    }
+
+
+	    // show the caption for the question
+	    $("#cap_"+ (q_num+1)).fadeIn();
+	    
+	    answered[q_num] = 1;
+	    
+	    $('#score_num').html(20*score + "%");
+	    $('#comment').html(comment[score]);
+	}
+    });
+});
+
+
+</script>
+</head>
+
+<body>
+<div id="ribbon"><img src="./ribbon.png" border="0" width="300" height="300"></div>
+
+<div id="page-wrap">
+<div id="content">
+
+<div id="top"><img src="machine.png" height="70px" /><p>Sweet Feedback Questionnaire</p><img src="machine.png" height="70px" /></div>
+<div id="marubastu"></div>
+
+<table>
+    <tr id="q1"><td class="number">1.</td><td class="quiz">Mountain View's average temperature is above 69 degrees farenheit.
+    <div style="color:green" id="cap_1" class="caption">this is the answer.</div></td>
+    <td class="tf" val="1">True</td>
+    <td class="tf" val="0">False</td></tr>
+
+
+    <tr id="q2"><td class="number">2.</td><td class="quiz">Mountain View gets at least 20 inches of rain a year.
+    <div style="color:green" id="cap_2" class="caption">this is the answer.</div></td>
+    <td class="tf" val="1">True</td>
+    <td class="tf" val="0">False</td></tr>
+    
+    <tr id="q3"><td class="number">3.</td><td class="quiz">Mountain View has more than 60k residents.
+    <div style="color:green" id="cap_3" class="caption">this is the answer.</div></td>
+    <td class="tf" val="1">True</td>
+    <td class="tf" val="0">False</td></tr>
+
+    <tr id="q4"><td class="number">4.</td><td class="quiz">Mountain View is the second us city to be covered completely by wireles.
+    <div style="color:green" id="cap_4" class="caption">this is the answer.</div></td>
+    <td class="tf"  val="1">True</td>
+    <td class="tf" val="0">False</td></tr>
+
+    <tr id="q5"><td class="number">5.</td><td class="quiz">NASA AMES has the second most efficient builidng in the government.
+    <div style="color:green" id="cap_5" class="caption">this is the answer.</div></td>
+    <td class="tf" val="1">True</td>
+    <td class="tf" val="0">False</td></tr>
+
+ <table>
+
+</div>
+</div>
+<div id="result">
+<div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
+<input type="button" id="refresh_btn" value="refresh" onClick="location.href='./index.html'" />
+</div>
+<div id="footer">
+This is part of <b>Sweet Feedback</b> project by Ted Selker and Chihiro Suga.
+</div>
+</body> </html>
