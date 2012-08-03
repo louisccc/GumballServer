@@ -1,14 +1,12 @@
 <?php
-require_once("config.php");
+require_once("DbHelper.php");
 try {
   if ($_GET["report_id"] != "" && $_GET["user_id"]) {
-    
-    $pdo = new PDO("mysql:host=localhost; dbname=sweetfeedback",
-		   $account, $password);
-    $query = "update problems set status=0, updated_by=".$_GET["user_id"].", updated_at='NOW()' where id=" . $_GET["report_id"];
-    $stmt = $pdo->query($query);
-
-    echo $query;
+      $db_help = new DB();
+      $report_id = $_GET["report_id"];
+      $user_id = $_GET["user_id"];
+      $db_help->updateFixReport($user_id, $report_id);
+      $db_help->insertFeedbackStatusBy($_SERVER['REMOTE_ADDR'], 1, "positive");
   }
 } catch (PDOException $e){
     var_dump($e->getMessage());

@@ -1,26 +1,23 @@
 <?php
-
-require_once("config.php");
 require_once("DbHelper.php");
-//if(isset($device_id)){
 
-$time = time();
-$time_check = $time - 2; //10 mins
 
-//echo $device_id.' '.$time.' '.$time_check."<br>";
-$db = new Db();
+function login($db, $device_id, $ipaddr){
+    $time = time();
+    $time_check = $time - 4; //10 mins
 
-// refresh the user login table now 
-$db->updateAndLoginOnlineList($device_id, $time);
-$num_user_online = $db->getNumberOfOnline();
-//echo "User online :".$num_user_online;
+    $db->updateAndLoginOnlineList($device_id, $time, $ipaddr);
+    $num_user_online = $db->getNumberOfOnline();
+    $db->refreshOnlineList($time_check);
+}
 
-// if over 10 minute, delete session 
-$db->refreshOnlineList($time_check);
+function refreshOnlineStatus($db){
+    
+    $time = time();
+    $time_check = $time - 2; //10 mins
 
-//}
-//else{
-//	echo "No variable named device_id";
-//}
+    $db->refreshOnlineList($time_check);
+    
+}
 
 ?>

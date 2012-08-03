@@ -21,7 +21,7 @@ class DB{
         $this->dbh = new PDO($dsn, $user, $password);
     }
 
-
+    //getter
     public function getNumberOfOnline(){
         $query = "select * from $this->onlineUser_tableName";
         $result = $this->dbh->query($query);
@@ -50,9 +50,12 @@ class DB{
         //print_r($rows);
         return $rows;
     }
-    
+
     public function getPeopleStateBy($log_id){
-        
+        $query = "select * from $this->peopleSensorLog_tableName where log_id = $log_id";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
+        return $rows; 
     }
 
     public function getFeedbackStatusBy($device_id){
@@ -62,10 +65,52 @@ class DB{
         //   print_r($rows);
         return json_encode($rows);
     }
+    
+    public function getDeviceIdByIpAddr($ip_addr){
+        $query = "select * from $this->onlineUser_tableName where ipaddress='$ip_addr'";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
 
-    public function insertFeedbackStatusBy($device_id, $application_id, $type){
+        return $rows[0]['session'];
+    }
+    public function insertFixReport($title, $coor_x, $coor_y, $user_id){
+        $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coor_x. "," .$coor_y. "," .$user_id. ", 1, NOW(), NOW()," .$user_id. ");";
+        $result = $this->dbh->query($query);
+
+        //echo $result;
+    }
+    public function insertSensorBasic($device_id, $light, $temp, $sound){
+
+        $query = "insert into $this->basicSensorLog_tableName values( NULL, $device_id, $light, $temp, $sound, NOW())";
+        $result = $this->dbh->query($query);
+
+        $insert_id = $this->dbh->lastInsertId();
+        return $insert_id;
+
+    }
+    public function insertWindowState($log_id, $window_state){
+        $query = "insert into $this->windowStateLog_tableName values(".$log_id.",".$window_state.")";
+        $result = $this->dbh->query($query);
+    }
+    public function insertPeopleState($log_id, $people_state){
+        $query = "insert into $this->peopleSensorLog_tableName values($log_id, $people_state)";
+        $result = $this->dbh->query($query);
+    }
+
+    public function insertFeedbackStatusBy($ip_addr, $application_id, $type){ 
+        $device_id = $this->getDeviceIdByIpAddr($ip_addr);
         $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
         $result = $this->dbh->query($query);
+    }
+    public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type){ 
+        $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
+        $result = $this->dbh->query($query);
+    }
+
+    public function updateFixReport($user_id, $report_id){
+
+        $query = "update problems set status=0, updated_by=$user_id, updated_at='NOW()' where id=$report_id";
+        $report = $this->dbh->query($query);
     }
 
     public function updateFeedbackStatusBy($feedback_id){
@@ -73,19 +118,17 @@ class DB{
         $result = $this->dbh->query($query);
     }
 
-
-
     // actions
-    public function updateAndLoginOnlineList($device_id, $time){
+    public function updateAndLoginOnlineList($device_id, $time, $ip_addr){
         $query = "select * from $this->onlineUser_tableName where session='$device_id'";
         $result = $this->dbh->query($query);
 
         if($result->rowCount() == 0){
-            $query = "INSERT INTO $this->onlineUser_tableName VALUES('$device_id', '$time')";
+            $query = "INSERT INTO $this->onlineUser_tableName VALUES('$device_id', '$time', '$ip_addr')";
             $result = $this->dbh->query($query);
         }        
         else{   
-            $query = "UPDATE $this->onlineUser_tableName SET time='$time' WHERE session = '$device_id'";
+            $query = "UPDATE $this->onlineUser_tableName SET time='$time', ipaddress='$ip_addr' WHERE session = '$device_id'";
             $result = $this->dbh->query($query);
         } 
     }

@@ -1,5 +1,5 @@
 <?php
-require_once("config.php");
+require_once("DbHelper.php");
 try {
   $user_id = $_GET["user_id"];
   $coordinate_x = $_GET["coordinate_x"];
@@ -14,12 +14,9 @@ try {
 
 
   if ($isOK == 1) {
-    $pdo = new PDO("mysql:host=localhost; dbname=sweetfeedback",
-		   $account, $password);
-    $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coordinate_x. "," .$coordinate_y. "," .$user_id. ", 1, NOW(), NOW()," .$user_id. ");";
-    $stmt = $pdo->query($query);
-
-    echo $query;
+      $db_help = new DB();
+      $db_help->insertFixReport($title, $coordinate_x, $coordinate_y, $user_id);
+      $db_help->insertFeedbackStatusBy($_SERVER['REMOTE_ADDR'], 2, "positive");
   }
 } catch (PDOException $e){
     var_dump($e->getMessage());

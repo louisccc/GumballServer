@@ -1,11 +1,8 @@
 <?php 
 require_once("DbHelper.php");
-
+require_once("onlineUser.php");
 $db_help = new DB();
-$time = time();
-$time_check = $time - 2;
-//$db_help->updateAndLoginOnlineList(0, $time);
-$db_help->refreshOnlineList($time_check);
+refreshOnlineStatus($db_help);
 
 $result['num_online_user'] = $db_help->getNumberOfOnline();
 echo json_encode($result);
