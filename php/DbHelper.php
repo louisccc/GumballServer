@@ -65,13 +65,21 @@ class DB{
         //   print_r($rows);
         return json_encode($rows);
     }
-    
+
     public function getDeviceIdByIpAddr($ip_addr){
         $query = "select * from $this->onlineUser_tableName where ipaddress='$ip_addr'";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
 
         return $rows[0]['session'];
+    }
+    public function getExistReport(){
+        $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from problems where status = 1";
+        $result = $this->dbh->query($query);
+        
+        $rows = $result->fetchAll();
+        return $rows;
+
     }
     public function insertFixReport($title, $coor_x, $coor_y, $user_id){
         $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coor_x. "," .$coor_y. "," .$user_id. ", 1, NOW(), NOW()," .$user_id. ");";
