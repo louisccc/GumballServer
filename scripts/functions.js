@@ -252,6 +252,9 @@ function initRoom() {
 
 function initFloor () {
 
+    for(i = 0; i < 10; i++) {
+        $("#red-dot-" + i).remove();                                        	    
+    }
     var if_window_open = 0;
     var values;
     var auto_refresh = setInterval(
@@ -267,15 +270,6 @@ function initFloor () {
 
                 $.getJSON("./php/getSensorValuesNew.php", function(data) { values = data; });
 
-                //	    console.log(values);
-
-                /*
-                   console.log("a" + values[0][0]["id"]);
-                   console.log("b" + values[0][0]["created_at"]);
-                   console.log("c" + values[0][0]["sensor_val_0"]);
-                   console.log("d" + values[0][0]["sensor_val_1"]);
-                   console.log("e" + values[0][0]["sensor_val_2"]);
-                   */
                 if(values != null){
 
                     for(i = 0; i < 3; i++) {
@@ -290,7 +284,7 @@ function initFloor () {
                         var temperature = values[i]["temperature"];
                         var window_state = values[i]["window_state"];
 
-                        //					console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
+                        //console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
                         if ( Math.abs(sound_level - 102) > 5) {
                             var id = i+1;
                             var earmuff = $("#earmuff-"+ id);
