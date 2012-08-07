@@ -1,20 +1,21 @@
 <?php
-//session_start();
 require_once("DbHelper.php");
 require_once("onlineUser.php");
-//echo $_GET['ip'];
-//echo $_GET['mac'];
 if(isset($_GET["d_id"])){
 
     $device_id = $_GET["d_id"];
     $db_help = new DB();
-    login($db_help, $device_id, $_GET['ip']);
-
+    login($db_help, $device_id, $_SERVER['REMOTE_ADDR']);
     $row = $db_help->getNewestDataOf($device_id);
     $log_id = $row[0]['log_id'];
     $row_window = $db_help->getWindowStateBy($log_id);
-    $row_merge = array_merge($row[0], $row_window[0]);
-    
+    $row_merge = array();
+    if($row_window != null){
+        $row_merge = array_merge($row[0], $row_window[0]);
+    }
+    else{
+        $row_merge = $row[0];
+    }
     $num_online = $db_help->getNumberOfOnline();
 
     if(isset($_GET["s_lv"]) && isset($_GET["l_lv"]) && isset($_GET["tem"])){
@@ -26,6 +27,7 @@ if(isset($_GET["d_id"])){
 
         if( $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
             $db_help->insertFeedbackStatusByDeviceId($device_id, 3, "positive");
+            echo $log_id ." id get feedback";
         }
         $insert_id = $db_help->insertSensorBasic($device_id, $light_level, $temperature, $sound_level);
 

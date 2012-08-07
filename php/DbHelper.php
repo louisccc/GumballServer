@@ -32,7 +32,7 @@ class DB{
         $query = "select distinct device_id from $this->basicSensorLog_tableName";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
-        //print_r($rows);
+       // print_r($rows);
         return $rows; 
     }
     public function getNewestDataOf($device_id){
@@ -46,9 +46,12 @@ class DB{
     public function getWindowStateBy($log_id){
         $query = "select * from $this->windowStateLog_tableName where log_id = $log_id";
         $result = $this->dbh->query($query);
-        $rows = $result->fetchAll();
-        //print_r($rows);
-        return $rows;
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            //print_r($rows);
+            return $rows;
+        }
+        return null;
     }
 
     public function getPeopleStateBy($log_id){
@@ -62,11 +65,12 @@ class DB{
         $query = "select * from $this->feedbackStatus_tableName where device_id=$device_id and if_get=0";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
-        //   print_r($rows);
+        //print_r($rows);
         return json_encode($rows);
     }
 
     public function getDeviceIdByIpAddr($ip_addr){
+        //echo $ip_addr;
         $query = "select * from $this->onlineUser_tableName where ipaddress='$ip_addr'";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
@@ -76,7 +80,7 @@ class DB{
     public function getExistReport(){
         $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from problems where status = 1";
         $result = $this->dbh->query($query);
-        
+
         $rows = $result->fetchAll();
         return $rows;
 
@@ -110,9 +114,26 @@ class DB{
         $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
         $result = $this->dbh->query($query);
     }
+
+    // mostly for sensor scenario need conjection control
     public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type){ 
-        $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
+        $time = $this->getMaxTimeStamp();
+        date_default_timezone_set('America/Los_Angeles');
+        $date = date('Y-m-d H:i:s', time());
+        $diff = strtotime($date) - strtotime($time);
+        if($diff > 2){
+            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
+            $result = $this->dbh->query($query);
+        }
+    }
+
+    public function getMaxTimeStamp(){
+        $query = "select max(created_time) from $this->feedbackStatus_tableName";
         $result = $this->dbh->query($query);
+        $num = $result->fetchAll();
+        //print_r($num);
+        return $num[0][0];
+     
     }
 
     public function updateFixReport($user_id, $report_id){

@@ -274,7 +274,7 @@ function initFloor () {
 
                     for(i = 0; i < 3; i++) {
 
-                        if(values[i].hasOwnProperty('no_data')){
+                        if(values[i]==null){
                             console.log("oops");
                             continue;
                         }
@@ -284,7 +284,7 @@ function initFloor () {
                         var temperature = values[i]["temperature"];
                         var window_state = values[i]["window_state"];
 
-                        //console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
+                        console.log(i + ":" + sound_level+","+ light_level +","+temperature + "," + window_state );
                         if ( Math.abs(sound_level - 102) > 5) {
                             var id = i+1;
                             var earmuff = $("#earmuff-"+ id);
