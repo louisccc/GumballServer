@@ -64,9 +64,12 @@ class DB{
     public function getFeedbackStatusBy($device_id){
         $query = "select * from $this->feedbackStatus_tableName where device_id=$device_id and if_get=0";
         $result = $this->dbh->query($query);
+        if($rows->rowCount() > 0){
         $rows = $result->fetchAll();
         //print_r($rows);
         return json_encode($rows);
+        }
+        return null;
     }
 
     public function getDeviceIdByIpAddr($ip_addr){
