@@ -32,7 +32,7 @@ class DB{
         $query = "select distinct device_id from $this->basicSensorLog_tableName";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
-       // print_r($rows);
+        // print_r($rows);
         return $rows; 
     }
     public function getNewestDataOf($device_id){
@@ -64,10 +64,10 @@ class DB{
     public function getFeedbackStatusBy($device_id){
         $query = "select * from $this->feedbackStatus_tableName where device_id=$device_id and if_get=0";
         $result = $this->dbh->query($query);
-        if($rows->rowCount() > 0){
-        $rows = $result->fetchAll();
-        //print_r($rows);
-        return json_encode($rows);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            //print_r($rows);
+            return json_encode($rows);
         }
         return null;
     }
@@ -136,7 +136,7 @@ class DB{
         $num = $result->fetchAll();
         //print_r($num);
         return $num[0][0];
-     
+
     }
 
     public function updateFixReport($user_id, $report_id){
