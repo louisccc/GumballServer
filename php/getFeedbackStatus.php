@@ -1,5 +1,5 @@
 <?php
-require_once("Dbhelper.php");
+require_once("DbHelper.php");
 
 $db = new DB();
 if(isset($_GET['device_id'])){
