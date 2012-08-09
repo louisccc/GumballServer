@@ -31,17 +31,20 @@ class DB{
     public function getAllDevice(){
         $query = "select distinct device_id from $this->basicSensorLog_tableName";
         $result = $this->dbh->query($query);
-        $rows = $result->fetchAll();
-        // print_r($rows);
-        return $rows; 
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            // print_r($rows);
+            return $rows; 
+        }
+        return null;
     }
     public function getNewestDataOf($device_id){
         $query = "select * from $this->basicSensorLog_tableName where device_id = $device_id order by created_time DESC limit 1";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
-        $rows = $result->fetchAll();
-        //print_r($rows);
-        return $rows;
+            $rows = $result->fetchAll();
+            //print_r($rows);
+            return $rows;
         }
         return null;
     }
@@ -60,8 +63,11 @@ class DB{
     public function getPeopleStateBy($log_id){
         $query = "select * from $this->peopleSensorLog_tableName where log_id = $log_id";
         $result = $this->dbh->query($query);
-        $rows = $result->fetchAll();
-        return $rows; 
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows; 
+        }
+        return null;
     }
 
     public function getFeedbackStatusBy($device_id){
@@ -79,16 +85,20 @@ class DB{
         //echo $ip_addr;
         $query = "select * from $this->onlineUser_tableName where ipaddress='$ip_addr'";
         $result = $this->dbh->query($query);
-        $rows = $result->fetchAll();
-
-        return $rows[0]['session'];
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows[0]['session'];
+        }
+        return null; 
     }
     public function getExistReport(){
         $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from problems where status = 1";
         $result = $this->dbh->query($query);
-
-        $rows = $result->fetchAll();
-        return $rows;
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
 
     }
     public function insertFixReport($title, $coor_x, $coor_y, $user_id){
@@ -136,10 +146,12 @@ class DB{
     public function getMaxTimeStamp(){
         $query = "select max(created_time) from $this->feedbackStatus_tableName";
         $result = $this->dbh->query($query);
-        $num = $result->fetchAll();
-        //print_r($num);
-        return $num[0][0];
-
+        if($result->rowCount() > 0){
+            $num = $result->fetchAll();
+            //print_r($num);
+            return $num[0][0];
+        }
+        return null;
     }
 
     public function updateFixReport($user_id, $report_id){
