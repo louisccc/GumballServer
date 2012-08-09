@@ -1,5 +1,5 @@
 * { margin: 0; padding: 0; }
-body { font: 14px/1.4 Georgia, serif; }
+body { font: 13px/1.4 Georgia, serif; }
 #page-wrap { /*width: 600px; margin: 15px auto; position: relative;*/ }
 #main { width: 390px; float: left; }
 #ribbon img {position:fixed; right:0px; top:0px;
@@ -68,7 +68,7 @@ tbody .tf:hover {background: #f9f9f9;}
 
 #content {
     margin: 0 auto;
-    width: 50%;
+    width: 70%;
     min-width: 500px;
     position: relative;
 }
@@ -89,7 +89,7 @@ tbody .tf:hover {background: #f9f9f9;}
 
 #footer {
     text-align:center;
-    font: normal 100% Times New Roman;
+    font:  170% Times New Roman;
     padding: 30px;
 }
 
