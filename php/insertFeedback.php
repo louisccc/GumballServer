@@ -1,5 +1,5 @@
 <?php
-require_once("Dbhelper.php");
+require_once("DbHelper.php");
 if(isset($_GET['application_id'])){
     $app_id = $_GET['application_id'];
     $type = $_GET['type'];
