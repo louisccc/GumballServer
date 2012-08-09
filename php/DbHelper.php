@@ -38,9 +38,12 @@ class DB{
     public function getNewestDataOf($device_id){
         $query = "select * from $this->basicSensorLog_tableName where device_id = $device_id order by created_time DESC limit 1";
         $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
         $rows = $result->fetchAll();
         //print_r($rows);
         return $rows;
+        }
+        return null;
     }
 
     public function getWindowStateBy($log_id){

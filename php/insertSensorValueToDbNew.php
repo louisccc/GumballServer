@@ -7,14 +7,16 @@ if(isset($_GET["d_id"])){
     $db_help = new DB();
     login($db_help, $device_id, $_SERVER['REMOTE_ADDR']);
     $row = $db_help->getNewestDataOf($device_id);
-    $log_id = $row[0]['log_id'];
-    $row_window = $db_help->getWindowStateBy($log_id);
-    $row_merge = array();
-    if($row_window != null){
-        $row_merge = array_merge($row[0], $row_window[0]);
-    }
-    else{
-        $row_merge = $row[0];
+    if($row != null){
+        $log_id = $row[0]['log_id'];
+        $row_window = $db_help->getWindowStateBy($log_id);
+        $row_merge = array();
+        if($row_window != null){
+            $row_merge = array_merge($row[0], $row_window[0]);
+        }
+        else{
+            $row_merge = $row[0];
+        }
     }
     $num_online = $db_help->getNumberOfOnline();
 
@@ -25,7 +27,7 @@ if(isset($_GET["d_id"])){
         $people_presence = $_GET["p"];
         $window_state = $_GET["w"];
 
-        if( $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
+        if( $row != null && $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
             $db_help->insertFeedbackStatusByDeviceId($device_id, 3, "positive");
             echo $log_id ." id get feedback";
         }
