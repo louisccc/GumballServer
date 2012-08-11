@@ -32,7 +32,8 @@ class DB{
         $query = "select * from $this->onlineUser_tableName";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0 ){
-            return $result;
+            $rows = $result->fetchAll();
+            return $rows;
         }
         return null;
     }
