@@ -307,11 +307,11 @@ function initFloor () {
                         }
 
 
-                        if (temperature < 26 ) {
+                        if (temperature < 22 ) {
                             var id = i+1;
                             var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
                             cap.show(); sweat.hide();
-                        } else if ( temperature > 26 ) {
+                        } else if ( temperature > 24 ) {
                             var id = i+1;
                             var cap = $("#cap-"+ id);var sweat = $("#sweat-"+ id);
                             cap.hide(); sweat.show();
