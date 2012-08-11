@@ -28,6 +28,14 @@ class DB{
         $number = $result->rowCount();
         return $number;
     }
+    public function getOnlineList(){
+        $query = "select * from $this->onlineUser_tableName";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0 ){
+            return $result 
+        }
+        return null;
+    }
     public function getAllDevice(){
         $query = "select distinct device_id from $this->basicSensorLog_tableName";
         $result = $this->dbh->query($query);
@@ -76,7 +84,7 @@ class DB{
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
             //print_r($rows);
-            return json_encode($rows);
+            return $rows;
         }
         return null;
     }
