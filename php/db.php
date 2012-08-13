@@ -18,7 +18,11 @@ class DB{
         $user = Config::read('db.user');
         $password = Config::read('db.password');
         $dsn = 'mysql:host='.$hostname.';dbname='.$dbname;
-        $this->dbh = new PDO($dsn, $user, $password);
+        try{
+            $this->dbh = new PDO($dsn, $user, $password);
+        }
+        catch(PDOException $e){
+        } 
     }
 
     //getter

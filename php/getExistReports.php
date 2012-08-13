@@ -1,8 +1,12 @@
 <?php
-require_once("DbHelper.php");
+require_once("db.php");
 
-$db_help = new DB();
-$result = $db_help->getExistReport();
-echo json_encode($result);
-
+$db = new DB();
+$result = $db->getExistReport();
+if($result != null){
+    echo json_encode($result);
+}
+else{
+    echo null;
+}
 ?>
