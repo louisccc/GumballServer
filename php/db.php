@@ -9,7 +9,7 @@ class DB{
     public $peopleSensorLog_tableName = "people_presence_log_ext";
     public $windowStateLog_tableName = "window_state_log_ext";
     public $feedbackStatus_tableName = "feedback_repository";
-
+    public $members_tableName = "members";
 
     public function __construct()
     {
@@ -94,6 +94,18 @@ class DB{
         return null;
     }
 
+    public function getFeedbackStatusByUserId($user_id){
+        $query = "select * from $this->feedbackStatus_tableName where user_id=$user_id and if_get=0";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            //print_r($rows);
+            return $rows;
+        }
+        return null;
+    }
+
+
     public function getDeviceIdByIpAddr($ip_addr){
         //echo $ip_addr;
         $query = "select * from $this->onlineUser_tableName where ipaddress='$ip_addr'";
@@ -155,7 +167,62 @@ class DB{
             $result = $this->dbh->query($query);
         }
     }
+    
+    public function insertFeedbackStatusByUserId($user_id, $application_id, $type){ 
+        $time = $this->getMaxTimeStamp();
+        date_default_timezone_set('America/Los_Angeles');
+        $date = date('Y-m-d H:i:s', time());
+        $diff = strtotime($date) - strtotime($time);
+        if($diff > 2){
+            $query = "insert into $this->feedbackStatus_tableName (device_id, user_id, application_id, feedback_type) values (-1, $user_id, $application_id, \"$type\")";
+            $result = $this->dbh->query($query);
+        }
+    }
 
+    public function insertNewUser($account, $password){
+        if(!$this->checkUserExist($account)){
+            $token = md5(uniqid($account, true));
+            $pass = md5($password);
+            $query = "insert into $this->members_tableName (account, password, token) values (\"$account\", \"$pass\", \"$token\")";
+            $result = $this->dbh->query($query);
+            return $token;
+        }
+        else{
+            echo "existed";
+        }
+    }
+
+    public function verifyUser($account, $password){
+        if($this->checkUserExist($account)){
+            $encrypt_password = md5($password); 
+            $query = "select * from $this->members_tableName where account=\"$account\" and password=\"$encrypt_password\"";
+            $result = $this->dbh->query($query);
+            if($result->rowCount() > 0){
+                $row = $result->fetchAll();
+                return $row[0];
+            }
+        }
+        return null;
+    }
+
+    public function checkUserExist($account){
+        $query = "select * from members where account=\"$account\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            return true;
+        }
+        else
+            return false;
+    }
+
+    public function getUserByToken($token){
+        $query = "select * from $this->members_tableName where token=\"$token\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            return $result->fetchAll();
+        }
+        return null;
+    }
     public function getMaxTimeStamp(){
         $query = "select max(created_time) from $this->feedbackStatus_tableName";
         $result = $this->dbh->query($query);
@@ -178,6 +245,10 @@ class DB{
         $result = $this->dbh->query($query);
     }
 
+    public function assignFeedbackOfDeviceId($feedback_id, $device_id, $user_id){
+        $query = "update $this->feedbackStatus_tableName set device_id=$device_id=1 where feedback_id=$feedback_id and user_id=$user_id";
+        $result = $this->dbh->query($query);
+    }
     // actions
     public function updateAndLoginOnlineList($device_id, $time, $ip_addr){
         $query = "select * from $this->onlineUser_tableName where session='$device_id'";
