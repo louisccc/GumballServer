@@ -1,11 +1,14 @@
 <?php
-require_once("DbHelper.php");
+require_once("db.php");
 require_once("onlineUser.php");
+
+$coming_ip = $_SERVER['REMOTE_ADDR'];
 if(isset($_GET["d_id"])){
 
     $device_id = $_GET["d_id"];
     $db_help = new DB();
-    login($db_help, $device_id, $_SERVER['REMOTE_ADDR']);
+
+    login($db_help, $device_id, $coming_ip);
     $row = $db_help->getNewestDataOf($device_id);
     if($row != null){
         $log_id = $row[0]['log_id'];
@@ -29,7 +32,6 @@ if(isset($_GET["d_id"])){
 
         if( $row != null && $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
             $db_help->insertFeedbackStatusByDeviceId($device_id, 3, "positive");
-            echo $log_id ." id get feedback";
         }
         $insert_id = $db_help->insertSensorBasic($device_id, $light_level, $temperature, $sound_level);
 

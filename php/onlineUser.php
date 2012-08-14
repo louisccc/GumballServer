@@ -1,7 +1,4 @@
 <?php
-require_once("DbHelper.php");
-
-
 function login($db, $device_id, $ipaddr){
     $time = time();
     $time_check = $time - 4; //10 mins

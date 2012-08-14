@@ -1,9 +1,8 @@
 <?php
-require_once("DbHelper.php");
-
-$db = new DB();
+require_once("db.php");
 if(isset($_GET['id'])){
     $id = $_GET['id'];
+    $db = new DB();
     $db->updateFeedbackStatusBy($id);
 }
 ?>

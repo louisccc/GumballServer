@@ -1,14 +1,16 @@
 <?php
-require_once("DbHelper.php");
+require_once("db.php");
+$coming_ip = $_SERVER['REMOTE_ADDR'];
+
 if(isset($_GET['application_id'])){
     $app_id = $_GET['application_id'];
     $type = $_GET['type'];
     $db = new DB();
-    if($type == "positive"){
-        $db->insertFeedbackStatusBy($_SERVER['REMOTE_ADDR'], $app_id,"positive");
+    if($type == "negative"){
+        $db->insertFeedbackStatusBy($coming_ip, $app_id,"negative");
     }
-    else if($type == "negative"){
-        $db->insertFeedbackStatusBy($_SERVER['REMOTE_ADDR'], $app_id,"negative");
+    else{
+        $db->insertFeedbackStatusBy($coming_ip, $app_id,"positive");
     }
 }
 ?>

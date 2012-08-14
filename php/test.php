@@ -1,5 +1,5 @@
 <?php
-require_once("Dbhelper.php");
+require_once("db.php");
 
 $db = new DB();
 //echo $db->getMaxTimeStamp();

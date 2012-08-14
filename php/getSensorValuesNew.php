@@ -1,5 +1,5 @@
 <?php
-require_once("DbHelper.php");
+require_once("db.php");
 
 $db = new DB();
 $allDevice = $db->getAllDevice();
@@ -16,6 +16,11 @@ foreach($allDevice as $row){
     }
     $result[$device_id] = $newest_data;
 }
-echo json_encode($result);
+if(sizeof($result) > 0){
+    echo json_encode($result);
+}
+else{
+    echo null;
+}
 
 ?>
