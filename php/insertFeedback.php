@@ -6,11 +6,6 @@ if(isset($_GET['application_id'])){
     $app_id = $_GET['application_id'];
     $type = $_GET['type'];
     $db = new DB();
-    if($type == "negative"){
-        $db->insertFeedbackStatusBy($coming_ip, $app_id,"negative");
-    }
-    else{
-        $db->insertFeedbackStatusBy($coming_ip, $app_id,"positive");
-    }
+    $db->insertFeedbackStatusBy($coming_ip, $app_id, $type);
 }
 ?>
