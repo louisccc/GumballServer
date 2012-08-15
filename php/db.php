@@ -4,12 +4,14 @@ class DB{
     public $dbh;
 
     public $onlineUser_tableName = "user_online";
+    public $onlineDevice_tableName = "device_online";
     public $basicSensorLog_tableName = "basic_sensor_log";
     public $location_tableName = "location";
     public $peopleSensorLog_tableName = "people_presence_log_ext";
     public $windowStateLog_tableName = "window_state_log_ext";
     public $feedbackStatus_tableName = "feedback_repository";
     public $members_tableName = "members";
+    public $transportation_tableName = "transportation_log";
 
     public function __construct()
     {
@@ -249,26 +251,77 @@ class DB{
         $query = "update $this->feedbackStatus_tableName set device_id=$device_id=1 where feedback_id=$feedback_id and user_id=$user_id";
         $result = $this->dbh->query($query);
     }
+    
     // actions
-    public function updateAndLoginOnlineList($device_id, $time, $ip_addr){
-        $query = "select * from $this->onlineUser_tableName where session='$device_id'";
+    public function updateAndLoginOnlineDeviceList($device_id, $time, $ip_addr){
+        $query = "select * from $this->onlineDevice_tableName where session='$device_id'";
         $result = $this->dbh->query($query);
 
         if($result->rowCount() == 0){
-            $query = "INSERT INTO $this->onlineUser_tableName VALUES('$device_id', '$time', '$ip_addr')";
+            $query = "INSERT INTO $this->onlineDevice_tableName VALUES('$device_id', '$time', '$ip_addr')";
             $result = $this->dbh->query($query);
         }        
         else{   
-            $query = "UPDATE $this->onlineUser_tableName SET time='$time', ipaddress='$ip_addr' WHERE session = '$device_id'";
+            $query = "UPDATE $this->onlineDevice_tableName SET time='$time', ipaddress='$ip_addr' WHERE session = '$device_id'";
             $result = $this->dbh->query($query);
         } 
     }
-    public function refreshOnlineList($time_check){
+    
+    public function updateAndLoginOnlineUserList($token, $time, $ip_addr){
+        $query = "select * from $this->onlineUser_tableName where token='$token'";
+        $result = $this->dbh->query($query);
+
+        if($result->rowCount() == 0){
+            $query = "INSERT INTO $this->onlineUser_tableName (token, time, ipaddr) VALUES ('$token', '$time', '$ip_addr')";
+            $result = $this->dbh->query($query);
+        }        
+        else{   
+            $query = "UPDATE $this->onlineUser_tableName SET time='$time', ipaddr='$ip_addr' WHERE token = '$token'";
+            $result = $this->dbh->query($query);
+        } 
+    }
+    public function refreshOnlineUserList($time_check){
         $query = "delete from $this->onlineUser_tableName WHERE time<$time_check";
         $result = $this->dbh->query($query);
         //echo $result;
     } 
 
+    public function refreshOnlineDeviceList($time_check){
+        $query = "delete from $this->onlineDevice_tableName WHERE time<$time_check";
+        $result = $this->dbh->query($query);
+        //echo $result;
+    }
+
+
+    public function insertDataToDatabase($transportation, $user_id){
+        if($transportation == null){
+            return null;
+        }
+        $label = $transportation[1][1];
+        $trip_id = $this->getSupposeTripId();
+        for($i = 4; $i < count($transportation); $i++){
+            print_r($transportation[$i]);
+            $time_splited = explode(".",$transportation[$i][8]);
+            $this->insertDataRowToDatabase($label, $user_id, $trip_id, 
+                $transportation[$i][0], $transportation[$i][1], 
+                $transportation[$i][2], $transportation[$i][3], 
+                $transportation[$i][4], $transportation[$i][5], 
+                $transportation[$i][6], $transportation[$i][7], 
+                $time_splited[0]);
+        }
+    }
+    public function insertDataRowToDatabase($label, $user_id, $trip_id, $segment, $point, $latitude, $longitude, $altitude, $bearing, $accuracy, $speed, $time){
+        $query = "insert into $this->transportation_tableName values (NULL, $user_id, $trip_id, '$label', $segment, $point, $latitude, $longitude, $altitude, $bearing, $accuracy, $speed, \"$time\")";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
+        return $rows;
+    }
+    public function getSupposeTripId(){
+        $query = "select count(distinct('trip_id')) from $this->transportation_tableName where 1";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
+        return $rows[0][0];
+    }
 }
 
 ?>

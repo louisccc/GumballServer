@@ -1,12 +1,16 @@
 <?php
 require_once("../db.php");
-
+require_once("../onlineUser.php");
 
 if( isset($_GET["account"]) && isset($_GET["password"])){
     $username = $_GET["account"];
     $password = $_GET["password"];
     $db = new DB();
-    echo json_encode($db->verifyUser($username, $password));
+    $result = $db->verifyUser($username, $password);
+    if($result!=null){
+        userLogin($db, $result["token"], $_SERVER["REMOTE_ADDR"]);
+        echo json_encode($result);
+    }
 }
 
 ?>

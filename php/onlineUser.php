@@ -3,18 +3,29 @@ function login($db, $device_id, $ipaddr){
     $time = time();
     $time_check = $time - 4; //10 mins
 
-    $db->updateAndLoginOnlineList($device_id, $time, $ipaddr);
+    $db->updateAndLoginOnlineDeviceList($device_id, $time, $ipaddr);
     $num_user_online = $db->getNumberOfOnline();
-    $db->refreshOnlineList($time_check);
+    $db->refreshOnlineDeviceList($time_check);
 }
 
 function refreshOnlineStatus($db){
-    
     $time = time();
-    $time_check = $time - 2; //10 mins
+    $time_check = $time - 4; //10 mins
 
-    $db->refreshOnlineList($time_check);
+    $db->refreshOnlineDeviceList($time_check);
+}
+
+function userLogin($db, $token, $ipaddr){
+    $time = time();
+    $time_check = $time - 1800;
+    $db->updateAndLoginOnlineUserList($token, $time, $ipaddr);
+    $db->refreshOnlineUserList($time_check);
     
+}
+function refreshOnlineUserStatus($db){
+    $time = time();
+    $time_check = $time - 1800; //10 mins
+    $db->refreshOnlineUserList($time_check);
 }
 
 ?>
