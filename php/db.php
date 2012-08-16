@@ -363,6 +363,12 @@ class DB{
         $rows = $result->fetchAll();
         return $rows[0][0];
     }
+    public function getTripsOfUser($user_id){
+        $query = "select distinct(trip_id) from $this->transportation_tableName where user_id=$user_id";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
+        return $rows;
+    }
 
     public function getTransportationData($user_id){
         $query = "select * from $this->transportation_tableName where user_id=$user_id";
