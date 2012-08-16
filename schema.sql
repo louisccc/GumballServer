@@ -133,15 +133,15 @@ CREATE TABLE `transportation_log` (
   `label` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `segment` int(11) NOT NULL,
   `point` int(11) NOT NULL,
-  `latitude` float NOT NULL,
-  `longitude` float NOT NULL,
-  `altitude` float NOT NULL,
-  `bearing` float NOT NULL,
-  `accuracy` float NOT NULL,
-  `speed` float NOT NULL,
-  `time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `latitude` double NOT NULL,
+  `longitude` double NOT NULL,
+  `altitude` double NOT NULL,
+  `bearing` double NOT NULL,
+  `accuracy` double NOT NULL,
+  `speed` double NOT NULL,
+  `time` datetime NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1775 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10501 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -152,7 +152,7 @@ DROP TABLE IF EXISTS `user_online`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user_online` (
-  `token` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
   `time` int(11) NOT NULL,
   `ipaddr` varchar(50) COLLATE utf8_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -182,4 +182,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-15 11:52:27
+-- Dump completed on 2012-08-15 17:34:20

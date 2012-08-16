@@ -371,7 +371,7 @@ class DB{
         return $rows;
     }
     public function getTransportationDataByTrip($user_id, $trip_id){
-        $query = "select * from $this->transportation_tableName where user_id=$user_id and trip_id=$trip_id";
+        $query = "select * from $this->transportation_tableName where user_id=\"$user_id\" and trip_id=\"$trip_id\"";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
         return $rows;
