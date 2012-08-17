@@ -21,7 +21,7 @@ if(isset($_GET["d_id"])){
             $row_merge = $row[0];
         }
     }
-    $num_online = $db_help->getNumberOfOnline();
+    $num_online = $db_help->getNumberOfOnlineDevice();
 
     if(isset($_GET["s_lv"]) && isset($_GET["l_lv"]) && isset($_GET["tem"])){
         $sound_level = $_GET["s_lv"];

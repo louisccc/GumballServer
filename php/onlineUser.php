@@ -11,7 +11,6 @@ function login($db, $device_id, $ipaddr){
 function refreshOnlineStatus($db){
     $time = time();
     $time_check = $time - 4; //10 mins
-
     $db->refreshOnlineDeviceList($time_check);
 }
 

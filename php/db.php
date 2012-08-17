@@ -35,14 +35,14 @@ class DB{
         if(($result = $this->getOnlineUserList())!= null){
             return count($result);
         }
-        return null;
+        return 0;
     }
     ### get the number of online device
     public function getNumberOfOnlineDevice(){
-        if(($result = $this->getOnlineUserDevice()) != null){
+        if(($result = $this->getOnlineDeviceList()) != null){
             return count($result);
         }
-        return null;
+        return 0;
     }
     ### get the detail stuff of online user 
     public function getOnlineUserList(){
@@ -54,7 +54,7 @@ class DB{
         return null;
     }
     ### get the detail stuff of online device
-    public function getOnlineUserDevice(){
+    public function getOnlineDeviceList(){
         $query = "select * from $this->onlineDevice_tableName";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0 ){
@@ -219,7 +219,7 @@ class DB{
         $date = date('Y-m-d H:i:s', time());
         $diff = strtotime($date) - strtotime($time);
         if($diff > 2){
-            $query = "insert into $this->feedbackStatus_tableName (device_id, user_id, application_id, feedback_type) values (-1, $user_id, $application_id, \"$type\")";
+            $query = "insert into $this->feedbackStatus_tableName (user_id, application_id, feedback_type) values ($user_id, $application_id, \"$type\")";
             $result = $this->dbh->query($query);
         }
     }
