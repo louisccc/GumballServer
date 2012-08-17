@@ -10,102 +10,7 @@
 
     <!-- Le styles -->
     <link href="assets/css/bootstrap.css" rel="stylesheet">
-    <style>
-
-      body {
-        background-color: #f1f1f1;
-        /*background-color: #222222;*/
-        font-size: 16px;     
-        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
-      }
-      h3 {
-        padding: 0.8em 0.5em 0.8em 0.3em;
-
-      }
-      #logo{
-        margin-top: -3px;
-        margin-right: 7px;
-      }
-
-      .building{
-        float: left;  /* parent should use overflow to prevent broken */
-        padding: 50px 0 0 30px;
-      }
-
-      /*.building img:hover{
-        margin-top: -7px;
-        filter:alpha(opacity=50);
-        -moz-opacity:0.5;
-        -khtml-opacity: 0.5;
-        opacity: 0.5;
-      }
-      */
-      #left{
-        float: left;
-        display: block;
-        overflow: hidden;
-        width: 70%;
-        height: 100%;
-        margin: 7px;
-/*
-        background-color: #ffffff;
-        border: 1px #d5d5d5 solid;
-        
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-          border-radius: 7px;*/
-      }
-      #right{
-        display: block;
-        overflow: hidden;
-        width: 25%;
-        height: 300px;
-        margin: 7px;
-
-/*        background-color: #ffffff;
-        border: 1px #d5d5d5 solid;
-        
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-          border-radius: 7px;*/
-      }
-      .title{
-        padding-left: 5px;
-      }
-      .machine_status {
-        /*border: 1px #ff0000 solid;*/
-        padding: 7px;
-      }
-      .machine_status img{
-        height: 45px;
-      }
-      #loginBt{
-        color: #ffffff;
-        margin: 0;
-      }
-      .machine_status{
-        font-size: 16px;
-        font-weight: bold;
-        padding-left: 5px;
-      }
-      .machine_status img{
-        margin: 0 5px 0 5px;
-      }
-      #machine{
-        border: 0px #ff0000 solid;
-      }
-      #problemList{
-        margin: 3px;
-        padding: 3px;
-
-        background-color: #ffffff;
-        border: 1px #d5d5d5 solid;
-        
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-          border-radius: 7px;*/
-      }
-    </style>
+    <link href="assets/css/style.css" rel="stylesheet">
     
 
     <!--<link href="assets/css/docs.css" rel="stylesheet">-->
@@ -188,7 +93,7 @@
 
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h3>Report A Problem!</h3>
+          <h3>Report a Problem!</h3>
         </div>
         <div class="modal-body">
           <form>
@@ -207,7 +112,10 @@
       </div>
       <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
 
-      <div id="problemList">
+
+      <div id="problemArea">
+        <h4>Problem List</h4>
+        <div id="problemList"></div>
       </div>
 
 
@@ -241,13 +149,41 @@
 
 
     <script language="javascript">
+      function updateMachineStatus(){
+        alert("update!");
+      }
+      $(function(){
+        
+        /* update machine status every 2 sec */
+        setInterval(function(){
+          updateMachineStatus();
+        }, 2000);
 
-      $(function(){        
-        var cur_user;
-        var cur_token;
+        /* read exist problems */
+        $.ajax({
+          type: "GET",
+          url: "http://localhost/~janetyc/GumballServer/php/getExistReports.php",
+          dataType: 'json',
+          success: function(data) {
+            
+            $.each(data, function(i, item) {
+              $('#problemList').append('<li>'+item.title+"</li>");
+            });
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error");               
+          }
+        });
+
+        /* make machine icon draggable */
         $(".machine").draggable({
           cursor: 'move', 
-          containment: 'document'});
+          containment: 'document'}
+        );
+
+        /* log in stuff */
+        var cur_user;
+        var cur_token;
 
         if($.cookie("sweetpassword")!=null){
           cur_user = $.cookie("sweetaccount");
@@ -285,8 +221,6 @@
                 
               }
             });
-          
-
         });
       });
     </script>

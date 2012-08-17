@@ -1,0 +1,104 @@
+body {
+  background-color: #f1f1f1;
+  font-size: 16px;     
+  padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+h3 {
+  padding: 0.8em 0.5em 0.8em 0.3em;
+}
+#logo{
+  margin-top: -3px;
+  margin-right: 7px;
+}
+.building{
+  float: left;  /* parent should use overflow to prevent broken */
+  padding: 50px 0 0 30px;
+}
+
+/*
+.building img:hover{
+  margin-top: -7px;
+  filter:alpha(opacity=50);
+  -moz-opacity:0.5;
+    -khtml-opacity: 0.5;
+    opacity: 0.5;
+}
+ */
+      
+#left{
+  float: left;
+  display: block;
+  overflow: hidden;
+  width: 70%;
+  height: 100%;
+  margin: 7px;
+
+/*
+  background-color: #ffffff;
+  border: 1px #d5d5d5 solid;
+        
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;*/
+}
+      #right{
+        display: block;
+        overflow: hidden;
+        width: 25%;
+        height: 300px;
+        margin: 7px;
+
+/*        background-color: #ffffff;
+        border: 1px #d5d5d5 solid;
+        
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+          border-radius: 7px;*/
+      }
+      .title{
+        padding-left: 5px;
+      }
+      .machine_status {
+        /*border: 1px #ff0000 solid;*/
+        padding: 7px;
+      }
+      .machine_status img{
+        height: 45px;
+      }
+      #loginBt{
+        color: #ffffff;
+        margin: 0;
+      }
+      .machine_status{
+        font-size: 16px;
+        font-weight: bold;
+        padding-left: 5px;
+      }
+      .machine_status img{
+        margin: 0 5px 0 5px;
+      }
+      #machine{
+        border: 0px #ff0000 solid;
+      }
+      #problemArea{
+        margin-top: 10px;
+        padding: 5px 5px 5px 10px;
+
+        background-color: #ffffff;
+        border: 1px #d5d5d5 solid;
+        
+        -webkit-border-radius: 7px;
+        -moz-border-radius: 7px;
+          border-radius: 7px;*/
+      }
+      #problemArea h4{
+        padding: 5px;
+      }
+      #problemList li{
+        list-style: none;
+        padding-left: 7px;
+        padding-top: 3px;
+      }
+      #problemList li:hover{
+        background-color: #dddddd;
+      }
