@@ -43,8 +43,11 @@ if ( $_FILES["file"]["size"] < 2000000 && in_array($extension, $allowedExts))
                 }
             }
             #print_r($data_array);
-            $db = new DB();
-            $db->insertDataToDatabase($data_array, 2);
+            if( isset($_POST["token"]) ){
+                $db = new DB();
+                $db->getUserIdByToken($_POST["token"]);
+                $db->insertDataToDatabase($data_array, 2);
+            }
             fclose($handle);
         }
     }
