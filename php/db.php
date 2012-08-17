@@ -135,7 +135,7 @@ class DB{
     }
     ### utilities get user_id from ipaddr by checking online user table
     public function getUserIdByIpAddr($ip_addr){
-        $query = "select * from $this->onlineUser_tableName where ip_addr='$ip_addr'";
+        $query = "select * from $this->onlineUser_tableName where ipaddr='$ip_addr'";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
