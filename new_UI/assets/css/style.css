@@ -41,64 +41,71 @@ h3 {
   -moz-border-radius: 7px;
   border-radius: 7px;*/
 }
-      #right{
-        display: block;
-        overflow: hidden;
-        width: 25%;
-        height: 300px;
-        margin: 7px;
+#right{
+  display: block;
+  overflow: hidden;
+  width: 25%;
+  height: 500px;
+  margin: 7px;
+}
+.title{
+  padding-left: 5px;
+}
+.machine_status {
+  padding: 7px;
+}
+.machine_status img{
+  height: 45px;
+}
+#loginBt{
+  color: #ffffff;
+  margin: 0;
+}
+.machine_status{
+  font-size: 16px;
+  font-weight: bold;
+  padding-left: 5px;
+}
 
-/*        background-color: #ffffff;
-        border: 1px #d5d5d5 solid;
-        
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-          border-radius: 7px;*/
-      }
-      .title{
-        padding-left: 5px;
-      }
-      .machine_status {
-        /*border: 1px #ff0000 solid;*/
-        padding: 7px;
-      }
-      .machine_status img{
-        height: 45px;
-      }
-      #loginBt{
-        color: #ffffff;
-        margin: 0;
-      }
-      .machine_status{
-        font-size: 16px;
-        font-weight: bold;
-        padding-left: 5px;
-      }
-      .machine_status img{
-        margin: 0 5px 0 5px;
-      }
-      #machine{
-        border: 0px #ff0000 solid;
-      }
-      #problemArea{
-        margin-top: 10px;
-        padding: 5px 5px 5px 10px;
+.machine_status img{
+  margin: 0 5px 0 5px;
+}
 
-        background-color: #ffffff;
-        border: 1px #d5d5d5 solid;
+.machine{
+  border: 1px #ff0000 solid;
+  display: block;
+  width: 70px;
+  height: 70px;
+  float: left;
+  position: absolute;
+  margin-top: -100px;
+  margin-left: -100px;
+}
+
+#problemArea{
+  margin-top: 10px;
+  padding: 5px 5px 5px 10px;
+
+  background-color: #ffffff;
+  border: 1px #d5d5d5 solid;
         
-        -webkit-border-radius: 7px;
-        -moz-border-radius: 7px;
-          border-radius: 7px;*/
-      }
-      #problemArea h4{
-        padding: 5px;
-      }
-      #problemList li{
-        list-style: none;
-        padding-left: 7px;
-        padding-top: 3px;
-      }
-      #problemList li:hover{
-        background-color: #dddddd;
-      }
+  -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+        border-radius: 7px;
+}
+
+#problemArea h4{
+  padding: 5px;
+
+}
+
+#problemList li{
+  
+  list-style-image: url('../../img/others/problem.png');
+  padding-left: 3px;
+  padding-top: 3px;
+}
+
+/*#problemList li:hover{
+  background-color: #dddddd;
+}*/
