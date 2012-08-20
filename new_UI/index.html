@@ -111,8 +111,7 @@
 
         <div id="problemArea">
           <h4>Problem List</h4>
-          <div id="problemList"><ul class="items"></ul></div>
-          <div id="problemDetail"></div>
+
         </div>    
       </div>
       <!--      
@@ -169,7 +168,17 @@
       }
 
       function readProblemList(){
-        $('#problemList .items').empty();
+
+        /* clear problem list */
+        $('#problemList').remove();
+        $('#problemDetail').remove();
+        var proList = $('<div></div>').attr('id','problemList');
+        $('<ul></ul>').addClass('items').appendTo(proList);
+        var proDetail = $('<div></div>').attr('id', 'problemDetail');
+        $('#problemArea').append(proList);
+        $('#problemArea').append(proDetail);
+        
+        /* get existing report */
         $.ajax({
           type: "GET",
           url: "http://localhost/~janetyc/GumballServer/php/getExistReports.php",
