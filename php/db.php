@@ -71,6 +71,15 @@ class DB{
         }
         return null;
     }
+    public function checkIsDeviceOnline($device_id){
+        $query = "select * from $this->onlineDevice_tableName where session = \"$device_id\"";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            return true;
+        }
+        return false;
+    }
+    
     ### get the newest data row of 3-sensor data table using device_id
     public function getNewestDataOf($device_id){
         $query = "select * from $this->basicSensorLog_tableName where device_id = $device_id order by created_time DESC limit 1";
