@@ -1,7 +1,9 @@
 <?php
 require_once("db.php");
-
+require_once("onlineUser.php");
 $db = new DB();
+refreshOnlineStatus($db);
+refreshOnlineUserStatus($db);
 $allDevice = $db->getAllDevice();
 $result = Array();
 foreach($allDevice as $row){
