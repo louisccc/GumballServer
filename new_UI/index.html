@@ -26,7 +26,7 @@
 
   </head>
 
-  <body>
+  <body onload="initMap()">
 
     <div class="navbar navbar-fixed-top">
       <div class="navbar-inner">
@@ -65,80 +65,119 @@
       </div>
     </div>
 
+
     <div class="container">
-      <h1 class="title">Sustainability Base Building</h1>
+        <div class="tabable">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#apps-1" data-toggle="tab" id="app1">SB app</a>
+                </li>
+                <li class>
+                    <a href="#apps-2" data-toggle="tab" id="app2">Trans app</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="apps-1">
+                      <h1 class="title">Sustainability Base Building</h1>                                                                   
 
+                      <div id="left">
+                        <div class="building"><img src="img/building/building-1.png"/></div>
+                        <img id="" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
+                        <img id="" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
+                        <img id="" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
+                        <img id="" src="img/building/win4.png" style="margin-left: -26px; margin-top: 85px;"/>
+                        <img id="" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
+                        <div id="" class="building"><img src="img/building/building-2.png"/></div>
 
-      
-      
+                      </div>
+                      
 
-      <div id="left">
-        <div class="building"><img src="img/building/building-1.png"/></div>
-        <img id="" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
-        <img id="" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
-        <img id="" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
-        <img id="" src="img/building/win4.png" style="margin-left: -26px; margin-top: 85px;"/>
-        <img id="" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
-        <div id="" class="building"><img src="img/building/building-2.png"/></div>
+                      <div id="right">
 
-      </div>
-      
+                        <div id="report" class="modal hide fade">
 
-      <div id="right">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h3>Report a Problem!</h3>
+                          </div>
+                          
+                          <div class="modal-body">
+                            <form>
+                              <fieldset class='textbox' style="padding:10px">
+                                <input id="problemInput" style="margin-top: 8px" type="text" placeholder="Problem"/>
+                                <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
+                              </fieldset>
+                            </form>
+                          </div>
 
-        <div id="report" class="modal hide fade">
+                          <div class="modal-footer">
+                            <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                          </div>
 
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Report a Problem!</h3>
-          </div>
-          
-          <div class="modal-body">
-            <form>
-              <fieldset class='textbox' style="padding:10px">
-                <input id="problemInput" style="margin-top: 8px" type="text" placeholder="Problem"/>
-                <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
-              </fieldset>
-            </form>
-          </div>
+                        </div>
+                        <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
 
-          <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal" >Close</a>
-          </div>
+                        <div id="problemArea">
+                          <h4>Problem List</h4>
 
+                        </div>    
+                      </div>
+                      <div class="machine">
+                        <img src="img/mrc/mrc_happy.png" width="50px"/>
+                        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
+                      </div>
+                      <div class="machine">
+                        <img src="img/mrc/mrc_happy.png" width="50px"/>
+                        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
+                      </div>
+                      </div>
+              <div class="tab-pane active" id="apps-2">   
+                <h1 class="title">Your Transportation Track</h1>                                                                   
+                <div id="left">
+                    <div id="map_canvas"></div> 
+                </div>
+                <div id="right">
+
+                    <div id="report" class="modal hide fade">
+
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h3>Report a Problem!</h3>
+                      </div>
+                      
+                      <div class="modal-body">
+                        <form>
+                          <fieldset class='textbox' style="padding:10px">
+                            <input id="problemInput" style="margin-top: 8px" type="text" placeholder="Problem"/>
+                            <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
+                          </fieldset>
+                        </form>
+                      </div>
+
+                      <div class="modal-footer">
+                        <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                      </div>
+
+                    </div>
+                    <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
+
+                    <div id="problemArea">
+                      <h4>Problem List</h4>
+
+                    </div>    
+                  </div>
+              </div>
+            </div>
         </div>
-        <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
 
-        <div id="problemArea">
-          <h4>Problem List</h4>
-
-        </div>    
-      </div>
-      <!--      
-      <div class="machine_status">
-        <img src="img/mrc/mrc_happy.png"/><span id="machine_count">X 0</span>
-      </div>
-      -->
-      <div class="machine">
-        <img src="img/mrc/mrc_happy.png" width="50px"/>
-        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
-      </div>
-      <div class="machine">
-        <img src="img/mrc/mrc_happy.png" width="50px"/>
-        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
-      </div>
-      <!--
-      <div class="machine">
-        <img src="img/mrc/mrc_sad.png" width="50px"/>  
-        <img src="img/logo_b.png" width="50px"/>
-      </div>-->
       <section id="monitor"></section>
       <section id="transportation"></section>
 
 
 
 
-    </div> <!-- /container -->
+  </div> <!-- /container -->
+                     
 
     <!-- Le javascript
     ================================================== -->
@@ -158,6 +197,7 @@
     <script src="assets/js/bootstrap-typeahead.js"></script>
     <script src="assets/js/jquery.cookie.js"></script>
 
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
     
@@ -166,6 +206,54 @@
       function updateMachineStatus(){
         alert("update!");
       }
+    function initMap() {
+
+        $.getJSON("http://localhost/~yushihyuan/sweetfeedback/php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
+                var mapOptions = {
+                    center: new google.maps.LatLng(37, -122),
+                    zoom: 14,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+
+                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+
+                for(var i=0; i < data.length;i++){
+                    var trip_id = data[i][0];
+                    $.getJSON("../php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
+                        var marker_array = [];
+                        var label = data[0]['label'];
+
+                        for(var i=0; i < data.length; i++){
+                            marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
+                            if( i == data.length - 1){
+                                map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
+                            }
+                        }
+
+                        var color = "#FF0000";
+                        //alert(label);
+                        if (label == "driving car"){
+                            color = "#00FF00";
+                        }
+                        else if(label == "train"){
+                            color = "#0000FF";
+                        }
+                        else if(label == "walking"){
+                            color = "#FFFF00";
+                        }
+                        var flight = new google.maps.Polyline({
+                            path:  marker_array,
+                            strokeColor: color,
+                            strokeOpacity: 1.0,
+                            strokeWeight: 2
+                        });
+                        flight.setMap(map);
+          
+                    });
+                }
+        });
+        
+    }
 
       function readProblemList(){
 
@@ -308,7 +396,13 @@
         setInterval(function(){
           /*updateMachineStatus();*/
         }, 2000);
-
+        
+        /* loading map from database */
+        //$("#app2").click(function(){
+        //    initMap();
+        //});
+        
+        
 
       });
     </script>

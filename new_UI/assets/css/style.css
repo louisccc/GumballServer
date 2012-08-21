@@ -109,3 +109,8 @@ h3 {
 /*#problemList li:hover{
   background-color: #dddddd;
 }*/
+#map_canvas { 
+    height: 460px; 
+    width: 100%;
+    display: block;
+}
