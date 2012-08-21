@@ -4,7 +4,6 @@ function login($db, $device_id, $ipaddr){
     $time_check = $time - 4; //10 mins
 
     $db->updateAndLoginOnlineDeviceList($device_id, $time, $ipaddr);
-    $num_user_online = $db->getNumberOfOnline();
     $db->refreshOnlineDeviceList($time_check);
 }
 
