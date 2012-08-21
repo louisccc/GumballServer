@@ -24,7 +24,7 @@
 
     </head>
 
-    <body onload="initMap()">
+    <body>
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
                 <div class="container">
@@ -63,7 +63,7 @@
 
         <div class="container">
             <div class="tabable">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-pills spliter">
                 <li class="active">
                     <a href="#apps-1" data-toggle="tab" id="app1">SB app</a>
                 </li>
@@ -74,6 +74,7 @@
                     <a href="#apps-3" data-toggle="tab" id="app3">Questionaire</a>
                 </li>
             </ul>
+
             <div class="tab-content">
                 <div class="tab-pane active" id="apps-1">
                     <h1 class="title">Sustainability Base Building</h1>                                                                   
@@ -147,7 +148,7 @@
                         </div>
                     </div>
               
-                <div class="tab-pane active" id="apps-2">   
+                <div class="tab-pane" id="apps-2">   
                     <h1 class="title">Your Transportation Track</h1>                                                                   
                     <div id="left">
                         <div id="map_canvas"></div> 
@@ -353,18 +354,19 @@
                 }
             });
         }
-    
+         
         function initMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(37, -122),
+                zoom: 12,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            if(window.map != null){
+                return;
+            }
+            window.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
 
-            $.getJSON("..//php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
-                var mapOptions = {
-                    center: new google.maps.LatLng(37, -122),
-                    zoom: 14,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-
-                var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
+            $.getJSON("../php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
                 for(var i=0; i < data.length;i++){
                     var trip_id = data[i][0];
                     $.getJSON("../php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
@@ -374,7 +376,7 @@
                         for(var i=0; i < data.length; i++){
                             marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
                             if( i == data.length - 1){
-                                map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
+                                window.map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
                             }
                         }
 
@@ -395,10 +397,11 @@
                             strokeOpacity: 1.0,
                             strokeWeight: 2
                         });
-                        flight.setMap(map);
+                        flight.setMap(window.map);
                     });
                 }
             });
+            google.maps.event.trigger(window.map, 'resize');
         }
 
         function readProblemList(){
@@ -532,7 +535,10 @@
                 cursor: 'move', 
                 containment: 'document'}
             );
-
+            $("#app2").click(function(){
+                //google.maps.event.trigger(window.map, 'resize');
+                initMap();
+            });
 
             /* update machine status every 2 sec */
             setInterval(function(){
