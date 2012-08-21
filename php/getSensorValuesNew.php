@@ -6,6 +6,9 @@ refreshOnlineStatus($db);
 refreshOnlineUserStatus($db);
 $allDevice = $db->getAllDevice();
 $result = Array();
+if($allDevice == null){
+    return null;
+}
 foreach($allDevice as $row){
     $device_id = $row['device_id'];
     if($db->checkIsDeviceOnline($device_id)){
