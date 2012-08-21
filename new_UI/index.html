@@ -74,12 +74,12 @@
 
       <div id="left">
         <div class="building"><img src="img/building/building-1.png"/></div>
-        <img id="" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
-        <img id="" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
-        <img id="" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
-        <img id="" src="img/building/win4.png" style="margin-left: -26px; margin-top: 85px;"/>
-        <img id="" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
-        <div id="" class="building"><img src="img/building/building-2.png"/></div>
+        <img id="win_1" class="win" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
+        <img id="win_2" class="win" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
+        <img id="win_3" class="win" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
+        <img id="win_4" class="win" src="img/building/win4.png" style="margin-left: -26px; margin-top: 85px;"/>
+        <img id="win_5" class="win" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
+        <div class="building"><img src="img/building/building-2.png"/></div>
 
       </div>
       
@@ -119,13 +119,13 @@
         <img src="img/mrc/mrc_happy.png"/><span id="machine_count">X 0</span>
       </div>
       -->
-      <div class="machine">
-        <img src="img/mrc/mrc_happy.png" width="50px"/>
-        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
+      <div class="machine" id="mrc_1" >
+        <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+        <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
       </div>
-      <div class="machine">
-        <img src="img/mrc/mrc_happy.png" width="50px"/>
-        <img src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
+      <div class="machine" id="mrc_2" >
+        <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+        <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -128px; margin-left: -6px;"/>
       </div>
       <!--
       <div class="machine">
@@ -164,10 +164,37 @@
 
     <script language="javascript">
       function updateMachineStatus(){
-        alert("update!");
+
+        /*$('.machine').each(function(i) {
+          $(this).children().each(function(j){
+            
+          });
+        });*/
+        
+        
+        /* get sensor value*/
+        $.ajax({
+          type: "GET",
+          url: "http://localhost/~janetyc/GumballServer/php/getSensorValuesNew.php",
+            
+          dataType: 'json',
+          success: function(data) {
+            $.each(data, function(i, item) {
+              /*alert(item[0]['device_id']+": "+item[0]['light_level']+","+item[0]['temperature']+","+item[0]['sound_level']);*/
+
+            });
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error");
+          }
+        });
+
       }
 
       function readProblemList(){
+
+
+
 
         /* clear problem list */
         $('#problemList').remove();
@@ -226,6 +253,12 @@
         });
       }
       $(function(){
+
+        /* hide headphone */
+        $('.machine').hide(0);
+        $('.headphone').hide(0);
+        $('.win').hide(0);
+
 
         /* log in stuff */
         window.cur_user = "test";
@@ -291,8 +324,6 @@
           });
         });
 
-        
-
 
         /* read exist problems */
         readProblemList();
@@ -306,8 +337,8 @@
 
         /* update machine status every 2 sec */
         setInterval(function(){
-          /*updateMachineStatus();*/
-        }, 2000);
+          updateMachineStatus();
+        }, 5000);
 
 
       });
