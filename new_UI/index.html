@@ -106,7 +106,6 @@
                                 </div>
                             </div>
                             <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
-
                             <div id="problemArea">
                                 <h4>Problem List</h4>
                             </div>    
@@ -220,22 +219,22 @@
 
 
                             // light 
-                            if(parseFloat(item['light_level']) >= 5.0){
-                                $('#mrc_'+d_id+' img.sunglass').css("visibility", "show");
-                                }else{
+                            if(parseFloat(item['light_level']) >= 80.0){
+                                $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
+                            }else{
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
                             }
 
                             // temperature
-                            if(parseFloat(item['temperature']) >= 22.0){
+                            if(parseFloat(item['temperature']) >= 24.0){
                                 $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
                                 }else{
-                                $('#mrc_'+d_id+' img.cold').css("visibility", "show");
+                                $('#mrc_'+d_id+' img.cold').css("visibility", "visible");
                             }
 
                             // sound_level
                             if(parseFloat(item['sound_level']) >= 5.0){
-                                $('#mrc_'+d_id+' img.headphone').css("visibility", "show");
+                                $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                                 }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
 
@@ -439,7 +438,7 @@
                 /* update machine status every 2 sec */
                 setInterval(function(){
                     updateMachineStatus();
-                }, 2000);
+                }, 1000);
 
 
                 /* load quiz */
