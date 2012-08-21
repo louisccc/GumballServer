@@ -1,0 +1,107 @@
+h4{
+    font-size: 16px;
+}
+table {
+    border-collapse: collapse;
+    border: 1px solid #ddd;
+    color: #555;
+    background: #fff;
+}
+
+tr .tf {
+    color: #ccc;
+    text-align: center;
+}
+
+td, th {
+    border: 1px dotted #bbb;
+    padding: .5em;
+}
+
+
+tbody th, tbody td {
+    vertical-align: middle;
+    text-align: left;
+}
+
+tbody th {
+    white-space: nowrap;
+}
+
+.odd {
+    background: #fcfcfc;
+}
+
+tbody .tf:hover {
+    background: #f9f9f9;
+}
+
+.number {
+    width:40px; text-align:center; border-right: 0px;
+}
+
+.quiz {
+    width:70%; margin-left:40px; border-left: 0px;
+}
+
+#content {
+    margin: 0 auto;
+    width: 70%;
+    min-width: 500px;
+    position: relative;
+}
+
+
+#top {
+    margin-top:80px;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+#result {
+    height: 200px;
+    margin-top:40px;
+    margin-bottom:30px;
+    text-align:center;
+}
+
+table {
+    width:100%;
+}
+
+#result input {
+    padding:10px;
+    font-size: 16pt; 
+    border:1px;
+}
+
+#refresh_btn {
+    background-color: CCFFFF;
+    color:aaa; 
+}
+
+#score {
+    padding-top: 10px;
+    margin: 30 auto;
+    text-align:center;
+    width: 200px;
+
+    height:150px;
+    border: 1px solid #C0C0C0;
+}
+
+
+#comment {
+    color:red;
+    font-size: 18pt;
+    padding-top: 35px;
+}
+
+#score_num {
+    font-size: 48pt;
+    padding-top: 45px;
+}
+
+tr {
+    height: 80px;
+}

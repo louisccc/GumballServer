@@ -1,6 +1,6 @@
 <html>
-    <head>
-        <link href="assets/css/style.css" rel="stylesheet">
+    <haed>
+        <link href="assets/css/style_quiz.css" rel="stylesheet">
     </head>
     <body>
         <h1>CMUSV Questionaire</h1>
@@ -103,22 +103,22 @@
                 <td class="tf" val="b">b</td>
                 <td class="tf" val="c">c</td>
                 <td class="tf" val="d">d</td></tr>
-        </table>
-        <div id="result">
-            <div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
-        </div>
-
-        <script src="assets/js/jquery.js"></script>
-        <script>
-            $(function(){
-                var correct_answers = ["b","c","b","c","a","d","b","a","d"];
-                var answered = ["0","0","0","0","0","0","0","0","0"];
-                var correct = 0;
-                var count = 0;
-                var standard = 100;
-                var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
-                $(".caption").hide(); 
-                $(".tf").click(function() {
+            </table>
+            <div id="result">
+                <div id="score">Your score is...<div id="score_num"></div><div id="comment"></div></div>
+            </div>
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/jquery-ui.min.js"></script>
+<script>
+    $(function(){
+        var correct_answers = ["b","c","b","c","a","d","b","a","d"];
+            var answered = ["0","0","0","0","0","0","0","0","0"];
+            var correct = 0;
+            var count = 0;
+            var standard = 100;
+            var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
+            $(".caption").hide(); 
+            $(".tf").click(function() {
 
                     // get question number, 0 ~ 4
                     q_num = ($("tr").index($(this).parent()));

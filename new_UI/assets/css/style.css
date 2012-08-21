@@ -3,6 +3,7 @@ body {
   font-size: 16px;     
   padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
 }
+
 h3 {
   padding: 0.8em 0.5em 0.8em 0.3em;
 }
@@ -32,6 +33,7 @@ h3 {
   width: 70%;
   height: 100%;
   margin: 7px;
+  padding: 5px;
 
 /*
   background-color: #ffffff;
@@ -105,18 +107,19 @@ h3 {
   padding-top: 3px;
 }
 
-/*#problemList li:hover{
-  background-color: #dddddd;
-}*/
+
 #map_canvas { 
+    
     height: 460px; 
-    width: 700px;
+    width: 100%;
     display: block;
+
 }
 .spliter{
     padding:5px; 
     border-bottom: 1px solid #dddddd;
 }
+
 .question{
     padding:50px;
     border:1px solid #dddddd;
