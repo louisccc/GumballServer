@@ -65,7 +65,6 @@
       </div>
     </div>
 
-
     <div class="container">
         <div class="tabable">
             <ul class="nav nav-tabs">
@@ -138,32 +137,20 @@
                 </div>
                 <div id="right">
 
-                    <div id="report" class="modal hide fade">
-
-                      <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h3>Report a Problem!</h3>
-                      </div>
-                      
-                      <div class="modal-body">
-                        <form>
-                          <fieldset class='textbox' style="padding:10px">
-                            <input id="problemInput" style="margin-top: 8px" type="text" placeholder="Problem"/>
-                            <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
-                          </fieldset>
-                        </form>
-                      </div>
-
-                      <div class="modal-footer">
-                        <a href="#" class="btn" data-dismiss="modal" >Close</a>
-                      </div>
-
-                    </div>
-                    <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
+                    <h3>Notice!</h3>
 
                     <div id="problemArea">
                       <h4>Problem List</h4>
-
+                      <div id="descriptionList">
+                        <ul class="items">
+                            <li>the red line represent you are biking</li>
+                            <li>the green line represent you are driving</li>
+                            <li>the yellow line represent you are walking</li>
+                            <li>other color represent you are train or other ways</li>
+                        </ul>
+                      </div>
+                      <ul>
+                      </ul>
                     </div>    
                   </div>
               </div>
@@ -204,7 +191,31 @@
 
     <script language="javascript">
       function updateMachineStatus(){
-        alert("update!");
+
+        /*$('.machine').each(function(i) {
+          $(this).children().each(function(j){
+            
+          });
+        });*/
+        
+        
+        /* get sensor value*/
+        $.ajax({
+          type: "GET",
+          url: "http://localhost/~yushihyuan/sweetfeedback/php/getSensorValuesNew.php",
+            
+          dataType: 'json',
+          success: function(data) {
+            $.each(data, function(i, item) {
+              /*alert(item[0]['device_id']+": "+item[0]['light_level']+","+item[0]['temperature']+","+item[0]['sound_level']);*/
+
+            });
+          },
+          error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("Error");
+          }
+        });
+
       }
     function initMap() {
 
@@ -257,6 +268,9 @@
 
       function readProblemList(){
 
+
+
+
         /* clear problem list */
         $('#problemList').remove();
         $('#problemDetail').remove();
@@ -269,7 +283,7 @@
         /* get existing report */
         $.ajax({
           type: "GET",
-          url: "http://localhost/~janetyc/GumballServer/php/getExistReports.php",
+          url: "http://localhost/~yushihyuan/sweetfeedback/php/getExistReports.php",
           dataType: 'json',
           success: function(data) {
             
@@ -294,7 +308,7 @@
               
               $.ajax({
                 type: "GET",
-                url: "http://localhost/~janetyc/GumballServer/php/makeFixReport.php",
+                url: "http://localhost/~yushihyuan/sweetfeedback/php/makeFixReport.php",
                 data: { "user_id": window.cur_uid, "report_id": report[1] },
             
                 dataType: 'json',
@@ -314,6 +328,12 @@
         });
       }
       $(function(){
+
+        /* hide headphone */
+        $('.machine').hide(0);
+        $('.headphone').hide(0);
+        $('.win').hide(0);
+
 
         /* log in stuff */
         window.cur_user = "test";
@@ -337,7 +357,7 @@
             
           $.ajax({
             type: "GET",
-            url:"http://localhost/~janetyc/GumballServer/php/mobile/verifyUser.php",
+            url:"http://localhost/~yushihyuan/sweetfeedback/php/mobile/verifyUser.php",
             data: { "account": $('#account').val(), "password": $('#password').val() },
             dataType: 'json',
             success: function(data) {
@@ -364,7 +384,7 @@
 
           $.ajax({
             type: "GET",
-            url: "http://localhost/~janetyc/GumballServer/php/makeNewReport.php",
+            url: "http://localhost/~yushihyuan/sweetfeedback/php/makeNewReport.php",
             data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val()},
             
             dataType: 'json',
@@ -379,8 +399,6 @@
           });
         });
 
-        
-
 
         /* read exist problems */
         readProblemList();
@@ -394,15 +412,8 @@
 
         /* update machine status every 2 sec */
         setInterval(function(){
-          /*updateMachineStatus();*/
-        }, 2000);
-        
-        /* loading map from database */
-        //$("#app2").click(function(){
-        //    initMap();
-        //});
-        
-        
+          updateMachineStatus();
+        }, 5000);
 
       });
     </script>
