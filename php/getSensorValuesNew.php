@@ -12,9 +12,9 @@ foreach($allDevice as $row){
 
     $row_window = $db->getWindowStateBy($log_id);
     if($row_window != null){
-        $newest_data = array_merge($newest_data[0], $row_window[0]);
+        $newest_data[0] = array_merge($newest_data[0], $row_window[0]);
     }
-    $result[$device_id] = $newest_data;
+    $result[$device_id] = $newest_data[0];
 }
 if(sizeof($result) > 0){
     echo json_encode($result);
