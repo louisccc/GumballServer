@@ -72,7 +72,6 @@ h3 {
 }
 
 .machine{
-  border: 1px #ff0000 solid;
   display: block;
   width: 70px;
   height: 70px;
@@ -114,3 +113,4 @@ h3 {
     width: 100%;
     display: block;
 }
+
