@@ -4,6 +4,7 @@
     </head>
     <body>
         <h1>CMUSV Questionaire</h1>
+        <p>Hi, please fill up the quesionnaire and you will get feedback if your score is high than <span id="threshold"></span>.</p>
         <table class="question">
             <tr id="q1"><td class="quiz"><h4>1. In 2012, what anniversary did Carnegie Mellon Silicon Valley celebrate?</h4><br/>
                     a.    5th anniversary<br/>
@@ -116,8 +117,10 @@
                 var answered = ["0","0","0","0","0","0","0","0","0"];
                 var correct = 0;
                 var count = 0;
-                var standard = 100;
+                var standard = 80;
                 var comment = new Array("", "", "OK...","Good!","Great!", "Excellent!!");
+
+                $("#threshold").text(standard);
                 $(".caption").hide(); 
                 $(".tf").click(function() {
 
@@ -149,7 +152,7 @@
 
                         answered[q_num] = 1;
                         score = (100*correct/correct_answers.length);
-                        if(score >= standard && count == correct_answers.length){
+                        if(score >= standard){
                             $.post("../php/insertFeedback.php?application_id=9&type=positive");
                         }
                         $('#score_num').html(score.toFixed(1) + "%");
