@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Collaboration Task</title>
+    <meta name="description" content="">
+    <meta name="author" content="janetyc">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+    <style>
+      body {
+        background-color: #f1f1f1;
+        font-size: 16px;     
+        padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+      }
+      h3 {
+        padding: 0.8em 0.5em 0.8em 0.3em;
+
+      }
+      #score {
+        padding: 0.5em 0 0.5em 0.3em;
+
+        color: #C4020F;
+        font-weight: bold;
+        font-size: 18px;
+      }
+      #content {
+        background-color: #fdfdfd;
+        line-height: 1.6em;
+        padding: 10px;
+        
+        -webkit-border-radius: 7px;
+          -moz-border-radius: 7px;
+            border-radius: 7px;
+
+        box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+          -moz-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+          -webkit-box-shadow: 0 1px 3px rgba(34,25,25,0.4);
+      }
+      span:hover{
+        background-color: #FFBAD2; 
+      }
+      .check{
+        background-color: #FFBAD2;
+      }
+      .correct{
+        background-color: #C4020F;
+        color: #ffffff;
+      }
+      .active{
+        background-color: #d3d3d3;
+      }
+      #logo{
+        margin-top: -3px;
+        margin-right: 7px;
+      }
+    </style>
+    <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+    <link rel="shortcut icon" href="asserts/ico/cat.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a id="brand" class="brand" href=""><img src="img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
+<!--          <a class="brand" href="#">CoCheck</a> -->
+          <div class="nav-collapse">
+            <ul class="nav">
+              <li class="dropdown" data-dropdown="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Feedback<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#" id="firstFeedback">First Feedback</a></li>
+                  <li><a href="#" id="lastFeedback">Last Feedback</a></li>
+                  <li><a href="#" id="randomFeedback">Random Feedback</a></li>
+                  <li><a href="#" id="soundFeedback">Sound Feedback</a></li>
+                  <li><a href="#" id="soundLevel">Sound Level</a></li>
+                </ul>
+              </li>
+
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+    <div class="container">
+    <h3>Please pick up the misspelt words as much as possible.</h3>
+    <div id="score"></div>
+    <div id="content">
+    </div>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="assets/js/jquery.js"></script>
+    <script src="assets/js/bootstrap-transition.js"></script>
+    <script src="assets/js/bootstrap-alert.js"></script>
+    <script src="assets/js/bootstrap-modal.js"></script>
+    <script src="assets/js/bootstrap-dropdown.js"></script>
+    <script src="assets/js/bootstrap-scrollspy.js"></script>
+    <script src="assets/js/bootstrap-tab.js"></script>
+    <script src="assets/js/bootstrap-tooltip.js"></script>
+    <script src="assets/js/bootstrap-popover.js"></script>
+    <script src="assets/js/bootstrap-button.js"></script>
+    <script src="assets/js/bootstrap-collapse.js"></script>
+    <script src="assets/js/bootstrap-carousel.js"></script>
+    <script src="assets/js/bootstrap-typeahead.js"></script>
+    
+
+    <script>
+      var ans;
+      var appId = 20;
+      var correct_count = 0;
+      var serverURL = "yo";
+      var feedbackType = "no";
+
+      $(function(){
+
+        $('.dropdown-toggle').dropdown();  
+        $('.dropdown-menu li a').click(function(){
+          if(!$(this).hasClass("active")){
+            $('.active').removeClass('active');
+            $(this).addClass("active");
+            feedbackType = this.id;
+
+          }
+        });
+
+
+        $.getJSON("data/ans1.json", function(json) {
+          ans = json;
+          $("#score").text(correct_count + " / "+ ans.length);
+        });
+
+
+        $.getJSON("config.json", function(json){
+          serverURL = json['server'];
+          $('#brand').attr("href", serverURL+"new_UI/");
+
+          /* read content json file*/
+          $.getJSON("data/data1.json", function(json) {
+            $.each(json, function(index){
+              if(this[1]){
+                var span = $('<span></span>').text(this[0]);
+                span.attr('id',index);
+                $("#content").append(span);
+              }else{
+                $("#content").append(this[0]);
+              }
+          });
+              
+          /* add click event on span*/
+          $('span').click(function(){
+            if($(this).hasClass("check")){
+              $(this).removeClass("check");
+            }else{
+              $(this).addClass("check");
+              if(this.id){                          
+                var wid = parseInt(this.id);
+                if($.inArray(wid, ans) != -1){
+                  if(!$(this).hasClass("correct")){
+                    $(this).addClass("correct");
+
+                    /*update score*/
+                    correct_count += 1;
+                    checkFeedback();                                   
+                    $("#score").text(correct_count+" / "+ans.length);
+                  }
+                }
+              }
+            }
+          });
+        });
+      });
+    });
+    
+    function checkFeedback(){
+      if(feedbackType == 'firstFeedback'){
+        if(correct_count == 1) $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");  
+      }else if(feedbackType == "lastFeedback"){
+        if(correct_count == ans.length) $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+      }else if(feedbackType == "randomFeedback"){
+        var a = Math.floor((Math.random()*2)+1);
+        if(a == 2){
+          $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+        } 
+      }else if(feedbackType == "soundFeedback"){
+        $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=sound");
+      }else if(feedbackType == "soundLevel"){ 
+        $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=soundLevel_"+Math.ceil(correct_count/ans.length*10)%10);
+      }else{
+        if(correct_count/ans.length >= 0.5){
+          $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+        }
+      }
+      if(correct_count == ans.length){
+        $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+      }
+      
+      
+      
+    }
+  </script>
+
+  </body>
+</html>
