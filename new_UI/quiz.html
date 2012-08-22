@@ -149,7 +149,7 @@
                         answered[q_num] = 1;
                         score = (100*correct/correct_answers.length);
                         if(score >= standard && count == correct_answers.length){
-                            $.post("http://10.0.22.99/~fit/GumballServer/php/insertFeedback.php?application_id=9&type=positive");
+                            $.post("../php/insertFeedback.php?application_id=9&type=positive");
                         }
                         $('#score_num').html(score.toFixed(1) + "%");
                         $('#comment').html(comment[Math.floor(correct/correct_answers.length*5)]);

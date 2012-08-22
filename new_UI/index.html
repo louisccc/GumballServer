@@ -87,6 +87,7 @@
                             <img id="win_5" class="win" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
                             <div class="building"><img src="img/building/building-2.png"/></div>
                         </div>
+                        <!--<span id="testTxt">cc</span>-->
                         <div id="right">
                             <div id="report" class="modal hide fade">
                                 <div class="modal-header">
@@ -235,9 +236,17 @@
                             // sound_level
                             if(parseFloat(item['sound_level']) >= 5.0){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
-                                }else{
+                            }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
+                            }
 
+                            // window_state
+                            if(parseInt(item['window_state']) == 1){
+                                //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
+                                $('#win_'+d_id).css("visibility", "visible");
+                            }else{
+                                //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
+                                $('#win_'+d_id).css("visibility", "hidden");
                             }
 
                             //show machine
@@ -359,7 +368,8 @@
                 /* hide headphone */
                 $('.machine').hide(0);
                 //$('.headphone').hide(0);
-                $('.win').hide(0);
+                
+                $('.win').css("visibility", "hidden");
 
                 /* log in stuff */
                 window.cur_user = "test";
