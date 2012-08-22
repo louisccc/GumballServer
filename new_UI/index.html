@@ -213,7 +213,7 @@
 
                     dataType: 'json',
                     success: function(data) {
-                        $.each(data, function(i, item) {
+                        $.each(data['data'], function(i, item) {
                             var d_id = item['device_id'];
 
 
@@ -267,8 +267,8 @@
                         $.getJSON("../php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
                             var marker_array = [];
                             var label = data[0]['label'];
-
                             for(var i=0; i < data.length; i++){
+                            //    console.log(data[i]['speed']);
                                 marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
                                 if( i == data.length - 1){
                                     window.map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
