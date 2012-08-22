@@ -1,7 +1,7 @@
 <?php
 function login($db, $device_id, $ipaddr){
     $time = time();
-    $time_check = $time - 4; //10 mins
+    $time_check = $time - 10; //10 mins
 
     $db->updateAndLoginOnlineDeviceList($device_id, $time, $ipaddr);
     $db->refreshOnlineDeviceList($time_check);
@@ -9,7 +9,7 @@ function login($db, $device_id, $ipaddr){
 
 function refreshOnlineStatus($db){
     $time = time();
-    $time_check = $time - 4; //10 mins
+    $time_check = $time - 10; //10 mins
     $db->refreshOnlineDeviceList($time_check);
 }
 
