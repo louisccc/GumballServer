@@ -5,29 +5,24 @@ $db = new DB();
 refreshOnlineStatus($db);
 refreshOnlineUserStatus($db);
 $allDevice = $db->getAllDevice();
-$result = Array();
-if($allDevice == null){
-    return null;
-}
-foreach($allDevice as $row){
-    $device_id = $row['device_id'];
-    if($db->checkIsDeviceOnline($device_id)){
-        $newest_data = $db->getNewestDataOf($device_id);
+$result['data'] = Array();
 
-        $log_id = $newest_data[0]['log_id'];
+if($allDevice != null){
+    foreach($allDevice as $row){
+        $device_id = $row['device_id'];
+        if($db->checkIsDeviceOnline($device_id)){
+            $newest_data = $db->getNewestDataOf($device_id);
 
-        $row_window = $db->getWindowStateBy($log_id);
-        if($row_window != null){
-            $newest_data[0] = array_merge($newest_data[0], $row_window[0]);
+            $log_id = $newest_data[0]['log_id'];
+
+            $row_window = $db->getWindowStateBy($log_id);
+            if($row_window != null){
+                $newest_data[0] = array_merge($newest_data[0], $row_window[0]);
+            }
+            $result['data'][$device_id] = $newest_data[0];
         }
-        $result[$device_id] = $newest_data[0];
     }
 }
-if(sizeof($result) > 0){
-    echo json_encode($result);
-}
-else{
-    echo null;
-}
+echo json_encode($result);
 
 ?>
