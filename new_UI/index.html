@@ -186,6 +186,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >1</div>
                         </div>
@@ -195,6 +196,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >2</div>
                         </div>
@@ -204,6 +206,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >3</div>
                         </div>
@@ -213,6 +216,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >4</div>
                         </div>
@@ -222,13 +226,15 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
                             <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
                             <div class="mrc_num" >5</div>
                         </div>
-                        <div id="info" style="position: absolute; top:500px; left:550px;">
-                            <img src="img/others/char-cold.png" width="55px" style="margin-left: 20px;"/>: Cold
-                            <img src="img/others/char-headphone.png" width="55px" style="margin-left: 20px;"/>: Noisy
-                            <img src="img/others/char-sunglass.png" width="55px" style="margin-left: 20px;" />: Bright
+                        <div id="info" style="position: absolute; top:510px; left:490px;">
+                            <img src="img/others/char-cold.png" width="55px" style="margin-left: 20px;"/> : Cold
+                            <img class="sweat" src="img/others/char-sweat.png" style="margin-left: 20px;"/> : Hot
+                            <img src="img/others/char-headphone.png" width="55px" style="margin-left: 20px;"/> : Noisy
+                            <img src="img/others/char-sunglass.png" width="55px" style="margin-left: 20px;" /> : Bright
                         </div>
 
                     </div>
@@ -305,21 +311,28 @@
                             // light 
                             if(parseFloat(item['light_level']) >= 80.0){
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
-                                }else{
+                            }else{
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
                             }
 
                             // temperature
                             if(parseFloat(item['temperature']) >= 24.0){
+                                $('#mrc_'+d_id+' img.sweat').css("visibility", "visible");
                                 $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
+                            }else{ 
+                                if(parseFloat(item['temperature']) <= 20.0){                                
+                                    $('#mrc_'+d_id+' img.cold').css("visibility", "visible");
+                                    $('#mrc_'+d_id+' img.sweat').css("visibility", "hidden");
                                 }else{
-                                $('#mrc_'+d_id+' img.cold').css("visibility", "visible");
+                                    $('#mrc_'+d_id+' img.sweat').css("visibility", "hidden");
+                                    $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
+                                }
                             }
 
                             // sound_level
                             if(parseFloat(item['sound_level']) >= 40.0){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
-                                }else{
+                            }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
                             }
 
@@ -327,7 +340,7 @@
                             if(parseInt(item['window_state']) == 1){
                                 //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
                                 $('#win_'+d_id).css("visibility", "visible");
-                                }else{
+                            }else{
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }

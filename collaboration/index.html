@@ -84,6 +84,7 @@
                 <ul class="dropdown-menu">
                   <li><a href="#" id="firstFeedback">First Feedback</a></li>
                   <li><a href="#" id="lastFeedback">Last Feedback</a></li>
+                  <li><a href="#" id="halfFeedback">Half Feedback</a></li>
                   <li><a href="#" id="randomFeedback">Random Feedback</a></li>
                   <li><a href="#" id="soundFeedback">Sound Feedback</a></li>
                   <li><a href="#" id="soundLevel">Sound Level</a></li>
@@ -189,10 +190,14 @@
     });
     
     function checkFeedback(){
-      if(feedbackType == 'firstFeedback'){
+      if(feedbackType == "firstFeedback"){
         if(correct_count == 1) $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");  
       }else if(feedbackType == "lastFeedback"){
         if(correct_count == ans.length) $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+      }else if(feedbackType == "halfFeedback"){
+        if(correct_count/ans.length >= 0.5){
+          $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
+        }
       }else if(feedbackType == "randomFeedback"){
         var a = Math.floor((Math.random()*2)+1);
         if(a == 2){
@@ -203,9 +208,7 @@
       }else if(feedbackType == "soundLevel"){ 
         $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=soundLevel_"+Math.ceil(correct_count/ans.length*10)%10);
       }else{
-        if(correct_count/ans.length >= 0.5){
-          $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
-        }
+        $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
       }
       if(correct_count == ans.length){
         $.post(serverURL+"php/insertFeedback.php?application_id="+appId+"&type=positive");
