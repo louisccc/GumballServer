@@ -269,7 +269,7 @@
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");
+                        alert("get sensor Error");
                     }
                 });
             }
@@ -447,13 +447,13 @@
                                     $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                    alert("Error");
+                                    alert("fix report Error");
                                 }
                             });
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");               
+                        alert("get exist Error");               
                     }
                 });
             }
@@ -522,7 +522,7 @@
                             $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Error");
+                            alert("make new Error");
                         }
                     });
                 });
