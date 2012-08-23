@@ -115,12 +115,22 @@ h3 {
     display: block;
 
 }
-.spliter{
+.spliter {
     padding:5px; 
     border-bottom: 1px solid #dddddd;
 }
 
-.question{
+.question {
     padding:50px;
     border:1px solid #dddddd;
+}
+
+img.ceil:hover {
+    opacity: 0.4;
+    filter: alpha(opacity=40);
+}
+
+img.winclick:hover {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
 }
