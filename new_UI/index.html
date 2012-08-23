@@ -82,7 +82,7 @@
                     <div class="tab-pane active" id="apps-1">
                         <h1 class="title">Sustainability Base Building</h1>                                                                   
                         <div id="left">
-                            <div class="building"><img src="img/building/building-1.png"/></div>
+                            <div class="building"><img id="building_1" src="img/building/building-1.png"/></div>
                             <img id="win_1" class="win" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
                             <img id="win_2" class="win" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
                             <img id="win_3" class="win" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
@@ -99,7 +99,6 @@
 
                             <img id="sun" src="img/others/sun.png" style="margin-left: 50px; margin-top: -200px;"/>
                             <div class="building"><img src="img/building/building-2.png"/></div>
-
                             
 
 
@@ -229,10 +228,15 @@
 
                     dataType: 'json',
                     success: function(data) {
+                        
+                        $('#mrc_1').addClass('offline');
+                        $('#mrc_2').addClass('offline');
+                        $('#mrc_3').addClass('offline');
+                        $('#mrc_4').addClass('offline');
+                        $('#mrc_5').addClass('offline');
+
                         $.each(data['data'], function(i, item) {
                             var d_id = item['device_id'];
-
-
 
                             // light 
                             if(parseFloat(item['light_level']) >= 80.0){
@@ -263,9 +267,10 @@
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }
-
+            
+                            $('#mrc_'+d_id).removeClass("offline");
                             //show machine
-                            $('#mrc_'+d_id).show();
+                            //$('#mrc_'+d_id).show();
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {

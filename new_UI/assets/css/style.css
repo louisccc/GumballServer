@@ -148,7 +148,7 @@ img#sun:hover {
 
 #mrc_2 {
     position: absolute;
-    top: 530px;
+    top: 485px;
     left: 440px;
 }
 
@@ -179,6 +179,18 @@ img#sun:hover {
 }
 
 div.offline {
-    opacity: 0.1;
-    filter: alpha(opacity=10);
+    opacity: 0.18;
+    filter: alpha(opacity=18);
 }
+
+/*#building_1 {
+    position: absolute;
+    top: 200px;
+    left: 100px;
+}
+
+#building_2 {
+    position: absolute;
+    top: 200px;
+    left: 120px;
+}*/
