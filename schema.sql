@@ -153,6 +153,7 @@ DROP TABLE IF EXISTS `transportation_status`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `transportation_status` (
   `log_id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
   `trip_id` int(11) NOT NULL DEFAULT '0',
   `trans_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `aver_speed` double NOT NULL,
@@ -204,4 +205,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-23  2:03:42
+-- Dump completed on 2012-08-23  2:21:03
