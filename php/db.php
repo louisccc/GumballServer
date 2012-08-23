@@ -303,6 +303,15 @@ class DB{
         }
         return null;
     }
+    public function getUserIdByAddr($addr){
+    	$query = "select * from $this->onlineUser_tableName where ipaddr=\"$addr\"";
+	$result = $this->dbh->query($query);
+	if($result->rowCount() > 0){
+		$rows = $result->fetchAll();
+		return $rows[0]['user_id'];
+	}
+	return null;
+    }
     public function getUserIdByToken($token){
         if(($result = $this->getUserByToken($token)) != null){
             return $result[0]['user_id'];
@@ -414,6 +423,16 @@ class DB{
         return $rows;
     }
     
+
+    public function getNewestTransportationStatus($user_id){
+        $query = "select * from $this->transportationStatus_tableName where user_id=$user_id order by timestamp DESC limit 1";
+        $result = $this->dbh->query($query);
+	if($result->rowCount() > 0){
+        	$rows = $result->fetchAll();
+        	return $rows;
+	}
+	return null;
+    }
     public function getTransportationStatus($user_id){
         $query = "select * from $this->transportationStatus_tableName where user_id=$user_id";
         $result = $this->dbh->query($query);
