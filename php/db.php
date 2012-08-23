@@ -344,7 +344,8 @@ class DB{
         } 
     }
     
-    public function updateAndLoginOnlineUserList($user_id, $time, $ip_addr){
+    public function updateAndLoginOnlineUserList($token, $time, $ip_addr){
+	$user_id = $this->getUserIdByToken($token);
         $query = "select * from $this->onlineUser_tableName where user_id='$user_id'";
         $result = $this->dbh->query($query);
 

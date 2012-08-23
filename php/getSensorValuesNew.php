@@ -21,7 +21,6 @@ if($allDevice != null){
 			}
 			$user_id = $db->getUserIdByIpAddr($_SERVER['REMOTE_ADDR']);
 			if($user_id!=null){
-				echo "user_id ". $user_id;
 				$status = $db->getNewestTransportationStatus($user_id);
 				$newest_data[0]['trans'] = $status[0];
 			}
