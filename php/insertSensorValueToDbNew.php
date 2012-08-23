@@ -30,8 +30,8 @@ if(isset($_GET["d_id"])){
         $people_presence = $_GET["p"];
         $window_state = $_GET["w"];
 
-        if( $row != null && $row_merge!=null && $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
-            $db_help->insertFeedbackStatusByDeviceId($device_id, 3, "positive");
+        if( $row != null && isset($row_merge['window_state']) && $num_online == 1 && $row_merge['window_state'] == '1' && $window_state == '0'){
+            $db_help->insertFeedbackStatusByDeviceId($device_id, 3, "positive", "You are the last person who close window!");
         }
         $insert_id = $db_help->insertSensorBasic($device_id, $light_level, $temperature, $sound_level);
 

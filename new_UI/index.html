@@ -352,7 +352,7 @@
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("get sensor Error");
+                        //alert("get sensor Error");
                     }
                 });
             }
@@ -530,13 +530,13 @@
                                     $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                    alert("fix report Error");
+                                    //alert("fix report Error");
                                 }
                             });
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("get exist Error");               
+                        //alert("get exist Error");               
                     }
                 });
             }
@@ -592,11 +592,11 @@
                                 $('#login').hide();
 
                             }else{
-                                alert("No such user!");
+                                //alert("No such user!");
                             }
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Error");    
+                            //alert("Error");    
                         }
                     });
                 });
@@ -615,7 +615,7 @@
                             $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert("make new Error");
+                            //alert("make new Error");
                         }
                     });
                 });
