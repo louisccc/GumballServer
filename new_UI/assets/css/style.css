@@ -134,3 +134,8 @@ img.winclick:hover {
     opacity: 0.5;
     filter: alpha(opacity=50);
 }
+
+img#sun:hover {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+}
