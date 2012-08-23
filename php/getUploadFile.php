@@ -5,7 +5,7 @@ $allowedTypes = array("image/jpeg", "image/pjpeg", "image/png", "image/gif", "te
 $extension = end(explode(".", $_FILES["file"]["name"]));
 $store_path = "../uploads/";
 $file_type = $_FILES["file"]["type"];
-print_r($_FILES);
+#print_r($_FILES);
 if ( $_FILES["file"]["size"] < 2000000 && in_array($extension, $allowedExts))
 {
     if ($_FILES["file"]["error"] > 0)
@@ -36,7 +36,7 @@ if ( $_FILES["file"]["size"] < 2000000 && in_array($extension, $allowedExts))
             while( ($data = fgetcsv($handle, 1000, ","))!= FALSE ){
                 $num = count($data);
             #    echo "<p> $num fields in line $row: <br /></p>\n";
-                $row++;
+            #    $row++;
                 array_push($data_array, $data);
                 for ($c=0; $c < $num; $c++) {
             #        echo $data[$c] . "<br />\n";
