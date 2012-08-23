@@ -134,6 +134,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <div class="mrc_num" >1</div>
                         </div>
 
                         <div class="machine" id="mrc_2">
@@ -141,6 +142,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <div class="mrc_num" >2</div>
                         </div>
 
                         <div class="machine" id="mrc_3">
@@ -148,6 +150,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <div class="mrc_num" >3</div>
                         </div>
 
                         <div class="machine" id="mrc_4">
@@ -155,6 +158,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <div class="mrc_num" >4</div>
                         </div>
 
                         <div class="machine" id="mrc_5">
@@ -162,6 +166,7 @@
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <div class="mrc_num" >5</div>
                         </div>
                     </div>
 
@@ -455,9 +460,9 @@
             $(function(){
 
                 /* hide headphone */
-                $('.machine').hide(0);
+                //$('.machine').hide(0);
                 //$('.headphone').hide(0);
-
+                $('.machine').addClass('offline');
                 $('.win').css("visibility", "hidden");
 
                 /* log in stuff */
@@ -526,10 +531,10 @@
                 readProblemList();
 
                 /* make machine icon draggable */
-                $(".machine").draggable({
+                /*$(".machine").draggable({
                     cursor: 'move', 
                     containment: 'document'}
-                );
+                );*/
                 $("#app2").click(function(){
                     //google.maps.event.trigger(window.map, 'resize');
                     initMap();
