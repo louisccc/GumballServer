@@ -121,6 +121,16 @@ class DB{
         }
         return null;
     }
+
+    public function getRecentFeedbackBy($user_id, $amount){
+        $query = "select * from $this->feedbackStatus_tableName where user_id=$user_id order by created_time DESC limit $amount";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
     ### get the feedback by user_id (means from user's feedback ex.transportation mode)
     public function getFeedbackStatusByUserId($user_id){
         $query = "select * from $this->feedbackStatus_tableName where user_id=$user_id and if_get=0";
