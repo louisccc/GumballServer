@@ -325,7 +325,24 @@
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }
+
                             // transportation
+                            if(item['trans'] !== undefined) {
+                                var trans_type = item['trans']['trans_type'];
+                                if(trans_type == "WALKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/walk.png');
+                                }else if(trans_type == "BIKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/bicycle.png');
+                                }else if(trans_type == "DRIVING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/car.png');
+                                }else if(trans_type == "TRAIN"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/vta.png');
+                                }else{
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','');
+                                }
+                            }else{
+                                $('#mrc_'+d_id+' img.transportation').attr('src','');
+                            }
                             
             
             
