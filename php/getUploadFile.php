@@ -10,26 +10,26 @@ if ( $_FILES["file"]["size"] < 2000000 && in_array($extension, $allowedExts))
 {
     if ($_FILES["file"]["error"] > 0)
     {
-        echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
+        #echo "Return Code: " . $_FILES["file"]["error"] . "<br />";
     }
     else
     {
-        echo "Upload: " . $_FILES["file"]["name"] . "<br />";
-        echo "Type: " . $_FILES["file"]["type"] . "<br />";
-        echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
-        echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
+        #echo "Upload: " . $_FILES["file"]["name"] . "<br />";
+        #echo "Type: " . $_FILES["file"]["type"] . "<br />";
+        #echo "Size: " . ($_FILES["file"]["size"] / 1024) . " Kb<br />";
+        #echo "Temp file: " . $_FILES["file"]["tmp_name"] . "<br />";
         if (is_uploaded_file($_FILES['file']['tmp_name'])) {
-            echo "File ". $_FILES['file']['name'] ." uploaded
-                successfully.<br />";
+           # echo "File ". $_FILES['file']['name'] ." uploaded
+           #     successfully.<br />";
         }
         if (file_exists($store_path.$_FILES["file"]["name"]))
         {
-            echo $_FILES["file"]["name"] . " already exists. ";
+           # echo $_FILES["file"]["name"] . " already exists. ";
         }
         else
         {
             move_uploaded_file($_FILES["file"]["tmp_name"], $store_path.$_FILES["file"]["name"]);
-            echo "Stored in: " . $store_path . $_FILES["file"]["name"];
+            #echo "Stored in: " . $store_path . $_FILES["file"]["name"];
             $file_path = $store_path.$_FILES["file"]["name"];
             $data_array = array();
             $handle = fopen($file_path, "r");
@@ -46,14 +46,15 @@ if ( $_FILES["file"]["size"] < 2000000 && in_array($extension, $allowedExts))
             if( isset($_POST["token"]) ){
                 $db = new DB();
                 $user_id = $db->getUserIdByToken($_POST["token"]);
-                $db->insertDataToDatabase($data_array, $user_id);
+                $result['trip_id'] = $db->insertDataToDatabase($data_array, $user_id);
             }
             fclose($handle);
+            echo json_encode($result);
         }
     }
 }
 else
 {
-    echo "Invalid file";
+    # echo "Invalid file";
 }
 ?>

@@ -359,6 +359,7 @@ class DB{
                 $transportation[$i][6], $transportation[$i][7], 
                 $time);
         }
+        return $trip_id;
     }
     public function insertDataRowToDatabase($label, $user_id, $trip_id, $segment, $point, $latitude, $longitude, $altitude, $bearing, $accuracy, $speed, $time){ 
         $query = "insert into $this->transportation_tableName values (NULL, $user_id, $trip_id, '$label', $segment, $point, $latitude, $longitude, $altitude, $bearing, $accuracy, $speed, \"$time\")";
