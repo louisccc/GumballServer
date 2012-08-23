@@ -65,43 +65,95 @@
             <div class="tabable">
                 <ul class="nav nav-pills spliter">
                     <li class="active">
-                    <a href="#apps-1" data-toggle="tab" id="app1">SB app</a>
+                    <a href="#apps-1" data-toggle="tab" id="app1">Sustainability Base</a>
                     </li>
                     <li>
-                    <a href="#apps-2" data-toggle="tab" id="app2">Trans app</a>
+                    <a href="#apps-2" data-toggle="tab" id="app2">Transportation</a>
                     </li>
                     <li>
                     <a href="#apps-3" data-toggle="tab" id="app3">Questionaire</a>
                     </li>
                     <li>
-                    <a href="../collaboration" id="app4">Spelling Checking</a>
+                    <a href="../collaboration" id="app4">Experiment</a>
                     </li>
                 </ul>
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">
-                        <h1 class="title">Sustainability Base Building</h1>                                                                   
+                        <h2 class="title">Sustainability Base Building</h2>                                                                   
                         <div id="left">
-                            <div class="building"><img src="img/building/building-1.png"/></div>
+                            <div class="building"><img id="building_1" src="img/building/building-1.png"/></div>
                             <img id="win_1" class="win" src="img/building/win1.png" style="margin-left: -486px; margin-top: 174px;"/>
                             <img id="win_2" class="win" src="img/building/win2.png" style="margin-left: -27px; margin-top: 143px;"/>
                             <img id="win_3" class="win" src="img/building/win3.png" style="margin-left: -25px; margin-top: 114px;"/>
                             <img id="win_4" class="win" src="img/building/win4.png" style="margin-left: -26px; margin-top: 85px;"/>
                             <img id="win_5" class="win" src="img/building/win5.png" style="margin-left: -26px; margin-top: 57px;"/>
-                            <img id="ceil_1" class="ceil" src="img/building/ceil1.png" style="margin-left: -300px; margin-top:70px;"/>
-                            <img id="ceil_2" class="ceil" src="img/building/ceil2.png" style="margin-left: -24px; margin-top:47px;"/>
-                            <img id="ceil_3" class="ceil" src="img/building/ceil3.png" style="margin-left: -22px; margin-top: 19px;" />
-                            <img id="winclick_1" class="winclick" src="img/building/win_click1.png" style="margin-left: -83px; margin-top:168px;"/>
+                            <img data-toggle="modal" href="#ceil_1_detail" id="ceil_1" class="ceil" src="img/building/ceil1.png" style="margin-left: -300px; margin-top:70px;"/>
+                            <img data-toggle="modal" href="#ceil_2_detail" id="ceil_2" class="ceil" src="img/building/ceil2.png" style="margin-left: -24px; margin-top:47px;"/>
+                            <img data-toggle="modal" href="#ceil_3_detail" id="ceil_3" class="ceil" src="img/building/ceil3.png" style="margin-left: -22px; margin-top: 19px;" />
+                            <img data-toggle="modal" href="#winclick_1_detail" id="winclick_1" class="winclick" src="img/building/win_click1.png" style="margin-left: -83px; margin-top:168px;"/>
 
-                            <img id="winclick_2" class="winclick" src="img/building/win_click2.png" style="margin-left: -36px; margin-top: 209px;" />
+                            <img data-toggle="modal" href="#winclick_2_detail" id="winclick_2" class="winclick" src="img/building/win_click2.png" style="margin-left: -36px; margin-top: 209px;" />
 
-                            <img id="ceil_5" class="ceil" src="img/building/ceil5.png" style="margin-left: 351px; margin-top: -4px;" />
+                            <img data-toggle="modal" href="#ceil_5_detail" id="ceil_5" class="ceil" src="img/building/ceil5.png" style="margin-left: 351px; margin-top: -4px;" />
 
-                            <img id="sun" src="img/others/sun.png" style="margin-left: 50px; margin-top: -200px;"/>
+                            <img data-toggle="modal" href="#sun_detail" id="sun" src="img/others/sun.png" style="margin-left: 50px; margin-top: -200px;"/>
                             <div class="building"><img src="img/building/building-2.png"/></div>
-
                             
+                            <!-- ceil detail -->
+                            <div id="ceil_1_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 1</h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="ceil_2_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 2</h3>
+                                    <img src="img/building/room2.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="ceil_3_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 3</h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
 
+                            <div id="ceil_5_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 5</h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            
+                            <!-- win click detail -->
+                            <div id="#winclick_1"></div>
+                            <div id="#winclick_2"></div>
+                            
+                            <!-- sun detail -->
+                            <div id="#sun_detail"></div>
+                            
 
                         </div>
                         <!--<span id="testTxt">cc</span>-->
@@ -130,43 +182,53 @@
                         </div>
 
                         <div class="machine" id="mrc_1">
-                            <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="65px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >1</div>
                         </div>
 
                         <div class="machine" id="mrc_2">
-                            <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="65px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >2</div>
                         </div>
 
                         <div class="machine" id="mrc_3">
-                            <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="65px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >3</div>
                         </div>
 
                         <div class="machine" id="mrc_4">
-                            <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="65px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >4</div>
                         </div>
 
                         <div class="machine" id="mrc_5">
-                            <img class="mrc" src="img/mrc/mrc_happy.png" width="50px"/>
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
                             <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
                             <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
                             <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="65px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >5</div>
                         </div>
                     </div>
 
                     <div class="tab-pane" id="apps-2">   
-                        <h1 class="title" id="trans_title">Your Transportation Track</h1>                                                                   
+                        <h2 class="title" id="trans_title">Your Transportation Track</h2>
                         <div id="left">
                             <div id="map_canvas"></div>
                             <div id="trip_des"></div>
@@ -224,10 +286,15 @@
 
                     dataType: 'json',
                     success: function(data) {
+                        
+                        $('#mrc_1').addClass('offline');
+                        $('#mrc_2').addClass('offline');
+                        $('#mrc_3').addClass('offline');
+                        $('#mrc_4').addClass('offline');
+                        $('#mrc_5').addClass('offline');
+
                         $.each(data['data'], function(i, item) {
                             var d_id = item['device_id'];
-
-
 
                             // light 
                             if(parseFloat(item['light_level']) >= 80.0){
@@ -259,12 +326,33 @@
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }
 
+                            // transportation
+                            if(item['trans'] !== undefined) {
+                                var trans_type = item['trans']['trans_type'];
+                                if(trans_type == "WALKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/walk.png');
+                                }else if(trans_type == "BIKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/bicycle.png');
+                                }else if(trans_type == "DRIVING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/car.png');
+                                }else if(trans_type == "TRAIN"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/vta.png');
+                                }else{
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','');
+                                }
+                            }else{
+                                $('#mrc_'+d_id+' img.transportation').attr('src','');
+                            }
+                            
+            
+            
+                            $('#mrc_'+d_id).removeClass("offline");
                             //show machine
-                            $('#mrc_'+d_id).show();
+                            //$('#mrc_'+d_id).show();
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");
+                        alert("get sensor Error");
                     }
                 });
             }
@@ -442,22 +530,22 @@
                                     $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
-                                    alert("Error");
+                                    alert("fix report Error");
                                 }
                             });
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
-                        alert("Error");               
+                        alert("get exist Error");               
                     }
                 });
             }
             $(function(){
 
                 /* hide headphone */
-                $('.machine').hide(0);
+                //$('.machine').hide(0);
                 //$('.headphone').hide(0);
-
+                $('.machine').addClass('offline');
                 $('.win').css("visibility", "hidden");
 
                 /* log in stuff */
@@ -465,7 +553,10 @@
                 window.cur_token;
                 window.cur_uid = 0;
 
+
+                
                 if($.cookie("sweetpassword")!=null){
+
                     window.cur_uid = $.cookie("sweetuid");
                     window.cur_user = $.cookie("sweetaccount");
                     window.cur_token = $.cookie("sweetpassword");
@@ -480,19 +571,26 @@
                 $('#loginBt').click(function(){
 
                     $.ajax({
+
                         type: "GET",
                         url: "../php/mobile/verifyUser.php",
                         data: { "account": $('#account').val(), "password": $('#password').val() },
                         dataType: 'json',
                         success: function(data) {
-
+                            
                             if(data["success"]==1){
-                                $.cookie("sweetuid", data["user_id"], 1);
-                                $.cookie("sweetaccount", data["account"] ,1);
-                                $.cookie("sweetpassword", data["token"], 1);
-
+                                
+                                //$.cookie("sweetuid", data["user_id"]);
+                                //$.cookie("sweetaccount", data["account"]);
+                                //$.cookie("sweetpassword", data["token"]);
+                                window.cur_user = data["account"];
+                                window.cur_token = data["token"];
+                                window.cur_uid = data["user_id"];
+                                
                                 $('#current_user').text("Hi, "+data["account"]+" !");
+                                
                                 $('#login').hide();
+
                             }else{
                                 alert("No such user!");
                             }
@@ -517,7 +615,7 @@
                             $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
-                            alert("Error");
+                            alert("make new Error");
                         }
                     });
                 });
@@ -526,10 +624,10 @@
                 readProblemList();
 
                 /* make machine icon draggable */
-                $(".machine").draggable({
+                /*$(".machine").draggable({
                     cursor: 'move', 
                     containment: 'document'}
-                );
+                );*/
                 $("#app2").click(function(){
                     //google.maps.event.trigger(window.map, 'resize');
                     initMap();

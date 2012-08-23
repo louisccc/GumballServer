@@ -122,6 +122,15 @@ class DB{
         return null;
     }
 
+    public function getAllRecentFeedback($amount){
+        $query = "select * from $this->feedbackStatus_tableName order by created_time DESC limit $amount";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
     public function getRecentFeedbackBy($user_id, $amount){
         $query = "select * from $this->feedbackStatus_tableName where user_id=$user_id order by created_time DESC limit $amount";
         $result = $this->dbh->query($query);
@@ -294,6 +303,15 @@ class DB{
         }
         return null;
     }
+    public function getUserIdByAddr($addr){
+    	$query = "select * from $this->onlineUser_tableName where ipaddr=\"$addr\"";
+	$result = $this->dbh->query($query);
+	if($result->rowCount() > 0){
+		$rows = $result->fetchAll();
+		return $rows[0]['user_id'];
+	}
+	return null;
+    }
     public function getUserIdByToken($token){
         if(($result = $this->getUserByToken($token)) != null){
             return $result[0]['user_id'];
@@ -326,7 +344,8 @@ class DB{
         } 
     }
     
-    public function updateAndLoginOnlineUserList($user_id, $time, $ip_addr){
+    public function updateAndLoginOnlineUserList($token, $time, $ip_addr){
+	$user_id = $this->getUserIdByToken($token);
         $query = "select * from $this->onlineUser_tableName where user_id='$user_id'";
         $result = $this->dbh->query($query);
 
@@ -404,6 +423,27 @@ class DB{
         $rows = $result->fetchAll();
         return $rows;
     }
+    
+
+    public function getNewestTransportationStatus($user_id){
+        $query = "select * from $this->transportationStatus_tableName where user_id=$user_id order by timestamp DESC limit 1";
+        $result = $this->dbh->query($query);
+	if($result->rowCount() > 0){
+        	$rows = $result->fetchAll();
+        	return $rows;
+	}
+	return null;
+    }
+    public function getTransportationStatus($user_id){
+        $query = "select * from $this->transportationStatus_tableName where user_id=$user_id";
+        $result = $this->dbh->query($query);
+	if($result->rowCount() > 0){
+        	$rows = $result->fetchAll();
+        	return $rows;
+	}
+	return null;
+    }
+
     public function getTransportationDataByTrip($user_id, $trip_id){
         $query = "select * from $this->transportation_tableName where user_id=\"$user_id\" and trip_id=\"$trip_id\"";
         $result = $this->dbh->query($query);

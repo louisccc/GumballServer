@@ -139,3 +139,58 @@ img#sun:hover {
     opacity: 0.6;
     filter: alpha(opacity=60);
 }
+
+#mrc_1 {
+    position: absolute;
+    top: 560px;
+    left: 320px;
+}
+
+#mrc_2 {
+    position: absolute;
+    top: 485px;
+    left: 440px;
+}
+
+#mrc_3 {
+    position: absolute;
+    top: 340px;
+    left: 420px;
+}
+
+#mrc_4 {
+    position: absolute;
+    top: 450px;
+    left: 530px;
+}
+
+#mrc_5 {
+    position: absolute;
+    top: 300px;
+    left: 530px;
+}
+.mrc_num {
+/*    border: 1px #ff0000 solid;*/
+    padding-left: 16px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: -90px;
+    margin-left: 36px;
+}
+
+div.offline {
+    opacity: 0.18;
+    filter: alpha(opacity=18);
+}
+
+/*#building_1 {
+    position: absolute;
+    top: 200px;
+    left: 100px;
+}
+
+#building_2 {
+    position: absolute;
+    top: 200px;
+    left: 120px;
+}*/
