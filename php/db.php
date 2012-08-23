@@ -12,6 +12,7 @@ class DB{
     public $feedbackStatus_tableName = "feedback_repository";
     public $members_tableName = "members";
     public $transportation_tableName = "transportation_log";
+    public $transportationStatus_tableName = "transportation_status";
 
     public function __construct()
     {
@@ -194,41 +195,41 @@ class DB{
     }
 
     ### insert feedback by ipaddr
-    public function insertFeedbackStatusBy($ip_addr, $application_id, $type){ 
+    public function insertFeedbackStatusBy($ip_addr, $application_id, $type, $description){ 
         $device_id = $this->getDeviceIdByIpAddr($ip_addr);
         $user_id = $this->getUserIdByIpAddr($ip_addr);
         if($device_id != null && $user_id != null){
-            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, user_id, feedback_type) values ($device_id, $application_id, $user_id, \"$type\")";
+            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, user_id, feedback_type, feedback_description) values ($device_id, $application_id, $user_id, \"$type\", \"$description\")";
             $result = $this->dbh->query($query);
         }
         else if($device_id != null && $user_id == null){
-            $this->insertFeedbackStatusByDeviceId($device_id, $application_id, $type);
+            $this->insertFeedbackStatusByDeviceId($device_id, $application_id, $type, $description);
         }
         else if($user_id != null && $device_id == null){
-            $this->insertFeedbackStatusByUserId($user_id, $application_id, $type);
+            $this->insertFeedbackStatusByUserId($user_id, $application_id, $type, $description);
         }
     }
 
     // mostly for sensor scenario need conjection control
     // use device_id to insert feedback
-    public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type){ 
+    public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type, $description){ 
         $time = $this->getMaxTimeStamp();
         date_default_timezone_set('America/Los_Angeles');
         $date = date('Y-m-d H:i:s', time());
         $diff = strtotime($date) - strtotime($time);
         if($diff > 2){
-            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type) values ($device_id, $application_id, \"$type\")";
+            $query = "insert into $this->feedbackStatus_tableName (device_id, application_id, feedback_type, feedback_description) values ($device_id, $application_id, \"$type\", \"$description\")";
             $result = $this->dbh->query($query);
         }
     }
     ### use user_id to insert feedback add avoid too fast insertion
-    public function insertFeedbackStatusByUserId($user_id, $application_id, $type){ 
+    public function insertFeedbackStatusByUserId($user_id, $application_id, $type, $description){ 
         $time = $this->getMaxTimeStamp();
         date_default_timezone_set('America/Los_Angeles');
         $date = date('Y-m-d H:i:s', time());
         $diff = strtotime($date) - strtotime($time);
         if($diff > 2){
-            $query = "insert into $this->feedbackStatus_tableName (user_id, application_id, feedback_type) values ($user_id, $application_id, \"$type\")";
+            $query = "insert into $this->feedbackStatus_tableName (user_id, application_id, feedback_type, feedback_description) values ($user_id, $application_id, \"$type\", \"$description\")";
             $result = $this->dbh->query($query);
         }
     }
@@ -367,6 +368,13 @@ class DB{
         $rows = $result->fetchAll();
         return $rows;
     }
+
+    public function insertStatusDataRowToData($user_id, $trip_id, $type, $average_speed, $max_speed, $total_distance, $total_time, $start_time, $end_time){ 
+        $query = "insert into $this->transportationStatus_tableName values (NULL, $user_id, $trip_id, \"$type\", $average_speed, $max_speed, $total_distance, \"$total_time\", \"$start_time\", \"$end_time\", NOW())";
+        $result = $this->dbh->query($query);
+        $rows = $result->fetchAll();
+        return $rows;
+    }   
     public function getMaxTripId($user_id){
         $query = "select MAX(trip_id) from $this->transportation_tableName where user_id=$user_id";
         $result = $this->dbh->query($query);
