@@ -1,3 +1,7 @@
+p {
+    padding: 5px;
+}
+
 h4{
     font-size: 16px;
 }
@@ -104,4 +108,9 @@ table {
 
 tr {
     height: 80px;
+}
+
+#threshold {
+    font-weight: bold;
+    color: #DF013A;
 }

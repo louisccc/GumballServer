@@ -73,6 +73,9 @@
                     <li>
                     <a href="#apps-3" data-toggle="tab" id="app3">Questionaire</a>
                     </li>
+                    <li>
+                    <a href="../collaboration" id="app4">Spelling Checking</a>
+                    </li>
                 </ul>
 
                 <div class="tab-content">
@@ -157,14 +160,15 @@
                         <div id="right">
                             <div id="tripArea">
                                 <h3>Description</h3>
-
+                                <div id="descriptionList">
+                                </div>
                             </div>    
                         </div>
                     </div>
 
                     <div class="tab-pane" id="apps-3">
-
                     </div>
+
                 </div>
             </div>
 
@@ -421,6 +425,7 @@
                                 dataType: 'json',
                                 success: function(data) {
                                     readProblemList(); // update problem list
+                                    $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                     alert("Error");
@@ -474,7 +479,7 @@
 
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 $('#login').hide();
-                                }else{
+                            }else{
                                 alert("No such user!");
                             }
                         },
@@ -495,6 +500,7 @@
                         success: function(data) {
                             $('#problemInput').val("");
                             readProblemList(); /* update problem list */
+                            $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                             alert("Error");
