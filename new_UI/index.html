@@ -149,23 +149,15 @@
                     </div>
 
                     <div class="tab-pane" id="apps-2">   
-                        <h1 class="title">Your Transportation Track</h1>                                                                   
+                        <h1 class="title" id="trans_title">Your Transportation Track</h1>                                                                   
                         <div id="left">
-                            <div id="map_canvas"></div> 
+                            <div id="map_canvas"></div>
+                            <div id="trip_des"></div>
                         </div>
                         <div id="right">
-                            <div id="problemArea">
+                            <div id="tripArea">
                                 <h3>Description</h3>
-                                <div id="descriptionList">
-                                    <ul class="items">
-                                        <li>the red line represent you are biking</li>
-                                        <li>the green line represent you are driving</li>
-                                        <li>the yellow line represent you are walking</li>
-                                        <li>other color represent you are train or other ways</li>
-                                    </ul>
-                                </div>
-                                <ul>
-                                </ul>
+
                             </div>    
                         </div>
                     </div>
@@ -199,7 +191,7 @@
         <script src="assets/js/bootstrap-typeahead.js"></script>
         <script src="assets/js/jquery.cookie.js"></script>
 
-        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
 
@@ -222,7 +214,7 @@
                             // light 
                             if(parseFloat(item['light_level']) >= 80.0){
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
-                            }else{
+                                }else{
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
                             }
 
@@ -236,7 +228,7 @@
                             // sound_level
                             if(parseFloat(item['sound_level']) >= 5.0){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
-                            }else{
+                                }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
                             }
 
@@ -244,7 +236,7 @@
                             if(parseInt(item['window_state']) == 1){
                                 //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
                                 $('#win_'+d_id).css("visibility", "visible");
-                            }else{
+                                }else{
                                 //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }
@@ -258,7 +250,30 @@
                     }
                 });
             }
-
+            function TotalDistance(data){
+                ret = 0;
+                for(var i=0; i < data.length-1; i++){
+                    var glatlng_first = new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']);
+                    var glatlng_second = new google.maps.LatLng(data[i+1]['latitude'], data[i+1]['longitude']);
+                    //var dis = glatlng_first.distanceFrom(glatlng_second, 3959).toFixed(1);
+                    var dis = google.maps.geometry.spherical.computeDistanceBetween(glatlng_first, glatlng_second);
+                    ret = ret + dis;
+                    console.log(ret);
+                }
+                return ret;
+            }
+            function TotalTime(data){
+                if(data.length != 0){
+                    var start_time = new Date(data[0]['time']);
+                    var end_time = new Date(data[data.length - 1]['time']);
+                    var ret = end_time - start_time
+                    return milliSecondToMinutes(ret);
+                }
+            }
+            function milliSecondToMinutes(ret){
+                var one_minutes = 1000*60;
+                return Math.ceil(ret / one_minutes);
+            }
             function initMap() {
                 var mapOptions = {
                     center: new google.maps.LatLng(37, -122),
@@ -269,15 +284,33 @@
                     return;
                 }
                 window.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-
+                window.alldata = new Array();
                 $.getJSON("../php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
                     for(var i=0; i < data.length;i++){
                         var trip_id = data[i][0];
                         $.getJSON("../php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
+
+                            var tripDiv = $('<li class="trip" id="trip_'+data[0]['trip_id']+'"></li>');
+
+                            tripDiv.text('trip ' + data[0]['trip_id']);
+                            tripDiv.appendTo('#tripArea');
+                            window.alldata[data[0]['trip_id']] = data;
+                            var tripDes = $('<div id="des_'+data[0]['trip_id']+'"></div>');
+                            tripDes.text('Total Trip time:' + TotalTime(data));
+                            $('#trip_des').append(tripDes);
+                            tripDes.hide();
+
+                            tripDiv.click(function(){
+                                $('#trip_des div').hide();
+                                var split = this.id.split('_');
+                                $('#des_' + split[1]).show();
+                                refreshMap(split[1]);
+                                $('#trans_title').text("Your Transportation Track(" + split[1] + ")");
+
+                            });
                             var marker_array = [];
                             var label = data[0]['label'];
                             for(var i=0; i < data.length; i++){
-                            //    console.log(data[i]['speed']);
                                 marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
                                 if( i == data.length - 1){
                                     window.map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
@@ -307,7 +340,44 @@
                 });
                 google.maps.event.trigger(window.map, 'resize');
             }
-
+            function refreshMap(trip_id)
+            {
+                get_data = window.alldata[trip_id];
+                total_distance = TotalDistance(get_data);
+                if(total_distance / 1000 > 30){
+                    zoom = 8;
+                }
+                else if(total_distance/1000 >= 20 && total_distance/1000 < 30){
+                    zoom = 10;
+                }
+                else if(total_distance/1000 >= 10 && total_distance/1000 < 20){
+                    zoom = 12;
+                }
+                else if(total_distance/1000 < 10){
+                    zoom = 14;
+                }
+                var myLatlng = new google.maps.LatLng(get_data[0]['latitude'],get_data[0]['longitude']);
+                var myOptions = {
+                    zoom: zoom,
+                    center: myLatlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                window.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                var marker_array = [];
+                var color = "#FF0000";
+                for(var i=0; i < get_data.length; i++){
+                    marker_array.push(new google.maps.LatLng(get_data[i]['latitude'], get_data[i]['longitude']));
+                }
+                console.log('total point number :' + get_data.length);
+                console.log('total distance:' + total_distance/1000 + 'km' + ' ' + get_data[0]['label']);
+                var flight = new google.maps.Polyline({
+                    path:  marker_array,
+                    strokeColor: color,
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                flight.setMap(window.map);
+            }
             function readProblemList(){
 
                 /* clear problem list */
@@ -368,7 +438,7 @@
                 /* hide headphone */
                 $('.machine').hide(0);
                 //$('.headphone').hide(0);
-                
+
                 $('.win').css("visibility", "hidden");
 
                 /* log in stuff */
