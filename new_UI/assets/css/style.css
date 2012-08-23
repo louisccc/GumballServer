@@ -143,13 +143,13 @@ img#sun:hover {
 #mrc_1 {
     position: absolute;
     top: 560px;
-    left: 320px;
+    left: 350px;
 }
 
 #mrc_2 {
     position: absolute;
-    top: 485px;
-    left: 440px;
+    top: 500px;
+    left: 500px;
 }
 
 #mrc_3 {
@@ -160,8 +160,8 @@ img#sun:hover {
 
 #mrc_4 {
     position: absolute;
-    top: 450px;
-    left: 530px;
+    top: 430px;
+    left: 620px;
 }
 
 #mrc_5 {
@@ -169,6 +169,50 @@ img#sun:hover {
     top: 300px;
     left: 530px;
 }
+
+#building_1 {
+    position: absolute;
+    top: 200px;
+    left: 200px;
+}
+
+#building_2 {
+    position: absolute;
+    top: 200px;
+    left: 600px;
+}
+
+#win_1{
+    position: absolute;
+    top: 325px;
+    left: 326px;
+}
+
+#win_2{
+    position: absolute;
+    top: 309px;
+    left: 366px;
+}
+
+
+#win_3{
+    position: absolute;
+    top: 295px;
+    left: 414px;
+}
+
+#win_4{
+    position: absolute;
+    top: 282px;
+    left: 449px;
+}
+
+#win_5{
+    position: absolute;
+    top: 268px;
+    left: 477px;
+}
+
 .mrc_num {
 /*    border: 1px #ff0000 solid;*/
     padding-left: 16px;
@@ -194,3 +238,7 @@ div.offline {
     top: 200px;
     left: 120px;
 }*/
+
+#info img{
+   width: 55px;
+}
