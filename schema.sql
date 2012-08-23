@@ -60,6 +60,7 @@ CREATE TABLE `feedback_repository` (
   `application_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `feedback_type` char(50) COLLATE utf8_unicode_ci NOT NULL,
+  `feedback_description` varchar(200) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `if_get` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`feedback_id`)
@@ -164,7 +165,7 @@ CREATE TABLE `transportation_status` (
   `end_time` datetime NOT NULL,
   `timestamp` datetime NOT NULL,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,4 +206,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-23  2:21:03
+-- Dump completed on 2012-08-23 10:52:57
