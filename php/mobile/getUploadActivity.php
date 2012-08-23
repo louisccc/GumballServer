@@ -1,6 +1,6 @@
 <?php 
 require_once("db.php");
-if(isset($_POST("token"))){
+if(isset($_POST["token"])){
     $db = new DB();
     $token = $_POST["token"];
     $user_id = $db->getUserIdByToken($token);
