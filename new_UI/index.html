@@ -526,6 +526,10 @@
                     updateMachineStatus();
                 }, 1000);
 
+                setInterval(function(){
+                    readProblemList();
+                }, 10000);
+
 
                 /* load quiz */
                 $("#apps-3").load('quiz.html');
