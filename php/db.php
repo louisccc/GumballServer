@@ -23,6 +23,7 @@ class DB{
         $dsn = 'mysql:host='.$hostname.';dbname='.$dbname;
         try{
             $this->dbh = new PDO($dsn, $user, $password);
+            date_default_timezone_set('America/Los_Angeles');
         }
         catch(PDOException $e){
         } 
@@ -201,11 +202,50 @@ class DB{
     ### fix report updating database
     public function updateFixReport($user_id, $report_id){
         $query = "update problems set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
-        $report = $this->dbh->query($query);
+        $result = $this->dbh->query($query);
     }
+
+    public function requestFixReport($report_id, $category){
+        $query = "select * from problems where id=$report_id";
+        $result = $this->dbh->query($query);
+        if( $result->rowCount() > 0 ){
+            $rows = $result->fetchAll();
+            $time1 = $rows[0]["created_at"];
+            $time2 = date("Y-m-d H:i:s");
+            echo $time1. " " . $time2. "<br>"; 
+            $this->getTemperatureAt($time1);
+            #print_r($rows);
+        }
+    }
+
+    public function getTemperatureAt($time){
+        $time_back = date("Y-m-d H:i:s", strtotime('-10 day '. $time));
+        #echo $time_back;
+        $query = "select * from $this->basicSensorLog_tableName where created_time < '$time' and created_time > '$time_back'";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            #print_r($rows);
+            $temperature = 0.0;
+            #printf("%d\n", count($rows));
+            for($i = 0; $i < count($rows); $i++){
+                #print $rows[$i]['temperature'];
+                $temperature = $temperature + (int)$rows[$i]['temperture'];
+            }
+            echo $temperature;
+            $temperature = $temperature / count($rows);
+            echo $temperature;
+        }
+    }
+
     ### make new report to database
     public function insertFixReport($title, $coor_x, $coor_y, $user_id){
-        $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coor_x. "," .$coor_y. "," .$user_id. ", 1, NOW(), NULL," .$user_id. ");";
+        $query = "insert into problems values( NULL, 0, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
+        $result = $this->dbh->query($query);
+    }
+
+    public function insertFixReportByCategory($title, $coor_x, $coor_y, $user_id, $category){
+        $query = "insert into problems values( NULL, $category, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
         $result = $this->dbh->query($query);
     }
     ### insert 3-sensor
@@ -248,7 +288,6 @@ class DB{
     // use device_id to insert feedback
     public function insertFeedbackStatusByDeviceId($device_id, $application_id, $type, $description){ 
         $time = $this->getMaxTimeStamp();
-        date_default_timezone_set('America/Los_Angeles');
         $date = date('Y-m-d H:i:s', time());
         $diff = strtotime($date) - strtotime($time);
         if($diff > 2){
@@ -259,7 +298,6 @@ class DB{
     ### use user_id to insert feedback add avoid too fast insertion
     public function insertFeedbackStatusByUserId($user_id, $application_id, $type, $description){ 
         $time = $this->getMaxTimeStamp();
-        date_default_timezone_set('America/Los_Angeles');
         $date = date('Y-m-d H:i:s', time());
         $diff = strtotime($date) - strtotime($time);
         if($diff > 2){
