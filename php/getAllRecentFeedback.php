@@ -2,11 +2,15 @@
 require_once("db.php");
 
 $db = new DB();
-$result = $db->getAllRecentFeedback(10);
+$result = null;
+if(isset($_GET['amount'])){
+    $amount = $_GET['amount'];
+    $result = $db->getRecentFeedback($amount);
+}
 if($result != null){
 	echo json_encode($result);
 }
 else{
-	echo "no";
+	echo null;
 }
 ?>

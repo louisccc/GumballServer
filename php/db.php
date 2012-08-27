@@ -122,8 +122,17 @@ class DB{
         return null;
     }
 
-    public function getAllRecentFeedback($amount){
+    public function getRecentFeedback($amount){
         $query = "select * from $this->feedbackStatus_tableName order by created_time DESC limit $amount";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
+    public function getAllFeedbackBy($user_id){
+        $query = "select * from $this->feedbackStatus_tableName where user_id=$user_id";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -150,6 +159,12 @@ class DB{
             return $rows;
         }
         return null;
+    }
+    public function getNumAvailableFeedbackStatus($user_id){
+        if( ($result = $this->getFeedbackStatusByUserId($user_id)) != null){
+            return count($result);
+        }
+        return 0; 
     }
 
     ### utilities get device_id from ipaddr by checking online device table
