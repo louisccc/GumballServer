@@ -212,30 +212,69 @@ class DB{
             $rows = $result->fetchAll();
             $time1 = $rows[0]["created_at"];
             $time2 = date("Y-m-d H:i:s");
-            echo $time1. " " . $time2. "<br>"; 
-            $this->getTemperatureAt($time1);
-            #print_r($rows);
+            echo $time1. " " . $time2. "<br>";
+            if( $category == 0 ){
+                ## no standard let it pass
+                return 1;
+            } 
+            else if( $category == 1 ){
+                ## too hot 
+                $temp_at_first = $this->getTemperatureAt($time1);
+                $temp_at_now = $this->getTemperatureAt($time2);
+                if($temp_at_first - $temp_at_now > 2){
+                    return 1;
+                }
+                #print_r($rows);
+            }
+            else if($category == 2){
+                ### too cold 
+                $temp_at_fitst = $this->getTemperatureAt($time1);
+                $temp_at_now = $this->getTemperatureAt($time2);
+                if($temp_at_now - $temp_at_first > 2){
+                    return 1;
+                }
+            }
+            else if($category == 3){
+                ### too noisy  
+                if(!$this->isDecibelOverAt(50, $time2)){
+                    return 1;
+                }
+
+            }
         }
+        return 0;
     }
 
     public function getTemperatureAt($time){
-        $time_back = date("Y-m-d H:i:s", strtotime('-10 day '. $time));
-        #echo $time_back;
+        $time_back = date("Y-m-d H:i:s", strtotime('-5 minute '. $time));
         $query = "select * from $this->basicSensorLog_tableName where created_time < '$time' and created_time > '$time_back'";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
-            #print_r($rows);
-            $temperature = 0.0;
-            #printf("%d\n", count($rows));
+            $temperature = 0;
             for($i = 0; $i < count($rows); $i++){
-                #print $rows[$i]['temperature'];
-                $temperature = $temperature + (int)$rows[$i]['temperture'];
+                $temp = (int)$rows[$i]['temperature'];
+                $temperature = $temperature + ($temp / count($rows));
             }
-            echo $temperature;
-            $temperature = $temperature / count($rows);
-            echo $temperature;
         }
+        return $temperature;
+    }
+    public function isDecibelOverAt($limit, $time){
+        $time_back = date("Y-m-d H:i:s", strtotime('-5 minute '. $time));
+        $query = "select * from $this->basicSensorLog_tableName where created_time < '$time' and created_time > '$time_back'";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            //$decibel = 0;
+            for($i = 0; $i < count($rows); $i++){
+                $noise = (int)$rows[$i]['sound_level'];
+                if($noise > $limit){
+                    return 1;
+                }
+                //$decibel = $decibel + ( $noise / count($rows));
+            }
+        }
+        return 0;
     }
 
     ### make new report to database
