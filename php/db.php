@@ -200,12 +200,12 @@ class DB{
     }
     ### fix report updating database
     public function updateFixReport($user_id, $report_id){
-        $query = "update problems set status=0, updated_by=$user_id, updated_at='NOW()' where id=$report_id";
+        $query = "update problems set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
         $report = $this->dbh->query($query);
     }
     ### make new report to database
     public function insertFixReport($title, $coor_x, $coor_y, $user_id){
-        $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coor_x. "," .$coor_y. "," .$user_id. ", 1, NOW(), NOW()," .$user_id. ");";
+        $query = "insert into problems values( NULL, '".$title. "','" .$title. "'," .$coor_x. "," .$coor_y. "," .$user_id. ", 1, NOW(), NULL," .$user_id. ");";
         $result = $this->dbh->query($query);
     }
     ### insert 3-sensor
