@@ -516,10 +516,14 @@
                 $('#problemList').remove();
                 $('#problemDetail').remove();
                 $('#feedbackList').remove();
+
                 var proList = $('<div></div>').attr('id','problemList');
                 $('<ul></ul>').addClass('items').appendTo(proList);
                 var proDetail = $('<div></div>').attr('id', 'problemDetail');
+                
                 var hisList = $('<div></div>').attr('id','feedbackList');
+                $('<ul></ul>').addClass('items').appendTo(hisList);
+                
                 $('#problemArea').append(proList);
                 $('#problemArea').append(proDetail);
                 $('#feedbackHistory').append(hisList);
@@ -540,7 +544,7 @@
                                 historyList.addClass('negative');
                             }
 
-                            $('#feedbackList').append(historyList);
+                            $('#feedbackList .items').append(historyList);
                         });
 
                         $('.tooltip-test').tooltip();
