@@ -13,7 +13,7 @@ class DB{
     public $members_tableName = "members";
     public $transportation_tableName = "transportation_log";
     public $transportationStatus_tableName = "transportation_status";
-
+    public $problem_tableName = "problems";
     public function __construct()
     {
         $hostname = Config::read('db.host');
@@ -81,7 +81,7 @@ class DB{
         }
         return false;
     }
-    
+
     ### get the newest data row of 3-sensor data table using device_id
     public function getNewestDataOf($device_id){
         $query = "select * from $this->basicSensorLog_tableName where device_id = $device_id order by created_time DESC limit 1";
@@ -191,7 +191,7 @@ class DB{
 
     ### get all report that not solved
     public function getExistReport(){
-        $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from problems where status = 1";
+        $query = "select id, title, coordinate_x, coordinate_y, created_by, created_at from $this->problem_tableName where status = 1";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -201,12 +201,12 @@ class DB{
     }
     ### fix report updating database
     public function updateFixReport($user_id, $report_id){
-        $query = "update problems set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
+        $query = "update $this->problem_tableName set status=0, updated_by=$user_id, updated_at=NOW() where id=$report_id";
         $result = $this->dbh->query($query);
     }
 
     public function requestFixReport($report_id){
-        $query = "select * from problems where id=$report_id";
+        $query = "select * from $this->problem_tableName where id=$report_id";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0 ){
             $rows = $result->fetchAll();
@@ -290,12 +290,12 @@ class DB{
 
     ### make new report to database
     public function insertFixReport($title, $coor_x, $coor_y, $user_id){
-        $query = "insert into problems values( NULL, 0, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
+        $query = "insert into $this->problem_tableName values( NULL, 0, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
         $result = $this->dbh->query($query);
     }
 
     public function insertFixReportByCategory($title, $coor_x, $coor_y, $user_id, $category){
-        $query = "insert into problems values( NULL, $category, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
+        $query = "insert into $this->problem_tableName values( NULL, $category, '$title', '$title', $coor_x, $coor_y, $user_id, 1, NOW(), NULL, $user_id);";
         $result = $this->dbh->query($query);
     }
     ### insert 3-sensor
@@ -407,7 +407,7 @@ class DB{
         return null;
     }
     public function getUserIdByAddr($addr){
-    	$query = "select * from $this->onlineUser_tableName where ipaddr=\"$addr\"";
+        $query = "select * from $this->onlineUser_tableName where ipaddr=\"$addr\"";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -440,7 +440,7 @@ class DB{
         }
         return null;
     }
-    
+
     // actions
     public function updateAndLoginOnlineDeviceList($device_id, $time, $ip_addr){
         $query = "select * from $this->onlineDevice_tableName where session='$device_id'";
@@ -455,9 +455,9 @@ class DB{
             $result = $this->dbh->query($query);
         } 
     }
-    
+
     public function updateAndLoginOnlineUserList($token, $time, $ip_addr){
-	$user_id = $this->getUserIdByToken($token);
+        $user_id = $this->getUserIdByToken($token);
         $query = "select * from $this->onlineUser_tableName where user_id='$user_id'";
         $result = $this->dbh->query($query);
 
@@ -544,25 +544,25 @@ class DB{
         $rows = $result->fetchAll();
         return $rows;
     }
-    
+
 
     public function getNewestTransportationStatus($user_id){
         $query = "select * from $this->transportationStatus_tableName where user_id=$user_id order by timestamp DESC limit 1";
         $result = $this->dbh->query($query);
-	if($result->rowCount() > 0){
-        	$rows = $result->fetchAll();
-        	return $rows;
-	}
-	return null;
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
     }
     public function getTransportationStatus($user_id){
         $query = "select * from $this->transportationStatus_tableName where user_id=$user_id";
         $result = $this->dbh->query($query);
-	if($result->rowCount() > 0){
-        	$rows = $result->fetchAll();
-        	return $rows;
-	}
-	return null;
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
     }
 
     public function getTransportationDataByTrip($user_id, $trip_id){
