@@ -8,8 +8,12 @@ if (isset($_GET["report_id"]) && isset($_GET["user_id"])) {
     $db_help = new DB();
     $report_id = $_GET["report_id"];
     $user_id = $_GET["user_id"];
+    $ret = array();
     if($db_help->requestFixReport($report_id)){
-        $db_help->updateFixReport($user_id, $report_id); 
+        $db_help->updateFixReport($user_id, $report_id);
+        $ret['success'] = 1;
+        echo json_encode($ret);
+        
     }
     else{
         $force = 0;
@@ -18,6 +22,8 @@ if (isset($_GET["report_id"]) && isset($_GET["user_id"])) {
         }
         if($force == 1){
             $db_help->updateFixReport($user_id, $report_id);
+            $ret['success'] = 1;
+            echo json_encode($ret);
         }
         else{
             $ret = array();
@@ -25,7 +31,6 @@ if (isset($_GET["report_id"]) && isset($_GET["user_id"])) {
             echo json_encode($ret);
         }
     }
-    #$db_help->insertFeedbackStatusBy($coming_up, feedbackType::$makeFixReport, "positive");
 }
 
 ?>

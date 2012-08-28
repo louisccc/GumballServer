@@ -626,7 +626,12 @@
                                 dataType: 'json',
                                 success: function(data) {
                                     readProblemList(); // update problem list
-                                    $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
+                                    if(data.hasOwnProperty('success') && data['success'] == 1){
+                                        $.post("../php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
+                                    }
+                                    else if(data.hasOwnProperty('reconfirm') && data['reconfirm'] == 1){
+                                        /// jump out a dialog to ask whether force or not 
+                                    }
                                 },
                                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                                     //alert("fix report Error");
