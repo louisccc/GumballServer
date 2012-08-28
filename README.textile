@@ -28,12 +28,12 @@ The Web page can be divided into four parts:
 h2. php
 
 This part is API for Sweetfeedback System. This part can be divided into four parts:
-* db.php
+* db.php *
   This php code acts as a bridge between database all api function. It contains all core functions 
 required by every api php code.
-* config.php.template
-* mobile/
-* others
+* config.php.template *
+* mobile/ *
+* others *
 
 h2. quiz
 
