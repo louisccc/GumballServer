@@ -205,14 +205,15 @@ class DB{
         $result = $this->dbh->query($query);
     }
 
-    public function requestFixReport($report_id, $category){
+    public function requestFixReport($report_id){
         $query = "select * from problems where id=$report_id";
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0 ){
             $rows = $result->fetchAll();
             $time1 = $rows[0]["created_at"];
             $time2 = date("Y-m-d H:i:s");
-            echo $time1. " " . $time2. "<br>";
+            $category = $rows[0]["category"];
+            #echo $time1. " " . $time2. "<br>";
             if( $category == 0 ){
                 ## no standard let it pass
                 return 1;

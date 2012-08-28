@@ -164,14 +164,36 @@
                                     <h3>Report a Problem!</h3>
                                 </div>
                                 <div class="modal-body">
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                                <span id="dropdown_title" >Any Problem?</span>
+                                                <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="hot">Hot Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="cold">Cold Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="noise">Noisy Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="other">Other Problem</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
                                     <form>
-                                        <fieldset class='textbox' style="padding:10px">
-                                            <input id="problemInput" style="margin-top: 8px" type="text" placeholder="Problem"/>
-                                            <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
+                                        <fieldset class='textbox'>
+                                            <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
                                         </fieldset>
+
                                     </form>
                                 </div>
                                 <div class="modal-footer">
+                                    <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
                                     <a href="#" class="btn" data-dismiss="modal" >Close</a>
                                 </div>
                             </div>
@@ -619,13 +641,29 @@
                         }
                     });
                 });
-
+                window.category = 0;
+                $('#hot').click(function(){
+                    window.category = 1;
+                    $('#dropdown_title').text($('#hot').text());
+                });
+                $('#cold').click(function(){
+                    window.category = 2;
+                    $('#dropdown_title').text($('#cold').text());
+                });
+                $('#noise').click(function(){
+                    $('#dropdown_title').text($('#noise').text());
+                    window.category = 3;
+                });
+                $('#other').click(function(){
+                    $('#dropdown_title').text($('#other').text());
+                    window.category = 0;
+                });
                 /* make a new report */
                 $('#reportSubmit').click(function(){
                     $.ajax({
                         type: "GET",
                         url: "../php/makeNewReport.php",
-                        data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val()},
+                        data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val(), "category": window.category},
 
                         dataType: 'json',
                         success: function(data) {
