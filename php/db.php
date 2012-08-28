@@ -564,6 +564,15 @@ class DB{
         }
         return null;
     }
+    public function getTransportationStatusByTrip($user_id , $trip_id){
+        $query = "select * from $this->transportation_tableName where user_id=$user_id and trip_id=$trip_id";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows;
+        }
+        return null;
+    }
 
     public function getTransportationDataByTrip($user_id, $trip_id){
         $query = "select * from $this->transportation_tableName where user_id=\"$user_id\" and trip_id=\"$trip_id\"";
