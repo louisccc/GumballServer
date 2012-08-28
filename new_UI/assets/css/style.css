@@ -16,15 +16,7 @@ h3 {
   padding: 50px 0 0 30px;
 }
 
-/*
-.building img:hover{
-  margin-top: -7px;
-  filter:alpha(opacity=50);
-  -moz-opacity:0.5;
-    -khtml-opacity: 0.5;
-    opacity: 0.5;
-}
- */
+
       
 #left{
   float: left;
@@ -35,13 +27,6 @@ h3 {
   margin: 7px;
   padding: 5px;
 
-/*
-  background-color: #ffffff;
-  border: 1px #d5d5d5 solid;
-        
-  -webkit-border-radius: 7px;
-  -moz-border-radius: 7px;
-  border-radius: 7px;*/
 }
 #right{
   display: block;
@@ -142,8 +127,8 @@ img#sun:hover {
 
 #mrc_1 {
     position: absolute;
-    top: 560px;
-    left: 350px;
+    top: 550px;
+    left: 370px;
 }
 
 #mrc_2 {
@@ -154,62 +139,68 @@ img#sun:hover {
 
 #mrc_3 {
     position: absolute;
-    top: 340px;
-    left: 420px;
+    top: 335px;
+    left: 455px;
 }
 
 #mrc_4 {
     position: absolute;
-    top: 430px;
-    left: 620px;
+    top: 460px;
+    left: 600px;
 }
 
 #mrc_5 {
     position: absolute;
     top: 300px;
-    left: 530px;
+    left: 550px;
 }
 
 #building_1 {
     position: absolute;
+    width: 480px;
     top: 200px;
-    left: 200px;
+    left: 120px;
 }
 
 #building_2 {
     position: absolute;
-    top: 200px;
-    left: 600px;
+    width: 125px;
+    top: 270px;
+    right: 40%;
 }
 
 #win_1{
     position: absolute;
-    top: 325px;
-    left: 326px;
+    width: 86px;
+    top: 359px;
+    left: 279px;
 }
 
 #win_2{
     position: absolute;
-    top: 309px;
-    left: 366px;
+    width: 91px;
+    top: 338px;
+    left: 333px;
 }
-
 
 #win_3{
     position: absolute;
-    top: 295px;
-    left: 414px;
+    width: 79px;
+    top: 322px;
+    left: 393px;
 }
 
 #win_4{
     position: absolute;
-    top: 282px;
-    left: 449px;
+    width: 68px;
+    top: 304px;
+    left: 440px;
 }
 
 #win_5{
     position: absolute;
-    top: 268px;
+    width: 68px;
+    top: 286px;
     left: 477px;
 }
 
@@ -227,18 +218,42 @@ div.offline {
     filter: alpha(opacity=18);
 }
 
-/*#building_1 {
-    position: absolute;
-    top: 200px;
-    left: 100px;
-}
-
-#building_2 {
-    position: absolute;
-    top: 200px;
-    left: 120px;
-}*/
 
 #info img{
-   width: 55px;
+    width: 30px;
+    margin-left: 20px;
+}
+#info {
+    position: absolute;
+    top:510px; 
+    right: 40%;
+    font-size: 14px;
+}
+
+#feedbackHistory {
+  margin-top: 10px;
+  padding: 5px 5px 5px 10px;
+
+  background-color: #ffffff;
+  border: 1px #d5d5d5 solid;
+        
+  -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+        border-radius: 7px;
+
+
+}
+
+#feedbackList li.positive{
+  
+  list-style-image: url('../../img/others/smile.png');
+  padding-left: 3px;
+  padding-top: 3px;
+}
+
+#feedbackList li.negative{
+  
+  list-style-image: url('../../img/others/sad.png');
+  padding-left: 3px;
+  padding-top: 3px;
 }
