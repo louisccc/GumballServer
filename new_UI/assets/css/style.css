@@ -204,6 +204,13 @@ img#sun:hover {
     left: 477px;
 }
 
+#ceil_1{
+    position: absolute;
+    width: 86px;
+    top: 312px;
+    left: 163px;
+}
+
 .mrc_num {
 /*    border: 1px #ff0000 solid;*/
     padding-left: 16px;
