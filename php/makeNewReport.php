@@ -16,6 +16,5 @@ if(isset($_GET["user_id"]) && isset($_GET["coordinate_x"]) && isset($_GET["coord
     else{
         $db_help->insertFixReport($title, $coordinate_x, $coordinate_y, $user_id);
     }
-    #$db_help->insertFeedbackStatusBy($coming_ip, 2, "positive");
 }
 ?>
