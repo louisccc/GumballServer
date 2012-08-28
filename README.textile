@@ -13,7 +13,7 @@ h2. collaboration
 
 h2. new_UI 
 
-  New version Webpage for sweetfeedback project that will be used in SB experiment. 
+  New version Webpage for sweetfeedback project that will be used in SB experiment.
 
   The Web pages are written in HTML5 and javascript and jquery. 
   Gumball Machine User can login this site and start using gumball server's service to report problem among their environment and look at the Sensor log visualization of SustainBility Bases in our webpage.
