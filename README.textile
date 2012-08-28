@@ -13,12 +13,12 @@ h2. collaboration
 
 h2. new_UI 
 
-  Under this directory is the new version Webpage for sweetfeedback project that will be used in SB experiment.
-  The Web pages are written in 
+Under this directory is the new version Webpage for sweetfeedback project that will be used in SB experiment. The Web pages are written in:
 * HTML5 
 * javascript 
 * jquery. 
-  Gumball Machine User can login this site and start using gumball server's service to report problem among their environment and look at the Sensor log visualization of SustainBility Bases in our webpage.
+
+Gumball Machine User can login this site and start using gumball server's service to report problem among their environment and look at the Sensor log visualization of SustainBility Bases in our webpage.
 
 h2. php
 
