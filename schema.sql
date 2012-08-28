@@ -30,7 +30,7 @@ CREATE TABLE `basic_sensor_log` (
   `sound_level` float NOT NULL,
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`log_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=277838 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=313695 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `feedback_repository` (
   `created_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `if_get` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`feedback_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=273 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=275 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -118,7 +118,7 @@ CREATE TABLE `problems` (
   `updated_at` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,6 +158,10 @@ CREATE TABLE `transportation_status` (
   `user_id` int(11) NOT NULL,
   `trip_id` int(11) NOT NULL DEFAULT '0',
   `trans_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `walking_percentage` int(11) NOT NULL DEFAULT '0',
+  `biking_percentage` int(11) NOT NULL DEFAULT '0',
+  `train_percentage` int(11) NOT NULL DEFAULT '0',
+  `driving_percentage` int(11) NOT NULL DEFAULT '0',
   `aver_speed` double NOT NULL,
   `max_speed` double NOT NULL,
   `total_distance` double NOT NULL,
@@ -207,4 +211,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-27 14:54:37
+-- Dump completed on 2012-08-28  1:31:05

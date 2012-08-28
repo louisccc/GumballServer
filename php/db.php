@@ -210,18 +210,27 @@ class DB{
         $result = $this->dbh->query($query);
         if( $result->rowCount() > 0 ){
             $rows = $result->fetchAll();
+            $user_id = $rows[0]["created_by"];
+            if( $user_id == 0 ){
+                return 1;
+            }
+            $ipaddr = $this->getAddrByUserId($user_id);
+            $device_id = $this->getDeviceIdByIpAddr($ipaddr);
             $time1 = $rows[0]["created_at"];
             $time2 = date("Y-m-d H:i:s");
             $category = $rows[0]["category"];
             #echo $time1. " " . $time2. "<br>";
-            if( $category == 0 ){
+            if($device_id == null){
+                return 0;
+            }
+            else if( $category == 0 ){
                 ## no standard let it pass
                 return 1;
             } 
             else if( $category == 1 ){
                 ## too hot 
-                $temp_at_first = $this->getTemperatureAt($time1);
-                $temp_at_now = $this->getTemperatureAt($time2);
+                $temp_at_first = $this->getTemperatureAt($time1, $device_id);
+                $temp_at_now = $this->getTemperatureAt($time2, $device_id);
                 if($temp_at_first - $temp_at_now > 2){
                     return 1;
                 }
@@ -229,15 +238,15 @@ class DB{
             }
             else if($category == 2){
                 ### too cold 
-                $temp_at_fitst = $this->getTemperatureAt($time1);
-                $temp_at_now = $this->getTemperatureAt($time2);
+                $temp_at_fitst = $this->getTemperatureAt($time1, $device_id);
+                $temp_at_now = $this->getTemperatureAt($time2, $device_id);
                 if($temp_at_now - $temp_at_first > 2){
                     return 1;
                 }
             }
             else if($category == 3){
                 ### too noisy  
-                if(!$this->isDecibelOverAt(50, $time2)){
+                if(!$this->isDecibelOverAt(50, $time2, $device_id)){
                     return 1;
                 }
 
@@ -246,13 +255,14 @@ class DB{
         return 0;
     }
 
-    public function getTemperatureAt($time){
+    public function getTemperatureAt($time, $device_id){
         $time_back = date("Y-m-d H:i:s", strtotime('-5 minute '. $time));
-        $query = "select * from $this->basicSensorLog_tableName where created_time < '$time' and created_time > '$time_back'";
+        $query = "select * from $this->basicSensorLog_tableName where device_id=$device_id and created_time < '$time' and created_time > '$time_back'";
         $result = $this->dbh->query($query);
+        $temperature = 0;
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
-            $temperature = 0;
+
             for($i = 0; $i < count($rows); $i++){
                 $temp = (int)$rows[$i]['temperature'];
                 $temperature = $temperature + ($temp / count($rows));
@@ -260,9 +270,9 @@ class DB{
         }
         return $temperature;
     }
-    public function isDecibelOverAt($limit, $time){
+    public function isDecibelOverAt($limit, $time, $device_id){
         $time_back = date("Y-m-d H:i:s", strtotime('-5 minute '. $time));
-        $query = "select * from $this->basicSensorLog_tableName where created_time < '$time' and created_time > '$time_back'";
+        $query = "select * from $this->basicSensorLog_tableName where device_id=$device_id created_time < '$time' and created_time > '$time_back'";
         $result = $this->dbh->query($query);
         if($result->rowCount() > 0){
             $rows = $result->fetchAll();
@@ -398,12 +408,21 @@ class DB{
     }
     public function getUserIdByAddr($addr){
     	$query = "select * from $this->onlineUser_tableName where ipaddr=\"$addr\"";
-	$result = $this->dbh->query($query);
-	if($result->rowCount() > 0){
-		$rows = $result->fetchAll();
-		return $rows[0]['user_id'];
-	}
-	return null;
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows[0]['user_id'];
+        }
+        return null;
+    }
+    public function getAddrByUserId($user_id){
+        $query = "select * from $this->onlineUser_tableName where user_id=$user_id";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows[0]['ipaddr'];
+        }
+        return null;
     }
     public function getUserIdByToken($token){
         if(($result = $this->getUserByToken($token)) != null){
@@ -491,8 +510,8 @@ class DB{
         return $rows;
     }
 
-    public function insertStatusDataRowToData($user_id, $trip_id, $type, $average_speed, $max_speed, $total_distance, $total_time, $start_time, $end_time){ 
-        $query = "insert into $this->transportationStatus_tableName values (NULL, $user_id, $trip_id, \"$type\", $average_speed, $max_speed, $total_distance, \"$total_time\", \"$start_time\", \"$end_time\", NOW())";
+    public function insertStatusDataRowToData($user_id, $trip_id, $type, $walk_per, $bike_per, $train_per, $drive_per, $average_speed, $max_speed, $total_distance, $total_time, $start_time, $end_time){ 
+        $query = "insert into $this->transportationStatus_tableName values (NULL, $user_id, $trip_id, \"$type\", $walk_per, $bike_per, $train_per, $drive_per, $average_speed, $max_speed, $total_distance, \"$total_time\", \"$start_time\", \"$end_time\", NOW())";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
         return $rows;
