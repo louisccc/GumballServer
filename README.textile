@@ -20,14 +20,20 @@ Under this directory is the new version Webpage for sweetfeedback project that w
 
 Gumball Machine User can login this site and start using gumball server's service to report problem among their environment and look at the Sensor log visualization of SustainBility Bases in our webpage.
 The Web page can be divided into four parts:
-* SustainBility Base Building application.
+* Sustainability Base Building application.
 * Transportation Track application.
 * Questionaire application.
 * Experiment (Collaboration Experiment).
 
 h2. php
 
-  Api for webpage to call.
+This part is API for Sweetfeedback System. This part can be divided into four parts:
+* db.php
+  This php code acts as a bridge between database all api function. It contains all core functions 
+required by every api php code.
+* config.php.template
+* mobile/
+* others
 
 h2. quiz
 
