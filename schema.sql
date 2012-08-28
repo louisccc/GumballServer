@@ -158,10 +158,10 @@ CREATE TABLE `transportation_status` (
   `user_id` int(11) NOT NULL,
   `trip_id` int(11) NOT NULL DEFAULT '0',
   `trans_type` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `walking_percentage` int(11) NOT NULL DEFAULT '0',
-  `biking_percentage` int(11) NOT NULL DEFAULT '0',
-  `train_percentage` int(11) NOT NULL DEFAULT '0',
-  `driving_percentage` int(11) NOT NULL DEFAULT '0',
+  `walking_percentage` double NOT NULL DEFAULT '0',
+  `biking_percentage` double NOT NULL DEFAULT '0',
+  `train_percentage` double NOT NULL DEFAULT '0',
+  `driving_percentage` double NOT NULL DEFAULT '0',
   `aver_speed` double NOT NULL,
   `max_speed` double NOT NULL,
   `total_distance` double NOT NULL,
@@ -211,4 +211,4 @@ CREATE TABLE `window_state_log_ext` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2012-08-28  1:31:05
+-- Dump completed on 2012-08-28  2:04:52
