@@ -73,11 +73,11 @@ h3 {
   padding: 5px 5px 5px 10px;
 
   background-color: #ffffff;
-  border: 1px #d5d5d5 solid;
+ /* border: 1px #d5d5d5 solid;
         
   -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
-        border-radius: 7px;
+        border-radius: 7px;*/
 }
 
 #problemArea h4{
@@ -238,16 +238,16 @@ div.offline {
 }
 
 #feedbackHistory {
-  margin-top: 10px;
+  /*margin-top: 10px;
   padding: 5px 5px 5px 10px;
-
+*/
   background-color: #ffffff;
-  border: 1px #d5d5d5 solid;
+/*  border: 1px #d5d5d5 solid;
         
   -webkit-border-radius: 7px;
     -moz-border-radius: 7px;
         border-radius: 7px;
-
+*/
 
 }
 
@@ -263,4 +263,23 @@ div.offline {
   list-style-image: url('../../img/others/sad.png');
   padding-left: 3px;
   padding-top: 3px;
+}
+
+
+#myTabContent div.tabStyle{
+  margin: 0px;
+  background-color: #ffffff;
+  padding: 10px;
+ border-left: 1px #d5d5d5 solid;
+  border-right: 1px #d5d5d5 solid;
+  border-bottom: 1px #d5d5d5 solid;
+  -webkit-border-bottom-left-radius: 7px;
+    -moz-border-bottom-left-radius: 7px;
+        border-bottom-left-radius: 7px;
+
+    -webkit-border-bottom-right-radius: 7px;
+    -moz-border-bottom-right-radius: 7px;
+        border-bottom-right-radius: 7px;
+
+
 }

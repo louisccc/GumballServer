@@ -157,8 +157,24 @@
 
                         </div>
                         <div id="right">
+                            <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
+                            <div class="bs-docs-example">
+                                <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
+                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">Feedback History</a></li>
+                                    <li><a href="#problemArea" data-toggle="tab">Problem List</a></li>
+                                </ul>
 
+                                <div id="myTabContent" class="tab-content" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
+                                    <div class="tab-pane fade in active tabStyle" id="feedbackHistory">
+                                    </div>
+
+                                    <div class="tab-pane fade tabStyle" id="problemArea">
+
+                                    </div>
+                                </div>
                             
+                            </div>
+
                             <div id="report" class="modal hide fade">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -198,15 +214,14 @@
                                     <a href="#" class="btn" data-dismiss="modal" >Close</a>
                                 </div>
                             </div>
-                            <a data-toggle="modal" href="#report" class="btn btn-primary">Report a Problem!</a>
                             
-                            <div id="feedbackHistory">
+                            <!--<div id="feedbackHistory">
                                 <h4>Feedback History</h4>
                             </div>
 
                             <div id="problemArea">
                                 <h4>Problem List</h4>
-                            </div>    
+                            </div>-->    
                         </div>
 
                         <div class="machine" id="mrc_1">
@@ -745,6 +760,9 @@
 
                 /* load quiz */
                 $("#apps-3").load('quiz.html');
+
+
+
 
             });
         </script>
