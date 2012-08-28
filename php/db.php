@@ -510,7 +510,16 @@ class DB{
         return $rows;
     }
 
-    public function insertStatusDataRowToData($user_id, $trip_id, $type, $walk_per, $bike_per, $train_per, $drive_per, $average_speed, $max_speed, $total_distance, $total_time, $start_time, $end_time){ 
+    public function insertStatusDataRowToData($user_id, $trip_id, $type, $walk_per, $bike_per, $train_per, $drive_per, $average_speed, $max_speed, $total_distance, $total_time, $start_time, $end_time){
+        echo "$user_id <br>"; 
+        echo "$trip_id <br>"; 
+        echo "$type <br>"; 
+        echo "$walk_per <br>"; 
+        echo "$bike_per <br>"; 
+        echo "$train_per <br>"; 
+        echo "$drive_per <br>"; 
+        echo "$average_speed <br>"; 
+        echo "$max_speed <br>";
         $query = "insert into $this->transportationStatus_tableName values (NULL, $user_id, $trip_id, \"$type\", $walk_per, $bike_per, $train_per, $drive_per, $average_speed, $max_speed, $total_distance, \"$total_time\", \"$start_time\", \"$end_time\", NOW())";
         $result = $this->dbh->query($query);
         $rows = $result->fetchAll();
