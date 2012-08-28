@@ -9,21 +9,22 @@ UI_Resources is auto-generated code by HYPE from chihiro's work. Other parts are
 
 h2. collaboration
 
-Janet Huang's stuff.
+  Janet Huang's stuff.
 
 h2. new_UI 
 
-New version Webpage for sweetfeedback project that will be used in SB experiment.
+  New version Webpage for sweetfeedback project that will be used in SB experiment. The Web pages are written in HTML5 and javascript and jquery. 
+  Gumball Machine User can login this site and start using gumball server's service to report problem among their environment and look at the Sensor log visualization of SustainBility Bases in our webpage.
 
 h2. php
 
-Api for webpage to call.
+  Api for webpage to call.
 
 h2. quiz
 
-Questionaire app stuff here.
+  Questionaire app stuff here.
 
 h2. schema.sql 
 
-Server database schema
+  Server database schema
 
