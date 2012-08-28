@@ -2,4 +2,21 @@ h1. Gumball Machine Server-Side
 
 By Louis Yu, Janet Huang, and many awesome contributors!
 
+h2. UI_Resources, css, jquerybubblepopup-themes, scripts, anime.gif, index.html, machine.jpg.
+UI_Resources is auto-generated code by HYPE from chihiro's work. Other parts are for webpage's elements made by Chihiro SUGA.
+
+h2. collaboration
+Janet Huang's stuff.
+
+h2. new_UI 
+New version Webpage for sweetfeedback project that will be used in SB experiment.
+
+h2. php
+Api for webpage to call.
+
+h2. quiz
+Questionaire app stuff here.
+
+h2. schema.sql 
+Server database schema
 
