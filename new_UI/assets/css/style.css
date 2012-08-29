@@ -307,3 +307,8 @@ div.offline {
   float: right;
   font-size: 12px;
 }
+#update_slider{
+  color: #F52887;
+  font-weight: bold;
+  font-size: 13px;
+}

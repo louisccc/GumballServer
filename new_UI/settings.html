@@ -71,11 +71,11 @@
         </div>
 
         <div class="container">
+            
             <div class="slider">
                 Light threshold:
                 <span id="light_value" class="slider_value">100</span>
                 <div id="light_slider" class="slider_ui"></div><span id="light_min" class="s_min">0</span><span id="light_max" class="s_max">255</span>
-
             </div>
             
             <div class="slider">
@@ -89,7 +89,7 @@
                 <span id="sound_value" class="slider_value">100</span>
                 <div id="sound_slider" class="slider_ui"></div><span id="sound_min" class="s_min">0</span><span id="sound_max" class="s_max">140</span>
             </div>
-            
+            <span id="update_slider">Update!</span>
         </div> <!-- /container -->
 
         <!-- Le javascript
@@ -199,7 +199,7 @@
             }
 
             $(function(){
-
+                $("#update_slider").hide();
 
                 /* slider */
                 $("#light_slider").slider({
@@ -209,9 +209,13 @@
                     step: 3,
                     slide: function( event, ui ) {
                         $("#light_value").html( ui.value );
+                        
                     },
                     change: function(event, ui) { 
                         setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
                     }
                 });
                 $("#temp_slider").slider({
@@ -224,6 +228,9 @@
                     },
                     change: function(event, ui) { 
                         setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
                     }
                 });
                 
@@ -237,6 +244,9 @@
                     },
                     change: function(event, ui) { 
                         setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
                     }
                 });
                 $("#sound_slider").slider({value: '0'});
