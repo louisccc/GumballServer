@@ -460,7 +460,7 @@
                 var one_minutes = 1000*60;
                 return Math.ceil(ret / one_minutes);
             }
-            function initMap() {
+            function initMap(token) {
                 var mapOptions = {
                     center: new google.maps.LatLng(37, -122),
                     zoom: 12,
@@ -471,10 +471,10 @@
                 }
                 window.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
                 window.alldata = new Array();
-                $.getJSON("../php/mobile/getTripOfUser.php?token=5c1660554760cc76eee461ab79e57eb2", function(data){
+                $.getJSON("../php/mobile/getTripOfUser.php?token=" + token, function(data){
                     for(var i=0; i < data.length;i++){
                         var trip_id = data[i][0];
-                        $.getJSON("../php/mobile/getUserTransportationData.php?token=5c1660554760cc76eee461ab79e57eb2&trip_id=" + trip_id, function(data){
+                        $.getJSON("../php/mobile/getUserTransportationData.php?token=" + token + "&trip_id=" + trip_id, function(data){
 
                             var tripDiv = $('<li class="trip" id="trip_'+data[0]['trip_id']+'"></li>');
 
@@ -575,11 +575,16 @@
 
                                 window.cur_user = data["account"];
                                 window.cur_token = data["token"];
-                                
+                                window.cur_uid = data["user_id"]; 
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 
                                 $('#login').hide();
-                                $('#logout').show();
+                                $('#logoutBt').show();
+
+                            }
+                            else{
+                                $('#login').show();
+                                $('#logoutBt').hide();
 
                             }
                         },
@@ -758,9 +763,12 @@
                         success: function(data) {
                             
                             if(data["success"]==1){
-                                
+                                window.cur_user = 0;
+                                window.cur_token = 0;
+                                window.cur_uid = 0;
+
                                 $('#current_user').text("");
-                                
+                                 
                                 $('#login').show();
                                 $('#logoutBt').hide();
 
@@ -835,7 +843,13 @@
                 );*/
                 $("#app2").click(function(){
                     //google.maps.event.trigger(window.map, 'resize');
-                    initMap();
+                    if(window.cur_user == 0 || window.cur_token == 0 || window.cur_uid == 0){
+                        alert("this page require you to login !!");
+                        document.location.reload(true);
+                    }
+                    else{
+                        initMap(window.cur_token);
+                    }
                 });
 
                 /* update machine status every 2 sec */

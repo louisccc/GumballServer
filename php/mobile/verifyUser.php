@@ -15,6 +15,7 @@ if(isset($_SESSION['is_logged_in']) && ($_SESSION['is_logged_in'] == 1)){
         $result['is_logged_in'] = 1;
         $result['account'] = $_SESSION['account'];
         $result['token'] = $_SESSION['token'];
+        $result['user_id'] = $_SESSION['user_id'];
     }
     echo json_encode($result);
 }else{
@@ -34,6 +35,7 @@ if(isset($_SESSION['is_logged_in']) && ($_SESSION['is_logged_in'] == 1)){
             $_SESSION['is_logged_in'] = 1;
             $_SESSION['account'] = $username;
             $_SESSION['token'] = $result["token"];
+            $_SESSION['user_id'] = $result["user_id"];
             $_SESSION['create_time'] = time();
 
         }else{
