@@ -33,16 +33,15 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </a>
-                    <a class="brand" href=""><img src="img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
+                    <a class="brand" href="./index.html"><img src="img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
                     <div class="nav-collapse">
                         <ul class="nav">
                             <li class="active"><a href="#">Home</a></li>
                             <li><a href="#about">About</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
                             <li class="dropdown" id="login">
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">
-                                Login
-                                <b class="caret"></b>
-                            </a>
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">Login<b class="caret"></b></a>
 
                             <div class="dropdown-menu">
                                 <form>
@@ -55,8 +54,16 @@
                                 </form>
                             </div>
                             </li>
-                            <li><a id="logoutBt">logout</a></li>
-                            <li><a id="current_user"></a></li>
+
+                            <li id="setting" class="dropdown">
+                            <a href="#" id="current_user" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                <li><a tabindex="-1" href="./settings.html">Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" href="#" id="logoutBt">Log Out</a></li>
+                            </ul>
+                            </li>
+
                         </ul>
                     </div><!--/.nav-collapse -->
                 </div>
@@ -343,7 +350,7 @@
         <script src="assets/js/bootstrap-collapse.js"></script>
         <script src="assets/js/bootstrap-carousel.js"></script>
         <script src="assets/js/bootstrap-typeahead.js"></script>
-        <script src="assets/js/jquery.cookie.js"></script>
+        <!--<script src="assets/js/jquery.cookie.js"></script>-->
 
         <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
@@ -582,15 +589,16 @@
                                 window.cur_user = data["account"];
                                 window.cur_token = data["token"];
                                 window.cur_uid = data["user_id"]; 
-                                $('#current_user').text("Hi, "+data["account"]+" !");
-                                
+                                $('#current_user').text("Hi, "+data["account"]+"! ");
+                                $('#current_user').append('<b class="caret"></b>');
+                    
                                 $('#login').hide();
-                                $('#logoutBt').show();
+                                $('#setting').show();
 
                             }
                             else{
                                 $('#login').show();
-                                $('#logoutBt').hide();
+                                $('#setting').hide();
 
                             }
                         },
@@ -631,6 +639,8 @@
                                 historyList.addClass('positive');
                             }else if(item.feedback_type == "negative"){
                                 historyList.addClass('negative');
+                            }else if(item.feedback_type == "sound"){
+                                historyList.addClass('sound');
                             }
 
                             $('#feedbackList .items').append(historyList);
@@ -699,31 +709,18 @@
             $(function(){
 
                 /* hide headphone */
-                //$('.machine').hide(0);
-                //$('.headphone').hide(0);
                 $('.machine').addClass('offline');
                 $('.win').css("visibility", "hidden");
 
-                /* log in stuff */
-                checkLogin();
+                /* hide setting */
+                $('#setting').hide();
 
+                /* log in stuff */
                 window.cur_user = "test";
                 window.cur_token;
                 window.cur_uid = 0;
+                checkLogin();
 
-
-                if($.cookie("sweetpassword")!=null){
-
-                    window.cur_uid = $.cookie("sweetuid");
-                    window.cur_user = $.cookie("sweetaccount");
-                    window.cur_token = $.cookie("sweetpassword");
-
-                    $('#current_user').text("Hi, "+cur_user+" !");
-                    $('#login').hide(); 
-                }else{
-                    $('#login').show();
-                }
-                $('#logout').hide();
                 $('.dropdown-toggle').dropdown();
                 $('#loginBt').click(function(){
 
@@ -737,9 +734,6 @@
                             
                             if(data["success"]==1){
                                 
-                                //$.cookie("sweetuid", data["user_id"]);
-                                //$.cookie("sweetaccount", data["account"]);
-                                //$.cookie("sweetpassword", data["token"]);
                                 window.cur_user = data["account"];
                                 window.cur_token = data["token"];
                                 window.cur_uid = data["user_id"];
@@ -747,9 +741,15 @@
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 
                                 $('#login').hide();
-                                $('#logoutBt').show();
+                                //$('#logoutBt').show();
+
+                                $('#setting').show();
 
                             }else{
+                                $('#login').show();
+                                
+
+                                $('#setting').hide();
                                 //alert("No such user!");
                             }
                         },
