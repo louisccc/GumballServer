@@ -43,17 +43,19 @@
                                 Login
                                 <b class="caret"></b>
                             </a>
+
                             <div class="dropdown-menu">
                                 <form>
                                     <fieldset class='textbox' style="padding:10px">
                                         <input id="account" style="margin-top: 8px" type="text" placeholder="Account" name="account"/>
                                         <input id="password" style="margin-top: 8px" type="password" placeholder="Passsword" name="password"/>
                                         <a class="btn btn-primary" id="loginBt">Log In</a>
+                                        <a data-toggle="modal" href="#reg" class="btn btn-primary" id="registerBt" >Register</a>
                                     </fieldset>
                                 </form>
                             </div>
                             </li>
-
+                            <li><a id="logoutBt">logout</a></li>
                             <li><a id="current_user"></a></li>
                         </ul>
                     </div><!--/.nav-collapse -->
@@ -62,6 +64,22 @@
         </div>
 
         <div class="container">
+            <div id="reg" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Register a new account!</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
+                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
+                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                </div>
+            </div>
             <div class="tabable">
                 <ul class="nav nav-pills spliter">
                     <li class="active">
@@ -561,6 +579,7 @@
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 
                                 $('#login').hide();
+                                $('#logout').show();
 
                             }
                         },
@@ -693,7 +712,7 @@
                 }else{
                     $('#login').show();
                 }
-
+                $('#logout').hide();
                 $('.dropdown-toggle').dropdown();
                 $('#loginBt').click(function(){
 
@@ -717,6 +736,7 @@
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 
                                 $('#login').hide();
+                                $('#logoutBt').show();
 
                             }else{
                                 //alert("No such user!");
@@ -724,6 +744,48 @@
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {
                             //alert("Error");    
+                        }
+                    });
+                });
+                $('#logoutBt').click(function(){
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: "../php/mobile/logout.php",
+                        data: { },
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["success"]==1){
+                                
+                                $('#current_user').text("");
+                                
+                                $('#login').show();
+                                $('#logoutBt').hide();
+
+                            }else{
+                                //alert("No such user!");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+                });
+                $('#registerSubmit').click(function(){
+                    alert($('#reg_account').val());
+                    alert($('#reg_password').val());
+                    $.ajax({
+                        type: "GET",
+                        url: "../php/mobile/createNewUser.php",
+                        data: { "account": $('#reg_account').val(), "password":$('#reg_password').val()},
+                        dataType: 'json',
+                        success: function(data){
+                            alert("song la");
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
+                        
                         }
                     });
                 });
