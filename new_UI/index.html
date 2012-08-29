@@ -307,7 +307,8 @@
                             <div id="trip_des"></div>
                         </div>
                         <div id="right">
-                            <div id="tripArea">
+                            <div id="tripArea" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
+
                                 <h3>Trip List as below:</h3>
                                 <div id="descriptionList">
                                 </div>
@@ -475,23 +476,28 @@
                     for(var i=0; i < data.length;i++){
                         var trip_id = data[i][0];
                         $.getJSON("../php/mobile/getUserTransportationData.php?token=" + token + "&trip_id=" + trip_id, function(data){
-
-                            var tripDiv = $('<li class="trip" id="trip_'+data[0]['trip_id']+'"></li>');
+                            var tripFrame = $('<li class="items"></li>');
+                            var tripDiv = $('<a class="trip" id="trip_'+data[0]['trip_id']+'"></a>');
 
                             tripDiv.text('trip ' + data[0]['trip_id']);
-                            tripDiv.appendTo('#tripArea');
+                            tripDiv.appendTo(tripFrame);
+                            tripFrame.appendTo('#tripArea');
+                            //tripDiv.appendTo('#tripArea');
                             window.alldata[data[0]['trip_id']] = data;
                             var tripDes = $('<div id="des_'+data[0]['trip_id']+'"></div>');
                             tripDes.text('Total Trip time:' + TotalTime(data));
                             $('#trip_des').append(tripDes);
                             tripDes.hide();
-
+                            
                             tripDiv.click(function(){
                                 $('#trip_des div').hide();
                                 var split = this.id.split('_');
                                 $('#des_' + split[1]).show();
                                 refreshMap(split[1]);
-                                $('#trans_title').text("Your Transportation Track(" + split[1] + ")");
+                                $('#trans_title').text("Your Transportation Track(trip_id=" + split[1] + ")");
+                                $.getJSON("../php/mobile/getTransportationSummary.php?token="+ token + "&trip_id=" + split[1], function(data){
+                                    console.log(data);
+                                });
 
                             });
                             var marker_array = [];
