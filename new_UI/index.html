@@ -71,6 +71,7 @@
         </div>
 
         <div class="container">
+            
             <div id="reg" class="modal hide fade">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -328,9 +329,8 @@
 
                 </div>
             </div>
-
-            <section id="monitor"></section>
-            <section id="transportation"></section>
+            
+           
 
         </div> <!-- /container -->
 
@@ -374,8 +374,11 @@
                         $('#mrc_4').addClass('offline');
                         $('#mrc_5').addClass('offline');
 
+
                         $.each(data['data'], function(i, item) {
                             var d_id = item['device_id'];
+
+                            
 
                             // light 
                             if(parseFloat(item['light_level']) >= 80.0){
@@ -383,6 +386,7 @@
                             }else{
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
                             }
+
 
                             // temperature
                             if(parseFloat(item['temperature']) >= 24.0){
@@ -398,12 +402,16 @@
                                 }
                             }
 
+
+
                             // sound_level
                             if(parseFloat(item['sound_level']) >= 40.0){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                             }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
                             }
+
+                            
 
                             // window_state
                             if(parseInt(item['window_state']) == 1){
@@ -414,8 +422,14 @@
                                 $('#win_'+d_id).css("visibility", "hidden");
                             }
 
+                            
+
                             // transportation
-                            if(item['trans'] !== undefined) {
+                            if((item['trans'] == undefined) || (item['trans'] == null)) {
+                                
+                                $('#mrc_'+d_id+' img.transportation').attr('src','');
+
+                            }else{
                                 var trans_type = item['trans']['trans_type'];
                                 if(trans_type == "WALKING"){
                                     $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/walk.png');
@@ -428,15 +442,13 @@
                                 }else{
                                     $('#mrc_'+d_id+' img.transportation').attr('src','');
                                 }
-                            }else{
-                                $('#mrc_'+d_id+' img.transportation').attr('src','');
+                                
                             }
                             
-            
-            
-                            $('#mrc_'+d_id).removeClass("offline");
                             //show machine
                             //$('#mrc_'+d_id).show();
+                            $('#mrc_'+d_id).removeClass("offline");
+
                         });
                     },
                     error: function(XMLHttpRequest, textStatus, errorThrown) {
