@@ -398,6 +398,19 @@ class DB{
         }
         return null;
     }
+    public function getUserPreference($user_id){
+        $query = "select temperature_threshold, light_threshold, micro_threshold from $this->members_tableName where user_id=$user_id";
+        $result = $this->dbh->query($query);
+        if($result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            return $rows[0];
+        }
+    }
+
+    public function setUserPreference($user_id, $temp, $light, $micro){
+        $query = "update $this->members_tableName set temperature_threshold=$temp, light_threshold=$light, micro_threshold=$micro where user_id=$user_id";
+        $result = $this->dbh->query($query);
+    }
     public function getUserByToken($token){
         $query = "select * from $this->members_tableName where token=\"$token\"";
         $result = $this->dbh->query($query);
