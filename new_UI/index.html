@@ -587,12 +587,12 @@
                                 $('#current_user').append('<b class="caret"></b>');
                     
                                 $('#login').hide();
-                                $('#logoutBt').show();
+                                $('#setting').show();
 
                             }
                             else{
                                 $('#login').show();
-                                $('#logoutBt').hide();
+                                $('#setting').hide();
 
                             }
                         },
@@ -735,11 +735,15 @@
                                 $('#current_user').text("Hi, "+data["account"]+" !");
                                 
                                 $('#login').hide();
-                                $('#logoutBt').show();
+                                //$('#logoutBt').show();
 
                                 $('#setting').show();
 
                             }else{
+                                $('#login').show();
+                                
+
+                                $('#setting').hide();
                                 //alert("No such user!");
                             }
                         },
