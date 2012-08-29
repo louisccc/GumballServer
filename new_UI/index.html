@@ -546,7 +546,29 @@
                 });
                 flight.setMap(window.map);
             }
+            function checkLogin(){
+                $.ajax({
+                        type: "GET",
+                        url: "../php/mobile/verifyUser.php",
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["is_logged_in"]==1){
 
+                                window.cur_user = data["account"];
+                                window.cur_token = data["token"];
+                                
+                                $('#current_user').text("Hi, "+data["account"]+" !");
+                                
+                                $('#login').hide();
+
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+            }
             function readProblemList(){
 
                 /* clear problem list */
@@ -653,12 +675,13 @@
                 $('.win').css("visibility", "hidden");
 
                 /* log in stuff */
+                checkLogin();
+
                 window.cur_user = "test";
                 window.cur_token;
                 window.cur_uid = 0;
 
 
-                
                 if($.cookie("sweetpassword")!=null){
 
                     window.cur_uid = $.cookie("sweetuid");
