@@ -42,4 +42,5 @@ h2. Old Version Web pages UI
 
 Including files like UI_Resources, css, jquerybubblepopup-themes, scripts, anime.gif, index.html, machine.jpg.
 UI_Resources is auto-generated code by HYPE from chihiro's work. Other parts are for webpage's elements made by Chihiro SUGA.
+"Workshop's documentation":http://209.129.244.24/wordpress/?page_id=51 are built 
 
