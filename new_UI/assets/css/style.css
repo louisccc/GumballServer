@@ -250,7 +250,11 @@ div.offline {
 */
 
 }
-
+#feedbackList li.sound{
+  list-style-image: url('../../img/others/sound.gif');
+  padding-left: 3px;
+  padding-top: 3px;
+}
 #feedbackList li.positive{
   
   list-style-image: url('../../img/others/smile.png');
@@ -281,5 +285,25 @@ div.offline {
     -moz-border-bottom-right-radius: 7px;
         border-bottom-right-radius: 7px;
 
+}
+.slider {
+  width: 300px;
+  padding: 5px 0 5px 0;
+  margin: 10px 0 30px 0;
+  font-weight: bold;
+}
+.slider_ui {
+  margin: 7px 0 7px 0;
+}
 
+.slider_value{
+  margin-left: 3px;
+}
+.s_min {
+  float: left;
+  font-size: 12px;
+}
+.s_max {
+  float: right;
+  font-size: 12px;
 }
