@@ -2,11 +2,6 @@ h1. Gumball Machine Server-Side
 
 By Louis Yu, Janet Huang, and many awesome contributors!
 
-h2. Old Version Web pages UI 
-
-Including files like UI_Resources, css, jquerybubblepopup-themes, scripts, anime.gif, index.html, machine.jpg.
-UI_Resources is auto-generated code by HYPE from chihiro's work. Other parts are for webpage's elements made by Chihiro SUGA.
-
 h2. collaboration
 
   Janet Huang's stuff.
@@ -42,4 +37,9 @@ h2. quiz
 h2. schema.sql 
 
   Server database schema
+
+h2. Old Version Web pages UI 
+
+Including files like UI_Resources, css, jquerybubblepopup-themes, scripts, anime.gif, index.html, machine.jpg.
+UI_Resources is auto-generated code by HYPE from chihiro's work. Other parts are for webpage's elements made by Chihiro SUGA.
 
