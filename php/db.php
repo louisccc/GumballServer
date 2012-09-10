@@ -122,6 +122,15 @@ class DB{
         }
         return null;
     }
+    public function getFeedbackRanking(){
+        $query = "select user_id, count(*) as count from $this->feedbackStatus_tableName where 1 group by `user_id`";
+        $result = $this->dbh->query($query);
+        if( $result->rowCount() > 0){
+            $rows = $result->fetchAll();
+            print_r($rows);
+        }
+        return null;
+    }
 
     public function getRecentFeedback($amount){
         $query = "select * from $this->feedbackStatus_tableName order by created_time DESC limit $amount";

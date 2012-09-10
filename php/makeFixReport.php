@@ -26,8 +26,10 @@ if (isset($_GET["report_id"]) && isset($_GET["user_id"])) {
             echo json_encode($ret);
         }
         else{
-            $ret = array();
-            $ret['reconfirm'] = 1;
+            #$ret = array();
+            #$ret['reconfirm'] = 1;
+            $db_help->updateFixReport($user_id, $report_id);
+            $ret['success'] = 1;
             echo json_encode($ret);
         }
     }
