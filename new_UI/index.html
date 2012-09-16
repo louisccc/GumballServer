@@ -106,7 +106,12 @@
 
                 <div class="tab-content">
                     <div class="tab-pane active" id="apps-1">
-                        <h2 class="title">Sustainability Base Building</h2>                                                                   
+                        <h2 class="title">Sustainability Base Building</h2>   
+                        <div id="user_preference">User Preference: 
+                            <span id="light_preference"></span>, 
+                            <span id="temp_preference"></span>, 
+                            <span id="sound_preference"></span>
+                        </div>                                                                
                         <div id="left">
                             <div class="building"><img id="building_1" src="img/building/building-1.png"/></div>
                             <img id="win_1" class="win" src="img/building/win1.png"/>
@@ -358,8 +363,35 @@
 
 
         <script language="javascript">
-            function updateMachineStatus(){
 
+            function getUserPreference(){
+                /* get profile preference */
+
+                $.ajax({
+                    type: "GET",
+                    url: "../php/mobile/getUserPreference.php",
+                    data: { 
+                        "token": window.cur_token
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data['success'] == 1){
+                            window.light_threshold = parseInt(data['data']['light_threshold']); 
+                            window.temperature_threshold = parseInt(data['data']['temperature_threshold']);
+                            window.micro_threshold = parseInt(data['data']['micro_threshold']);
+
+                            $('#light_preference').text(window.light_threshold);
+                            $('#temp_preference').text(window.temperature_threshold);
+                            $('#sound_preference').text(window.micro_threshold);
+                            $('#user_preference').show();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                });
+            }
+            function updateMachineStatus(){
+                
+                
                 /* get sensor value*/
                 $.ajax({
                     type: "GET",
@@ -381,7 +413,7 @@
                             
 
                             // light 
-                            if(parseFloat(item['light_level']) >= 80.0){
+                            if(parseFloat(item['light_level']) >= window.light_threshold){
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
                             }else{
                                 $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
@@ -389,11 +421,11 @@
 
 
                             // temperature
-                            if(parseFloat(item['temperature']) >= 24.0){
+                            if(parseFloat(item['temperature']) >= window.temperature_threshold+2){
                                 $('#mrc_'+d_id+' img.sweat').css("visibility", "visible");
                                 $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
                             }else{ 
-                                if(parseFloat(item['temperature']) <= 20.0){                                
+                                if(parseFloat(item['temperature']) <= window.temperature_threshold-2){                                
                                     $('#mrc_'+d_id+' img.cold').css("visibility", "visible");
                                     $('#mrc_'+d_id+' img.sweat').css("visibility", "hidden");
                                 }else{
@@ -405,7 +437,7 @@
 
 
                             // sound_level
-                            if(parseFloat(item['sound_level']) >= 40.0){
+                            if(parseFloat(item['sound_level']) >= window.sound_preference){
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
                             }else{
                                 $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
@@ -455,6 +487,8 @@
                         //alert("get sensor Error");
                     }
                 });
+
+                
             }
             function TotalDistance(data){
                 ret = 0;
@@ -607,6 +641,9 @@
                                 $('#login').hide();
                                 $('#setting').show();
 
+
+                                getUserPreference();
+
                             }
                             else{
                                 $('#login').show();
@@ -720,6 +757,8 @@
             }
             $(function(){
 
+                $('#user_preference').hide();
+
                 /* hide headphone */
                 $('.machine').addClass('offline');
                 $('.win').css("visibility", "hidden");
@@ -800,8 +839,8 @@
                     });
                 });
                 $('#registerSubmit').click(function(){
-                    alert($('#reg_account').val());
-                    alert($('#reg_password').val());
+                    //alert($('#reg_account').val());
+                    //alert($('#reg_password').val());
                     $.ajax({
                         type: "GET",
                         url: "../php/mobile/createNewUser.php",

@@ -81,7 +81,7 @@
             <div class="slider">
                 Temperature threshold:
                 <span id="temp_value" class="slider_value">22</span>
-                <div id="temp_slider" class="slider_ui"></div><span id="temp_min" class="s_min">0</span><span id="temp_max" class="s_max">255</span>
+                <div id="temp_slider" class="slider_ui"></div><span id="temp_min" class="s_min">-10</span><span id="temp_max" class="s_max">70</span>
                 
             </div>
             <div class="slider">
@@ -126,15 +126,16 @@
                         },
                         dataType: 'json',
                         success: function(data) {
-                            
-                            $('#light_value').text(data['light_threshold']); 
-                            $("#light_slider").slider({value: parseInt(data['light_threshold'])});
+                            if(data['success'] == 1){
+                                $('#light_value').text(data['data']['light_threshold']); 
+                                $("#light_slider").slider({value: parseInt(data['data']['light_threshold'])});
 
-                            $('#temp_value').text(data['temperature_threshold']);
-                            $("#temp_slider").slider({value: parseInt(data['temperature_threshold'])});
+                                $('#temp_value').text(data['data']['temperature_threshold']);
+                                $("#temp_slider").slider({value: parseInt(data['data']['temperature_threshold'])});
 
-                            $('#sound_value').text(data['micro_threshold']);
-                            $("#sound_slider").slider({value: parseInt(data['micro_threshold'])});
+                                $('#sound_value').text(data['data']['micro_threshold']);
+                                $("#sound_slider").slider({value: parseInt(data['data']['micro_threshold'])});                                
+                            }
 
                         },
                         error: function(XMLHttpRequest, textStatus, errorThrown) {}
@@ -204,8 +205,8 @@
                 /* slider */
                 $("#light_slider").slider({
                     value: parseInt($("#light_value").text()),
-                    min: $("#light_min").text(),
-                    max: $("#light_max").text(),
+                    min: parseInt($("#light_min").text()),
+                    max: parseInt($("#light_max").text()),
                     step: 3,
                     slide: function( event, ui ) {
                         $("#light_value").html( ui.value );
@@ -220,9 +221,9 @@
                 });
                 $("#temp_slider").slider({
                     value: parseInt($("#temp_value").text()),
-                    min: $("#temp_min").text(),
-                    max: $("#temp_max").text(),
-                    step: 3,
+                    min: parseInt($("#temp_min").text()),
+                    max: parseInt($("#temp_max").text()),
+                    step: 1,
                     slide: function( event, ui ) {
                         $("#temp_value").html( ui.value );
                     },
@@ -236,8 +237,8 @@
                 
                 $("#sound_slider").slider({
                     value: parseInt($("#sound_value").text()),
-                    min: $("#sound_min").text(),
-                    max: $("#sound_max").text(),
+                    min: parseInt($("#sound_min").text()),
+                    max: parseInt($("#sound_max").text()),
                     step: 3,
                     slide: function( event, ui ) {
                         $("#sound_value").html( ui.value );

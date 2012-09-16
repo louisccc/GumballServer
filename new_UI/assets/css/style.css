@@ -312,3 +312,7 @@ div.offline {
   font-weight: bold;
   font-size: 13px;
 }
+#user_preference{
+  font-size: 13px;
+  margin-left: 5px;
+}
