@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SweetFeedback</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <!-- Le styles -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+
+        <!--<link href="assets/css/docs.css" rel="stylesheet">-->
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/> <!-- jquery slider ui style-->
+        
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="./index.html"><img src="img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="login">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">Login<b class="caret"></b></a>
+
+                            <div class="dropdown-menu">
+                                <form>
+                                    <fieldset class='textbox' style="padding:10px">
+                                        <input id="account" style="margin-top: 8px" type="text" placeholder="Account" name="account"/>
+                                        <input id="password" style="margin-top: 8px" type="password" placeholder="Passsword" name="password"/>
+                                        <a class="btn btn-primary" id="loginBt">Log In</a>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            </li>
+
+                            <li id="setting" class="dropdown">
+                            <a href="#" id="current_user" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                <li><a tabindex="-1" href="./settings.html">Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" href="#" id="logoutBt">Log Out</a></li>
+                            </ul>
+                            </li>
+
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <div class="slider">
+                Light threshold:
+                <span id="light_value" class="slider_value">100</span>
+                <div id="light_slider" class="slider_ui"></div><span id="light_min" class="s_min">0</span><span id="light_max" class="s_max">255</span>
+            </div>
+            
+            <div class="slider">
+                Temperature threshold:
+                <span id="temp_value" class="slider_value">22</span>
+                <div id="temp_slider" class="slider_ui"></div><span id="temp_min" class="s_min">-10</span><span id="temp_max" class="s_max">70</span>
+                
+            </div>
+            <div class="slider">
+                Sound threshold:
+                <span id="sound_value" class="slider_value">100</span>
+                <div id="sound_slider" class="slider_ui"></div><span id="sound_min" class="s_min">0</span><span id="sound_max" class="s_max">140</span>
+            </div>
+            <span id="update_slider">Update!</span>
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/bootstrap-transition.js"></script>
+        <script src="assets/js/bootstrap-alert.js"></script>
+        <script src="assets/js/bootstrap-modal.js"></script>
+        <script src="assets/js/bootstrap-dropdown.js"></script>
+        <script src="assets/js/bootstrap-scrollspy.js"></script>
+        <script src="assets/js/bootstrap-tab.js"></script>
+        <script src="assets/js/bootstrap-tooltip.js"></script>
+        <script src="assets/js/bootstrap-popover.js"></script>
+        <script src="assets/js/bootstrap-button.js"></script>
+        <script src="assets/js/bootstrap-collapse.js"></script>
+        <script src="assets/js/bootstrap-carousel.js"></script>
+        <script src="assets/js/bootstrap-typeahead.js"></script>
+        <script src="assets/js/jquery.cookie.js"></script>
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+
+
+        <script language="javascript">
+            function getUserPreference(){
+                
+                if(window.cur_token != null){
+                    $.ajax({
+                        type: "GET",
+                        url: "./php/mobile/getUserPreference.php",
+                        data: { 
+                            "token": window.cur_token
+                        },
+                        dataType: 'json',
+                        success: function(data) {
+                            if(data['success'] == 1){
+                                $('#light_value').text(data['data']['light_threshold']); 
+                                $("#light_slider").slider({value: parseInt(data['data']['light_threshold'])});
+
+                                $('#temp_value').text(data['data']['temperature_threshold']);
+                                $("#temp_slider").slider({value: parseInt(data['data']['temperature_threshold'])});
+
+                                $('#sound_value').text(data['data']['micro_threshold']);
+                                $("#sound_slider").slider({value: parseInt(data['data']['micro_threshold'])});                                
+                            }
+
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                    });
+                }
+            }
+
+
+            function setUserPreference(){
+
+                if(window.cur_token != null){
+                    $.ajax({
+                        type: "GET",
+                        url: "./php/mobile/setUserPreference.php",
+                        data: { 
+                            "token": window.cur_token, 
+                            "temperature_threshold": $('#temp_value').text(), 
+                            "light_threshold": $('#light_value').text(),
+                            "micro_threshold": $('#sound_value').text()
+                        },
+                        dataType: 'json',
+                        success: function(data) {},
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                    });
+                }
+
+            }
+            
+            function checkLogin(){
+                $.ajax({
+                    type: "GET",
+                    url: "./php/mobile/verifyUser.php",
+                    dataType: 'json',
+                    success: function(data) {
+
+                        if(data["is_logged_in"]==1){
+
+                            window.cur_user = data["account"];
+                            window.cur_token = data["token"];
+                            window.cur_uid = data["user_id"];
+
+                            $('#current_user').text("Hi, "+data["account"]+"! ");
+                            $('#current_user').append('<b class="caret"></b>');
+                    
+                            $('#login').hide();
+                            $('#setting').show();
+
+
+                            /* get uesr preference */
+                            getUserPreference();
+
+                        }else{
+                            window.location = "./index.html";
+                            $('#login').show();
+                            $('#setting').hide();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("Error");    
+                    }
+                });
+            }
+
+            $(function(){
+                $("#update_slider").hide();
+
+                /* slider */
+                $("#light_slider").slider({
+                    value: parseInt($("#light_value").text()),
+                    min: parseInt($("#light_min").text()),
+                    max: parseInt($("#light_max").text()),
+                    step: 3,
+                    slide: function( event, ui ) {
+                        $("#light_value").html( ui.value );
+                        
+                    },
+                    change: function(event, ui) { 
+                        setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
+                    }
+                });
+                $("#temp_slider").slider({
+                    value: parseInt($("#temp_value").text()),
+                    min: parseInt($("#temp_min").text()),
+                    max: parseInt($("#temp_max").text()),
+                    step: 1,
+                    slide: function( event, ui ) {
+                        $("#temp_value").html( ui.value );
+                    },
+                    change: function(event, ui) { 
+                        setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
+                    }
+                });
+                
+                $("#sound_slider").slider({
+                    value: parseInt($("#sound_value").text()),
+                    min: parseInt($("#sound_min").text()),
+                    max: parseInt($("#sound_max").text()),
+                    step: 3,
+                    slide: function( event, ui ) {
+                        $("#sound_value").html( ui.value );
+                    },
+                    change: function(event, ui) { 
+                        setUserPreference();
+                        $("#update_slider").fadeIn(500,function () {
+                            $(this).fadeOut(1000);
+                        });
+                    }
+                });
+                $("#sound_slider").slider({value: '0'});
+
+
+                /* login stuff */
+                window.cur_user = "test";
+                window.cur_token = null;
+                window.cur_uid = 0;
+
+                checkLogin();
+
+
+
+                $('#loginBt').click(function(){
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: "./php/mobile/verifyUser.php",
+                        data: { "account": $('#account').val(), "password": $('#password').val() },
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["success"]==1){
+                                
+
+                                window.cur_user = data["account"];
+                                window.cur_token = data["token"];
+                                window.cur_uid = data["user_id"];
+                                
+                                $('#current_user').text("Hi, "+data["account"]+"! ");
+                                $('#current_user').append('<b class="caret"></b>');
+                                
+                                $('#login').hide();
+                                $('#setting').show();
+                            }else{
+                                //alert("No such user!");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+                });
+                
+                //logout bt
+                $('#logoutBt').click(function(){
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: "./php/mobile/logout.php",
+                        data: { },
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["success"]==1){
+                                window.cur_user = 0;
+                                window.cur_token = 0;
+                                window.cur_uid = 0;
+
+                                $('#current_user').text("");
+                                 
+                                $('#login').show();
+                                $('#logoutBt').hide();
+
+                            }else{
+                                //alert("No such user!");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+                });
+
+
+                
+
+            });
+
+
+        </script>
+    </body>
+</html>

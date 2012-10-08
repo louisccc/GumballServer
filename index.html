@@ -1,57 +1,935 @@
 <!DOCTYPE html>
-<html>
-  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1,IE=9" />
-	<meta name="viewport" content="user-scalable=yes, width=600" />
-	<title>Sweet Feedback demo</title>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SweetFeedback</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
 
-	<link href="./css/style.css" rel="stylesheet" type="text/css" />
-	<link href="./css/jquery-bubble-popup-v3.css" rel="stylesheet" type="text/css" />
-<script src="./scripts/jquery-1.7.2.min.js" type="text/javascript"></script>
-<script src="./scripts/jquery-bubble-popup-v3.min.js" type="text/javascript"></script>
-<script src="./scripts/functions.js" type="text/javascript"></script>
-  </head>
-  <body>
+        <!-- Le styles -->
+        <link href="assets/css/bootstrap.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
 
-<div id="content">
+        <!--<link href="assets/css/docs.css" rel="stylesheet">-->
+        <link href="assets/css/bootstrap-responsive.css" rel="stylesheet">
 
-<div id="wrap">
-<div id="title">
-  <img id="top_img_left" src="./machine.jpg"/><p>Sweet Feedback</p>
-  <img id="top_img_right" src="./machine.jpg"/>
-</div>
-<div id="menu">
-  <div class="column1" id="name">
-    1. Select Your Name. <br />
-    <select id="user_id" style="width:150px;">
-      <option value="0">Select your name</option>
-      <option value="1">Chihiro</option>
-      <option value="2">Ted</option>
-      <option value="3">Rahul</option>
-    </select>
-  </div>
-  <div class="column2" id="available">2. How many candy machines is online ?<br />    
-	<!--<select id="candy_machines" >
-	</select>-->
-	<div id="online"> </div>
-  </div>
-</div>
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+        <!-- Le fav and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+
+    </head>
+
+    <body>
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </a>
+                    <a class="brand" href="./index.html"><img src="img/logo.png" width="24px" id="logo"/>SweetFeedback</a>
+                    <div class="nav-collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="#">Home</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                        <ul class="nav pull-right">
+                            <li class="dropdown" id="login">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#login">Login<b class="caret"></b></a>
+
+                            <div class="dropdown-menu">
+                                <form>
+                                    <fieldset class='textbox' style="padding:10px">
+                                        <input id="account" style="margin-top: 8px" type="text" placeholder="Account" name="account"/>
+                                        <input id="password" style="margin-top: 8px" type="password" placeholder="Passsword" name="password"/>
+                                        <a class="btn btn-primary" id="loginBt">Log In</a>
+                                        <a data-toggle="modal" href="#reg" class="btn btn-primary" id="registerBt" >Register</a>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            </li>
+
+                            <li id="setting" class="dropdown">
+                            <a href="#" id="current_user" role="button" class="dropdown-toggle" data-toggle="dropdown"></a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                                <li><a tabindex="-1" href="./settings.html">Settings</a></li>
+                                <li class="divider"></li>
+                                <li><a tabindex="-1" href="#" id="logoutBt">Log Out</a></li>
+                            </ul>
+                            </li>
+
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            
+            <div id="reg" class="modal hide fade">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3>Register a new account!</h3>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <input id="reg_account" style="margin-top: 8px" type="text" placeholder="Enter your Account here" name="reg_account"/><br>
+                        <input id="reg_password" style="margin-top: 8px" type="password" placeholder="Enter your Passsword here" name="reg_password"/>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" id="registerSubmit" data-dismiss="modal">Register</a>
+                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                </div>
+            </div>
+            <div class="tabable">
+                <ul class="nav nav-pills spliter">
+                    <li class="active">
+                    <a href="#apps-1" data-toggle="tab" id="app1">Sustainability Base</a>
+                    </li>
+                    <li>
+                    <a href="#apps-2" data-toggle="tab" id="app2">Transportation</a>
+                    </li>
+                    <li>
+                    <a href="#apps-3" data-toggle="tab" id="app3">Questionaire</a>
+                    </li>
+                    <li>
+                    <a href="./collaboration" id="app4">Experiment</a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div class="tab-pane active" id="apps-1">
+                        <h2 class="title">Sustainability Base Building</h2>   
+                        <div id="user_preference">User Preference: 
+                            <span id="light_preference"></span>, 
+                            <span id="temp_preference"></span>, 
+                            <span id="sound_preference"></span>
+                        </div>                                                                
+                        <div id="left">
+                            <div class="building"><img id="building_1" src="img/building/building-1.png"/></div>
+                            <img id="win_1" class="win" src="img/building/win1.png"/>
+                            <img id="win_2" class="win" src="img/building/win2.png"/>
+                            <img id="win_3" class="win" src="img/building/win3.png"/>
+                            <img id="win_4" class="win" src="img/building/win4.png"/>
+                            <img id="win_5" class="win" src="img/building/win5.png"/>
+                            <img data-toggle="modal" href="#ceil_1_detail" id="ceil_1" class="ceil" src="img/building/ceil1.png"/>
+<!--                            <img data-toggle="modal" href="#ceil_2_detail" id="ceil_2" class="ceil" src="img/building/ceil2.png" style="margin-left: -24px; margin-top:47px;"/>
+                            <img data-toggle="modal" href="#ceil_3_detail" id="ceil_3" class="ceil" src="img/building/ceil3.png" style="margin-left: -22px; margin-top: 19px;" />
+                            <img data-toggle="modal" href="#winclick_1_detail" id="winclick_1" class="winclick" src="img/building/win_click1.png" style="margin-left: -83px; margin-top:168px;"/>
+
+                            <img data-toggle="modal" href="#winclick_2_detail" id="winclick_2" class="winclick" src="img/building/win_click2.png" style="margin-left: -36px; margin-top: 209px;" />
+
+                            <img data-toggle="modal" href="#ceil_5_detail" id="ceil_5" class="ceil" src="img/building/ceil5.png" style="margin-left: 351px; margin-top: -4px;" />-->
+
+                            <img data-toggle="modal" href="#sun_detail" id="sun" src="img/others/sun.png" style="position:absolute; top: 150px; left: 880px;"/>
+                            <div class="building"><img id="building_2" src="img/building/building-2.png"/></div>
+                            
+                            <!-- ceil detail -->
+                            <div id="ceil_1_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 1</h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="ceil_2_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 2</h3>
+                                    <img src="img/building/room2.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            <div id="ceil_3_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Ceiling 3</h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+
+                            <!--<div id="ceil_5_detail" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3></h3>
+                                    <img src="img/building/room1.png" width="120px"/>
+                                </div>
+                                <div class="modal-body"></div>
+                                <div class="modal-footer">
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>-->
+                            
+                            <!-- win click detail -->
+                            <div id="#winclick_1"></div>
+                            <div id="#winclick_2"></div>
+                            
+                            <!-- sun detail -->
+                            <div id="#sun_detail"></div>
+                            
+
+                        </div>
+                        <div id="right">
+                            <a data-toggle="modal" href="#report" class="btn btn-primary" style="margin-bottom: 5px;">Report a Problem!</a>
+                            <div class="bs-docs-example">
+                                <ul id="myTab" class="nav nav-tabs" style="margin: 0px; padding: 0px;">
+                                    <li class="active"><a href="#feedbackHistory" data-toggle="tab">Feedback History</a></li>
+                                    <li><a href="#problemArea" data-toggle="tab">Problem List</a></li>
+                                </ul>
+
+                                <div id="myTabContent" class="tab-content" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
+                                    <div class="tab-pane fade in active tabStyle" id="feedbackHistory">
+                                    </div>
+
+                                    <div class="tab-pane fade tabStyle" id="problemArea">
+
+                                    </div>
+                                </div>
+                            
+                            </div>
+
+                            <div id="report" class="modal hide fade">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h3>Report a Problem!</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="btn-group">
+                                        <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                                            <span id="dropdown_title" >Any Problem?</span>
+                                            <span class="caret"></span>
+                                        </a>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a href="#" id="hot">Hot Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="cold">Cold Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="noise">Noisy Problem</a>
+                                            </li>
+                                            <li>
+                                                <a href="#" id="other">Other Problem</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <form>
+                                        <fieldset class='textbox'>
+                                            <textarea id="problemInput" style="margin-top: 8px; width: 90%; height:180px;">problem.... </textarea>
+                                        </fieldset>
+
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <a class="btn btn-primary" id="reportSubmit" data-dismiss="modal">Submit</a>
+                                    <a href="#" class="btn" data-dismiss="modal" >Close</a>
+                                </div>
+                            </div>
+                            
+                            <!--<div id="feedbackHistory">
+                                <h4>Feedback History</h4>
+                            </div>
+
+                            <div id="problemArea">
+                                <h4>Problem List</h4>
+                            </div>-->    
+                        </div>
+
+                        <div class="machine" id="mrc_1">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >1</div>
+                        </div>
+
+                        <div class="machine" id="mrc_2">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >2</div>
+                        </div>
+
+                        <div class="machine" id="mrc_3">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >3</div>
+                        </div>
+
+                        <div class="machine" id="mrc_4">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >4</div>
+                        </div>
+
+                        <div class="machine" id="mrc_5">
+                            <img class="mrc" src="img/mrc/mrc.png" width="50px"/>
+                            <img class="cold" src="img/others/char-cold.png" width="65px" style="margin-top: -155px; margin-left: -3px;"/>
+                            <img class="sunglass" src="img/others/char-sunglass.png" width="65px" style="margin-top: -132px; margin-left: -6px;"/>
+                            <img class="headphone" src="img/others/char-headphone.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="sweat" src="img/others/char-sweat.png" width="65px" style="margin-top: -200px; margin-left: -6px;"/>
+                            <img class="transportation" src="img/transportation/empty.png" width="30px" style="margin-top: -120px; margin-left: -10px;"/>
+                            <div class="mrc_num" >5</div>
+                        </div>
+                        <div id="info" >
+                            <img src="img/others/char-cold.png"/> : Cold
+                            <img class="sweat" src="img/others/char-sweat.png"/> : Hot
+                            <img src="img/others/char-headphone.png"/> : Noisy
+                            <img src="img/others/char-sunglass.png"/> : Bright
+                        </div>
+
+                    </div>
+
+                    <div class="tab-pane" id="apps-2">   
+                        <h2 class="title" id="trans_title">Your Transportation Track</h2>
+                        <div id="left">
+                            <div id="map_canvas"></div>
+                            <div id="trip_des"></div>
+                        </div>
+                        <div id="right">
+                            <div id="tripArea" style="backgkround-color: #ffffff; margin: 0px; padding: 0px;">
+
+                                <h3>Trip List as below:</h3>
+                                <div id="descriptionList">
+                                </div>
+                            </div>    
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="apps-3">
+                    </div>
+
+                </div>
+            </div>
+            
+           
+
+        </div> <!-- /container -->
+
+        <!-- Le javascript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="assets/js/jquery.js"></script>
+        <script src="assets/js/bootstrap-transition.js"></script>
+        <script src="assets/js/bootstrap-alert.js"></script>
+        <script src="assets/js/bootstrap-modal.js"></script>
+        <script src="assets/js/bootstrap-dropdown.js"></script>
+        <script src="assets/js/bootstrap-scrollspy.js"></script>
+        <script src="assets/js/bootstrap-tab.js"></script>
+        <script src="assets/js/bootstrap-tooltip.js"></script>
+        <script src="assets/js/bootstrap-popover.js"></script>
+        <script src="assets/js/bootstrap-button.js"></script>
+        <script src="assets/js/bootstrap-collapse.js"></script>
+        <script src="assets/js/bootstrap-carousel.js"></script>
+        <script src="assets/js/bootstrap-typeahead.js"></script>
+        <!--<script src="assets/js/jquery.cookie.js"></script>-->
+
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyA3ieESIwbYV6OZC14fivVKoOSYvApTlh0&sensor=true&libraries=geometry"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 
 
-	<!-- copy these lines to your document: -->
 
-	<div id="ui_hype_container" style="position:relative;overflow:hidden;width:600px;height:400px; border: 1px dotted #ccc;">
-		<script type="text/javascript" charset="utf-8" src="UI_Resources/ui_hype_generated_script.js?65009"></script>
-	</div>
+        <script language="javascript">
 
-	<!-- end copy -->
-	
+            function getUserPreference(){
+                /* get profile preference */
+
+                $.ajax({
+                    type: "GET",
+                    url: "./php/mobile/getUserPreference.php",
+                    data: { 
+                        "token": window.cur_token
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        if(data['success'] == 1){
+                            window.light_threshold = parseInt(data['data']['light_threshold']); 
+                            window.temperature_threshold = parseInt(data['data']['temperature_threshold']);
+                            window.micro_threshold = parseInt(data['data']['micro_threshold']);
+
+                            $('#light_preference').text(window.light_threshold);
+                            $('#temp_preference').text(window.temperature_threshold);
+                            $('#sound_preference').text(window.micro_threshold);
+                            $('#user_preference').show();
+                        }
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {}
+                });
+            }
+            function updateMachineStatus(){
+                
+                
+                /* get sensor value*/
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getSensorValuesNew.php",
+
+                    dataType: 'json',
+                    success: function(data) {
+                        
+                        $('#mrc_1').addClass('offline');
+                        $('#mrc_2').addClass('offline');
+                        $('#mrc_3').addClass('offline');
+                        $('#mrc_4').addClass('offline');
+                        $('#mrc_5').addClass('offline');
 
 
-<div id="footer">This is part of <b>Sweet Feedback</b> project by Ted Selker and Chihiro Suga.</div>
-	
-</div>
-</div>
-  </body>
+                        $.each(data['data'], function(i, item) {
+                            var d_id = item['device_id'];
+
+                            
+
+                            // light 
+                            if(parseFloat(item['light_level']) >= window.light_threshold){
+                                $('#mrc_'+d_id+' img.sunglass').css("visibility", "visible");
+                            }else{
+                                $('#mrc_'+d_id+' img.sunglass').css("visibility", "hidden");
+                            }
+
+
+                            // temperature
+                            if(parseFloat(item['temperature']) >= window.temperature_threshold+2){
+                                $('#mrc_'+d_id+' img.sweat').css("visibility", "visible");
+                                $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
+                            }else{ 
+                                if(parseFloat(item['temperature']) <= window.temperature_threshold-2){                                
+                                    $('#mrc_'+d_id+' img.cold').css("visibility", "visible");
+                                    $('#mrc_'+d_id+' img.sweat').css("visibility", "hidden");
+                                }else{
+                                    $('#mrc_'+d_id+' img.sweat').css("visibility", "hidden");
+                                    $('#mrc_'+d_id+' img.cold').css("visibility", "hidden");
+                                }
+                            }
+
+
+
+                            // sound_level
+                            if(parseFloat(item['sound_level']) >= window.sound_preference){
+                                $('#mrc_'+d_id+' img.headphone').css("visibility", "visible");
+                            }else{
+                                $('#mrc_'+d_id+' img.headphone').css("visibility", "hidden");
+                            }
+
+                            
+
+                            // window_state
+                            if(parseInt(item['window_state']) == 1){
+                                //$('#testTxt').text(d_id+"_yyy "+item['window_state']);
+                                $('#win_'+d_id).css("visibility", "visible");
+                            }else{
+                                //$('#testTxt').text(d_id+"_nn "+ item['window_state']);
+                                $('#win_'+d_id).css("visibility", "hidden");
+                            }
+
+                            
+
+                            // transportation
+                            if((item['trans'] == undefined) || (item['trans'] == null)) {
+                                
+                                $('#mrc_'+d_id+' img.transportation').attr('src','');
+
+                            }else{
+                                var trans_type = item['trans']['trans_type'];
+                                if(trans_type == "WALKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/walk.png');
+                                }else if(trans_type == "BIKING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/bicycle.png');
+                                }else if(trans_type == "DRIVING"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/car.png');
+                                }else if(trans_type == "TRAIN"){
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','img/transportation/vta.png');
+                                }else{
+                                    $('#mrc_'+d_id+' img.transportation').attr('src','');
+                                }
+                                
+                            }
+                            
+                            //show machine
+                            //$('#mrc_'+d_id).show();
+                            $('#mrc_'+d_id).removeClass("offline");
+
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get sensor Error");
+                    }
+                });
+
+                
+            }
+            function TotalDistance(data){
+                ret = 0;
+                for(var i=0; i < data.length-1; i++){
+                    var glatlng_first = new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']);
+                    var glatlng_second = new google.maps.LatLng(data[i+1]['latitude'], data[i+1]['longitude']);
+                    //var dis = glatlng_first.distanceFrom(glatlng_second, 3959).toFixed(1);
+                    var dis = google.maps.geometry.spherical.computeDistanceBetween(glatlng_first, glatlng_second);
+                    ret = ret + dis;
+                    console.log(ret);
+                }
+                return ret;
+            }
+            function TotalTime(data){
+                if(data.length != 0){
+                    var start_time = new Date(data[0]['time']);
+                    var end_time = new Date(data[data.length - 1]['time']);
+                    var ret = end_time - start_time
+                    return milliSecondToMinutes(ret);
+                }
+            }
+            function milliSecondToMinutes(ret){
+                var one_minutes = 1000*60;
+                return Math.ceil(ret / one_minutes);
+            }
+            function initMap(token) {
+                var mapOptions = {
+                    center: new google.maps.LatLng(37, -122),
+                    zoom: 12,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                if(window.map != null){
+                    return;
+                }
+                window.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+                window.alldata = new Array();
+                $.getJSON("./php/mobile/getTripOfUser.php?token=" + token, function(data){
+                    for(var i=0; i < data.length;i++){
+                        var trip_id = data[i][0];
+                        $.getJSON("./php/mobile/getUserTransportationData.php?token=" + token + "&trip_id=" + trip_id, function(data){
+                            var tripFrame = $('<li class="items"></li>');
+                            var tripDiv = $('<a class="trip" id="trip_'+data[0]['trip_id']+'"></a>');
+
+                            tripDiv.text('trip ' + data[0]['trip_id']);
+                            tripDiv.appendTo(tripFrame);
+                            tripFrame.appendTo('#tripArea');
+                            //tripDiv.appendTo('#tripArea');
+                            window.alldata[data[0]['trip_id']] = data;
+                            var tripDes = $('<div id="des_'+data[0]['trip_id']+'"></div>');
+                            tripDes.text('Total Trip time:' + TotalTime(data));
+                            $('#trip_des').append(tripDes);
+                            tripDes.hide();
+                            
+                            tripDiv.click(function(){
+                                $('#trip_des div').hide();
+                                var split = this.id.split('_');
+                                $('#des_' + split[1]).show();
+                                refreshMap(split[1]);
+                                $('#trans_title').text("Your Transportation Track(trip_id=" + split[1] + ")");
+                                $.getJSON("./php/mobile/getTransportationSummary.php?token="+ token + "&trip_id=" + split[1], function(data){
+                                    console.log(data);
+                                });
+
+                            });
+                            var marker_array = [];
+                            var label = data[0]['label'];
+                            for(var i=0; i < data.length; i++){
+                                marker_array.push(new google.maps.LatLng(data[i]['latitude'], data[i]['longitude']));
+                                if( i == data.length - 1){
+                                    window.map.panTo(new google.maps.LatLng(data[data.length-1]['latitude'], data[data.length-1]['longitude']));
+                                }
+                            }
+
+                            var color = "#FF0000";
+                            //alert(label);
+                            if (label == "driving car"){
+                                color = "#00FF00";
+                            }
+                            else if(label == "train"){
+                                color = "#0000FF";
+                            }
+                            else if(label == "walking"){
+                                color = "#FFFF00";
+                            }
+                            var flight = new google.maps.Polyline({
+                                path:  marker_array,
+                                strokeColor: color,
+                                strokeOpacity: 1.0,
+                                strokeWeight: 2
+                            });
+                            flight.setMap(window.map);
+                        });
+                    }
+                });
+                google.maps.event.trigger(window.map, 'resize');
+            }
+            function refreshMap(trip_id)
+            {
+                get_data = window.alldata[trip_id];
+                total_distance = TotalDistance(get_data);
+                if(total_distance / 1000 > 30){
+                    zoom = 8;
+                }
+                else if(total_distance/1000 >= 20 && total_distance/1000 < 30){
+                    zoom = 10;
+                }
+                else if(total_distance/1000 >= 10 && total_distance/1000 < 20){
+                    zoom = 12;
+                }
+                else if(total_distance/1000 < 10){
+                    zoom = 14;
+                }
+                var myLatlng = new google.maps.LatLng(get_data[0]['latitude'],get_data[0]['longitude']);
+                var myOptions = {
+                    zoom: zoom,
+                    center: myLatlng,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                };
+                window.map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+                var marker_array = [];
+                var color = "#FF0000";
+                for(var i=0; i < get_data.length; i++){
+                    marker_array.push(new google.maps.LatLng(get_data[i]['latitude'], get_data[i]['longitude']));
+                }
+                console.log('total point number :' + get_data.length);
+                console.log('total distance:' + total_distance/1000 + 'km' + ' ' + get_data[0]['label']);
+                var flight = new google.maps.Polyline({
+                    path:  marker_array,
+                    strokeColor: color,
+                    strokeOpacity: 1.0,
+                    strokeWeight: 2
+                });
+                flight.setMap(window.map);
+            }
+            function checkLogin(){
+                $.ajax({
+                        type: "GET",
+                        url: "./php/mobile/verifyUser.php",
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["is_logged_in"]==1){
+
+                                window.cur_user = data["account"];
+                                window.cur_token = data["token"];
+                                window.cur_uid = data["user_id"]; 
+                                $('#current_user').text("Hi, "+data["account"]+"! ");
+                                $('#current_user').append('<b class="caret"></b>');
+                    
+                                $('#login').hide();
+                                $('#setting').show();
+
+
+                                getUserPreference();
+
+                            }
+                            else{
+                                $('#login').show();
+                                $('#setting').hide();
+
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+            }
+            function readProblemList(){
+                $('.manual-toggle').toggle();
+                /* clear problem list */
+                $('#problemList').remove();
+                $('#problemDetail').remove();
+                $('#feedbackList').remove();
+
+                var proList = $('<div></div>').attr('id','problemList');
+                $('<ul></ul>').addClass('items').appendTo(proList);
+                var proDetail = $('<div></div>').attr('id', 'problemDetail');
+                
+                var hisList = $('<div></div>').attr('id','feedbackList');
+                $('<ul></ul>').addClass('items').appendTo(hisList);
+                
+                $('#problemArea').append(proList);
+                $('#problemArea').append(proDetail);
+                $('#feedbackHistory').append(hisList);
+
+                /* get feedback history */
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getFeedbackHistory.php",
+                    dataType: 'json',
+                    success: function(data) {
+                        
+                        $.each(data, function(i, item) {
+                            var historyList = $('<li><a href="#" class="tooltip-test" title="'+item.feedback_description+'">'+item.feedback_type+' ('+item.created_time+')</a></li>');
+
+                            if(item.feedback_type == "positive"){
+                                historyList.addClass('positive');
+                            }else if(item.feedback_type == "negative"){
+                                historyList.addClass('negative');
+                            }else if(item.feedback_type == "sound"){
+                                historyList.addClass('sound');
+                            }
+
+                            $('#feedbackList .items').append(historyList);
+                        });
+
+                        $('.tooltip-test').tooltip();
+                        
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get exist Error");               
+                    }
+                });
+
+
+
+                /* get existing report */
+                $.ajax({
+                    type: "GET",
+                    url: "./php/getExistReports.php",
+                    dataType: 'json',
+                    success: function(data) {
+
+                        $.each(data, function(i, item) {
+                            $('#problemList .items').append('<li><a class="manual-toggle" data-toggle="modal" href="#problem_'+item.id+'">'+item.title+'</a></li>');
+
+                            var problemDiv = $("<div></div>").attr('id','problem_'+item.id).addClass('modal hide fade');
+                            var problemBody = $('<div></div>').addClass('modal-body').appendTo(problemDiv);
+
+                            problemBody.append('<button type="button" class="close" data-dismiss="modal">&times;</button>');
+                            problemBody.append("<h3>Problem: "+item.title+"</h3>");
+                            problemBody.append('<span style="margin-left: 5px;">Create at '+item.created_at+'</span>');
+                            problemDiv.append('<div class="modal-footer"><a href="#" class="btn fixIssue" id="problem_'+item.id+'"">Fixed it</a><a href="#" class="btn" data-dismiss="modal" >Close</a></div>');
+                            problemDiv.appendTo('#problemDetail');
+
+                        });
+
+                        /* fix an existing report */
+                        $('.fixIssue').click(function(){
+                            var report = this.id.split('_');
+                            $.ajax({
+                                type: "GET",
+                                url: "./php/makeFixReport.php",
+                                data: { "user_id": window.cur_uid, "report_id": report[1] },
+
+                                dataType: 'json',
+                                success: function(data) {
+                                    if(data.hasOwnProperty('success') && data['success'] == 1){
+                                        $.post("./php/insertFeedback.php?application_id=10&type=positive"); /* fix a report and get feedback */
+                                        readProblemList(); // update problem list
+                                    }
+                                    else if(data.hasOwnProperty('reconfirm') && data['reconfirm'] == 1){
+                                        /// jump out a dialog to ask whether force or not
+                                        var errorDiv = $("<div></div>").addClass("alert alert-error");
+                                        errorDiv.text("what the fuck is this ?");
+                                        errorDiv.appendTo($('#' + report[0]+'_'+report[1]));
+                                        //$("#alert").show();
+                                    }
+                                },
+                                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                                    //alert("fix report Error");
+                                }
+                            });
+                        });
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown) {
+                        //alert("get exist Error");               
+                    }
+                });
+            }
+            $(function(){
+
+                $('#user_preference').hide();
+
+                /* hide headphone */
+                $('.machine').addClass('offline');
+                $('.win').css("visibility", "hidden");
+
+                /* hide setting */
+                $('#setting').hide();
+
+                /* log in stuff */
+                window.cur_user = "test";
+                window.cur_token;
+                window.cur_uid = 0;
+                checkLogin();
+
+                $('.dropdown-toggle').dropdown();
+                $('#loginBt').click(function(){
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: "./php/mobile/verifyUser.php",
+                        data: { "account": $('#account').val(), "password": $('#password').val() },
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["success"]==1){
+                                
+                                window.cur_user = data["account"];
+                                window.cur_token = data["token"];
+                                window.cur_uid = data["user_id"];
+                                
+                                $('#current_user').text("Hi, "+data["account"]+" !");
+                                
+                                $('#login').hide();
+                                //$('#logoutBt').show();
+
+                                $('#setting').show();
+
+                            }else{
+                                $('#login').show();
+                                
+
+                                $('#setting').hide();
+                                //alert("No such user!");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+                });
+                $('#logoutBt').click(function(){
+
+                    $.ajax({
+
+                        type: "GET",
+                        url: "./php/mobile/logout.php",
+                        data: { },
+                        dataType: 'json',
+                        success: function(data) {
+                            
+                            if(data["success"]==1){
+                                window.cur_user = 0;
+                                window.cur_token = 0;
+                                window.cur_uid = 0;
+
+                                $('#current_user').text("");
+                                 
+                                $('#login').show();
+                                $('#logoutBt').hide();
+
+                            }else{
+                                //alert("No such user!");
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("Error");    
+                        }
+                    });
+                });
+                $('#registerSubmit').click(function(){
+                    //alert($('#reg_account').val());
+                    //alert($('#reg_password').val());
+                    $.ajax({
+                        type: "GET",
+                        url: "./php/mobile/createNewUser.php",
+                        data: { "account": $('#reg_account').val(), "password":$('#reg_password').val()},
+                        dataType: 'json',
+                        success: function(data){
+                            alert("song la");
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
+                        
+                        }
+                    });
+                });
+                window.category = 0;
+                $('#hot').click(function(){
+                    window.category = 1;
+                    $('#dropdown_title').text($('#hot').text());
+                });
+                $('#cold').click(function(){
+                    window.category = 2;
+                    $('#dropdown_title').text($('#cold').text());
+                });
+                $('#noise').click(function(){
+                    $('#dropdown_title').text($('#noise').text());
+                    window.category = 3;
+                });
+                $('#other').click(function(){
+                    $('#dropdown_title').text($('#other').text());
+                    window.category = 0;
+                });
+                /* make a new report */
+                $('#reportSubmit').click(function(){
+                    $.ajax({
+                        type: "GET",
+                        url: "./php/makeNewReport.php",
+                        data: { "user_id": window.cur_uid, "coordinate_x": "1", "coordinate_y": "1", "title": $('#problemInput').val(), "category": window.category},
+
+                        dataType: 'json',
+                        success: function(data) {
+                            $('#problemInput').val("");
+                            readProblemList(); /* update problem list */
+                            $.post("./php/insertFeedback.php?application_id=10&type=positive"); /* make new report and get feedback */
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            //alert("make new Error");
+                        }
+                    });
+                });
+
+                /* read exist problems */
+                readProblemList();
+
+                /* make machine icon draggable */
+                /*$(".machine").draggable({
+                    cursor: 'move', 
+                    containment: 'document'}
+                );*/
+                $("#app2").click(function(){
+                    //google.maps.event.trigger(window.map, 'resize');
+                    if(window.cur_user == 0 || window.cur_token == 0 || window.cur_uid == 0){
+                        alert("this page require you to login !!");
+                        document.location.reload(true);
+                    }
+                    else{
+                        initMap(window.cur_token);
+                    }
+                });
+
+                /* update machine status every 2 sec */
+                setInterval(function(){
+                    updateMachineStatus();
+                }, 1000);
+
+                setInterval(function(){
+                    readProblemList();
+                }, 10000);
+
+
+                /* load quiz */
+                $("#apps-3").load('quiz.html');
+
+
+
+
+            });
+        </script>
+    </body>
 </html>
