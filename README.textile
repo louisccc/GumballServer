@@ -38,3 +38,6 @@ h2. schema.sql
 
   Server database schema
 
+  you can import our data schema by typing:
+  mysql -u username -p password < schema.sql
+
